@@ -1,0 +1,52 @@
+@keyframes slideIn {
+  from {
+    transform: translateY(50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animated-image {
+  animation: slideIn 1s ease forwards;
+}
+
+.image-container {
+  animation: scaleUp 10s ease forwards ;
+}
+
+
+
+.custom-shape-divider-top-1708175870 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top-1708175870 svg {
+  position: relative;
+  display: block;
+ 
+  
+  
+}
+
+.custom-shape-divider-top-1708175870 .shape-fill {
+  fill: rgba(43, 1, 62, 0.2);
+}

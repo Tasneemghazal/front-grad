@@ -1,0 +1,12 @@
+/* fonts.css */
+
+@font-face {
+    font-family: 'Protest Strike';
+    src: url('path/to/ProtestStrike-Regular.woff2') format('woff2'),
+         url('path/to/ProtestStrike-Regular.woff') format('woff'); /* Add additional formats if available */
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* Add additional @font-face rules for other font weights or styles if needed */
+  
