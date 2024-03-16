@@ -6,11 +6,14 @@ import AccountBalanceSharpIcon from '@mui/icons-material/AccountBalanceSharp';
 import SupervisorAccountSharpIcon from '@mui/icons-material/SupervisorAccountSharp';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
-export default function InputCom({ placeholder, type }) {
+export default function InputCom({ placeholder, type, name,value,onChange }) {
   return (
     <TextField
       sx={{ my: 1 }}
       type={type}
+      name={name}
+      value={value}
+      onChange={onChange}
       fullWidth
       label={placeholder} variant="outlined"
       InputProps={{
