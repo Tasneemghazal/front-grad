@@ -6,6 +6,7 @@ import { purple } from "@mui/material/colors";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
+import Toast from "../shared/Toast.jsx";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -19,7 +20,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 export default function Sign_in() {
   const matches = useMediaQuery((theme) => theme.breakpoints.up('md'));
   let navigate = useNavigate();
-  let[userToken,setUserToken] = useState();
+  let [userToken, setUserToken] = useState();
   const initialValues = {
     email: "",
     password: "",
@@ -27,22 +28,21 @@ export default function Sign_in() {
 
   const onSubmit = async (users) => {
     try {
-      const {data} = await axios.post("http://localhost:3000/api/v1/grad/auth/signIn", users);
+      const { data } = await axios.post("http://localhost:3000/api/v1/grad/auth/signIn", users);
       console.log(data);
       if (data.message === "valid account") {
         localStorage.setItem("userToken", data.token);
         setUserToken(data.token);
-        if(data.role === "admin") {
-        navigate("/dashboard");
-        
+        if (data.role === "admin") {
+          navigate("/dashboard");
+          <Toast message="Login successful" severity="success" />; 
         }
       }
     } catch (error) {
       console.log("Error occurred:", error)
     }
-  
-  
   }
+
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -132,4 +132,3 @@ export default function Sign_in() {
     </Box>
   );
 }
-
