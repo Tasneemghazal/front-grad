@@ -1,48 +1,88 @@
-import React, { useState, useEffect } from "react";
-import { Box, Button, FormGroup, Typography } from "@mui/material";
+import React, { useState, useEffect, useContext } from "react";
+import { Box, Button, FormControl, FormGroup, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import InputCom from "../../shared/InputCom.jsx";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
 import axios from "axios";
+import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
+import UploadFile from "../../shared/UploadFile.jsx";
+import { useFormik } from "formik";
+import SelectCom from "../../shared/SelectCom.jsx";
+import userInputFields from "./userInputFields.js";
 
 export default function Create() {
-  const [dep, setDep] = useState([]);
-  const [selectedDepName, setSelectedDepName] = useState(""); // State to hold selected department name
   const token = localStorage.getItem("userToken");
+  const { getDepartments } = useContext(DepartmentContext);
+  const [departments, setDepartments] = useState([]);
 
   useEffect(() => {
-    getDep();
-  }, []);
-
-  const getDep = async () => {
-    try {
-      const { data } = await axios.get(
-        "http://127.0.0.1:3000/api/v1/grad/admin/getDep",
-        { headers: { token: `Bearer ${token}` } }
-      );
-      setDep(data.dep);
-    } catch (error) {
-      console.error("Error fetching department data:", error);
+    async function fetchData() {
+      const res = await getDepartments();
+      setDepartments(res.deps);
     }
+    fetchData();
+  }, [getDepartments]);
+
+  const initialValues = {
+    name: "",
+    email: "",
+    password: "",
+    img: "",
+    phoneNumber: "",
+    role: "",
+    depId: "",
+  };
+
+  const handleFieldChange = (event) => {
+    formik.setFieldValue("img", event.target.files[0]);
+  };
+
+  const onSubmit = async (values) => {
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
+    formData.append("img", values.img);
+    formData.append("depId", values.depId);
+    formData.append("role", values.role);
+    formData.append("phoneNumber", values.phoneNumber);
+
+    try {
+      const{data}=await axios.post(`${import.meta.env.VITE_API_URL}/auth/registerUser`, formData, {
+        headers: { token: `Bearer ${token}` },
+      });
+      if(data.message === "success"){
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
+  };
+
+  const { formik, inputs } = userInputFields(initialValues, onSubmit, handleFieldChange);
+
+  const renderInputs = inputs.map((input, index) => (
+    <InputCom
+      type={input.type}
+      name={input.name}
+      id={input.id}
+      title={input.title}
+      value={input.value}
+      key={index}
+      placeholder={input.title}
+      onChange={input.onChange || formik.handleChange}
+      onBlur={formik.handleBlur}
+      touched={formik.touched}
+    />
+  ));
+
+  const handleDepartmentChange = (event) => {
+    formik.setFieldValue("depId", event.target.value);
+  };
+
+  const handleRoleChange = (event) => {
+    formik.setFieldValue("role", event.target.value);
   };
 
   const Role = ["headOfDepartment", "supervisor"];
-
-  const handleFormSubmit = async () => {
-    try {
-      // Find the selected department object
-      const selectedDepartment = dep.find((department) => department.name === selectedDepName);
-      // Send the _id of the selected department to the backend
-      await axios.post("YOUR_BACKEND_URL_HERE", {
-        departmentId: selectedDepartment._id,
-        // Other form data
-      });
-      // Handle success
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      // Handle error
-    }
-  };
 
   return (
     <Box
@@ -54,35 +94,31 @@ export default function Create() {
       }}
     >
       <Box sx={{ width: "50%", textAlign: "center" }}>
-        <FormGroup>
-          <Typography
-            variant="h3"
-            sx={{ textAlign: "center", fontSize: "30px", my: 2, fontWeight: "bold" }}
-          >
-            Create User
-          </Typography>
-          <InputCom placeholder={"UserName"} type={"text"} />
-          <InputCom placeholder={"Email"} type={"email"} />
-          <InputCom placeholder={"Password"} type={"password"} />
-          <InputCom placeholder={"PhoneNumber"} type={"text"} />
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={dep.map((department) => department.name)} // Map department names only
-            value={selectedDepName} // Set selected department name
-            onChange={(event, newValue) => setSelectedDepName(newValue)} // Update selected department name
-            sx={{ my: 1 }}
-            renderInput={(params) => <TextField {...params} label="Departments" />}
+        <Typography
+          variant="h3"
+          sx={{ textAlign: "center", fontSize: "30px", my: 2, fontWeight: "bold" }}
+        >
+          Create User
+        </Typography>
+        <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
+          {renderInputs}
+          <SelectCom
+            labelId="department-label"
+            id="department"
+            value={formik.values.depId}
+            onChange={handleDepartmentChange}
+            label="Department"
+            options={departments.map(dep => ({ value: dep._id, label: dep.name }))}
           />
-
-          <Autocomplete
-            disablePortal
-            multiple
-            id="combo-box-demo"
-            options={Role}
-            sx={{ my: 1 }}
-            renderInput={(params) => <TextField {...params} label="Role" />}
+          <SelectCom
+            labelId="role-label"
+            id="role"
+            value={formik.values.role}
+            onChange={handleRoleChange}
+            label="Role"
+            options={Role.map(role => ({ value: role, label: role }))}
           />
+          <UploadFile />
           <Button
             variant="contained"
             sx={{
@@ -91,11 +127,11 @@ export default function Create() {
                 backgroundColor: " rgba(43, 1, 62, 0.8)",
               },
             }}
-            onClick={handleFormSubmit}
+            type="submit"
           >
             Submit
           </Button>
-        </FormGroup>
+        </form>
       </Box>
     </Box>
   );
