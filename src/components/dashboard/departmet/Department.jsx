@@ -2,7 +2,8 @@ import { Box, Button, Typography } from '@mui/material'
 import React from 'react'
 import InputCom from '../../shared/InputCom.jsx'
 import { useFormik } from 'formik';
-import axios from 'axios'; // don't forget to import axios if you haven't already
+import axios from 'axios'; 
+import CustomTable from '../../shared/CustomTable.jsx';
 
 export default function Department() {
     const initialValues = {
@@ -64,6 +65,9 @@ export default function Department() {
                         Submit
                     </Button>
                 </form>
+            </Box>
+            <Box sx={{my:1, width:"80%"}}>
+            <CustomTable/>
             </Box>
         </Box>
     )
