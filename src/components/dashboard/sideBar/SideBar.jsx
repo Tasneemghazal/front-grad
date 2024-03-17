@@ -19,6 +19,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import MailIcon from "@mui/icons-material/Mail";
 import ArticleIcon from "@mui/icons-material/Article";
+import DomainAddIcon from '@mui/icons-material/DomainAdd';
 import { Link } from "react-router-dom";
 export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
   return (
@@ -84,6 +85,16 @@ export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
                 <Create style={{ color: "#fff" }} />
               </ListItemIcon>
               <ListItemText primary="CreateStudent" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to="department" style={{ color: "white", textDecoration: "none" }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <DomainAddIcon style={{ color: "#fff" }} />
+              </ListItemIcon>
+              <ListItemText primary="Departments" />
             </ListItemButton>
           </ListItem>
         </Link>
