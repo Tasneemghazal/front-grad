@@ -27,6 +27,7 @@ export default function Create() {
     password: "",
     img: "",
     phoneNumber: "",
+    officeHours:"",
     role: "",
     depId: "",
   };
@@ -44,6 +45,7 @@ export default function Create() {
     formData.append("depId", values.depId);
     formData.append("role", values.role);
     formData.append("phoneNumber", values.phoneNumber);
+    formData.append("officeHours", values.officeHours);
 
     try {
       const{data}=await axios.post(`${import.meta.env.VITE_API_URL}/auth/registerUser`, formData, {
