@@ -23,7 +23,7 @@ const rows = [
 
 export default function CustomTable() {
   return (
-    <TableContainer  component={Paper}>
+    <TableContainer  component={Paper} sx={{border:"1px solid rgba(43, 1, 62, 0.5)"}}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
