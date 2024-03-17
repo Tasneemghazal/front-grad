@@ -1,6 +1,5 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import Crud from '../../shared/Crud'
 import CustomTable from '../../shared/CustomTable.jsx'
 
 export default function Students() {
