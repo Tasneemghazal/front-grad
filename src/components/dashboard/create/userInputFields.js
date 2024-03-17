@@ -38,6 +38,13 @@ const userInputFields = (initialValues, onSubmit, handleFieldChange) => {
       value: formik.values.phoneNumber,
     },
     {
+        id: "officeHours",
+        type: "text",
+        name: "officeHours",
+        title: "officeHours",
+        value: formik.values.officeHours,
+      },
+    {
       id: "img",
       type: "file",
       name: "img",
