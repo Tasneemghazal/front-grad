@@ -1,9 +1,11 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import Crud from '../../shared/Crud.jsx'
+import CustomTable from '../../shared/CustomTable.jsx'
 
 export default function ViewProject() {
   return (
-    <Crud/>
+    <Box sx={{ width: { md: '60%' }, ml: { md: "300px" }, mt: 10, mx: { xs: 4 } }}>
+    <CustomTable/>
+    </Box>
   )
 }
