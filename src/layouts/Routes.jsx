@@ -71,7 +71,11 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "create",
+        path: "createUser",
+        element: <Create />,
+      },
+      {
+        path: "createStudent",
         element: <Create />,
       },
       {
