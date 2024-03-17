@@ -28,6 +28,8 @@ import AddTask from "../components/Supervisor/supervisor_2/AddTask.jsx";
 import EditTask from "../components/Supervisor/supervisor_2/EditTask.jsx";
 import EditProfile from "../components/student/profile/EditProfile.jsx";
 import AllProfile from "../components/student/profile/AllProfile.jsx";
+import CreateStudent from "../components/dashboard/create/CreateStudent.jsx";
+import Department from "../components/dashboard/departmet/Department.jsx";
 const handleGoBack = () => {
   window.history.back();
 };
@@ -76,7 +78,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "createStudent",
-        element: <Create />,
+        element: <CreateStudent />,
+      },
+      {
+        path: "department",
+        element: <Department />,
       },
       {
         path: "departmentheads",
