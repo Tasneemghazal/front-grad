@@ -67,13 +67,23 @@ export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="create" style={{ color: "white", textDecoration: "none" }}>
+        <Link to="createUser" style={{ color: "white", textDecoration: "none" }}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 <Create style={{ color: "#fff" }} />
               </ListItemIcon>
-              <ListItemText primary="Create" />
+              <ListItemText primary="Create User" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+        <Link to="createStudent" style={{ color: "white", textDecoration: "none" }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <Create style={{ color: "#fff" }} />
+              </ListItemIcon>
+              <ListItemText primary="CreateStudent" />
             </ListItemButton>
           </ListItem>
         </Link>
