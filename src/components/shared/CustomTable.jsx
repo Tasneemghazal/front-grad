@@ -10,7 +10,7 @@ import { Paper, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const RedTableHead = styled(TableHead)({
-  backgroundColor: 'rgba(45, 3, 62, 0.4)', // Set the background color to red
+  backgroundColor: 'rgba(45, 3, 62, 0.4)', 
 });
 
 export default function CustomTable({ columns, data, onDelete }) {
