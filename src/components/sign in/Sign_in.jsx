@@ -37,6 +37,15 @@ export default function Sign_in() {
           navigate("/dashboard");
           <Toast message="Login successful" severity="success" />; 
         }
+        else if(data.role === "student") {
+          navigate("/student");
+        }
+        else if(data.role === "headOfDepartment") {
+          navigate("/headOfDepartment");
+        }
+        else if(data.role === "supervisor") {
+          navigate("/supervisor");
+        }
       }
     } catch (error) {
       console.log("Error occurred:", error)
