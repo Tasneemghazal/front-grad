@@ -78,26 +78,6 @@ export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="createStudent" style={{ color: "white", textDecoration: "none" }}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <Create style={{ color: "#fff" }} />
-              </ListItemIcon>
-              <ListItemText primary="CreateStudent" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <Link to="department" style={{ color: "white", textDecoration: "none" }}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <DomainAddIcon style={{ color: "#fff" }} />
-              </ListItemIcon>
-              <ListItemText primary="Departments" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
         <Link
           to="departmentheads"
           style={{ color: "white", textDecoration: "none" }}
@@ -124,6 +104,16 @@ export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
             </ListItemButton>
           </ListItem>
         </Link>
+        <Link to="createStudent" style={{ color: "white", textDecoration: "none" }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <Create style={{ color: "#fff" }} />
+              </ListItemIcon>
+              <ListItemText primary="Create Student" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
         <Link to="students" style={{ color: "white", textDecoration: "none" }}>
           <ListItem disablePadding>
             <ListItemButton>
@@ -134,6 +124,19 @@ export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
             </ListItemButton>
           </ListItem>
         </Link>
+        <Link to="department" style={{ color: "white", textDecoration: "none" }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <DomainAddIcon style={{ color: "#fff" }} />
+              </ListItemIcon>
+              <ListItemText primary="Departments" />
+            </ListItemButton>
+          </ListItem>
+        </Link>
+    
+      
+      
         <Link to="projects" style={{ color: "white", textDecoration: "none" }}>
           <ListItem disablePadding>
             <ListItemButton>
