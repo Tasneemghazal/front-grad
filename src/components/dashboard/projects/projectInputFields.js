@@ -23,20 +23,7 @@ const projectInputFields = (initialValues, onSubmit, handleFieldChange,handleFil
       title: "SupervisorName",
       value: formik.values.supervisorName,
     },
-    {
-      id: "img",
-      type: "file",
-      name: "img",
-      title: "Image",
-      onChange: handleFieldChange,
-    },
-    {
-        id: "thesis",
-        type: "file",
-        name: "thesis",
-        title: "Thesis",
-        onChange: handleFileChange,
-      },
+    
   ];
 
   return { formik, inputs };
