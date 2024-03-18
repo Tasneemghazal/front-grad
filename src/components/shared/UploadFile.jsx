@@ -17,13 +17,14 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function UploadFile() {
+export default function UploadFile({ onFileChange }) {
   const [fileName, setFileName] = useState('');
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setFileName(file.name);
+      onFileChange(file); 
     }
   };
 
