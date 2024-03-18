@@ -35,7 +35,7 @@ export default function Students() {
   }, [getUsers]);
 
   return (
-    <Box sx={{ width: { md: '60%' }, ml: { md: "400px" }, mt: 10, mx: { xs: 4 } }}>
+    <Box sx={{ width: { md: '60%' }, ml: { md: "400px" }, mt: 5, mx: { xs: 4 } }}>
       <Typography
           variant="h3"
           sx={{ textAlign: "center", fontSize: "30px", my: 5, fontWeight: "bold" }}

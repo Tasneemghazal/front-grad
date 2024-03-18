@@ -87,7 +87,8 @@ export default function Department() {
         sx={{
           textAlign: "center",
           fontSize: "30px",
-          my: 2,
+          mt: 5,
+          mb:2,
           fontWeight: "bold",
         }}
       >
