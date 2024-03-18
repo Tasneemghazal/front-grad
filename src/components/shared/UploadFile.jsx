@@ -17,7 +17,7 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-export default function UploadFile({ onFileChange }) {
+export default function UploadFile({ buttonText, onFileChange }) {
   const [fileName, setFileName] = useState('');
 
   const handleFileChange = (event) => {
@@ -43,7 +43,7 @@ export default function UploadFile({ onFileChange }) {
       },
     width: "100%",}}
     >
-      {fileName ? fileName : 'Upload file'}
+      {fileName ? fileName : buttonText}
       <VisuallyHiddenInput type="file" onChange={handleFileChange} />
     </Button>
   );
