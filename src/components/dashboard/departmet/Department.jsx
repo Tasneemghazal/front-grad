@@ -8,30 +8,32 @@ import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
 
 export default function Department() {
   const token = localStorage.getItem("userToken");
-  const { getDepartments,removeDep } = useContext(DepartmentContext);
+  const { getDepartments, removeDep } = useContext(DepartmentContext);
   const [tableData, setTableData] = useState([]);
   const [tableColumns, setTableColumns] = useState([]);
 
   const removeDepartment = async (depId) => {
     const res = await removeDep(depId);
-    console.log(res)
-    return res;
-};
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await getDepartments();
-        if (res.deps.length > 0) {
-          const departmentKeys = Object.keys(res.deps[0]); 
-          const columns = departmentKeys.slice(0, -1); 
-          setTableColumns(columns);
-          setTableData(res.deps);
-        }
-      } catch (error) {
-        console.error("Error fetching departments:", error);
-      }
+    console.log(res);
+    if (res.message === "success") {
+      setTableData(tableData.filter((dep) => dep._id !== depId));
     }
+    return res;
+  };
+  async function fetchData() {
+    try {
+      const res = await getDepartments();
+      if (res.deps.length > 0) {
+        const departmentKeys = Object.keys(res.deps[0]);
+        const columns = departmentKeys.slice(0, -1);
+        setTableColumns(columns);
+        setTableData(res.deps);
+      }
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
+  }
+  useEffect(() => {
     fetchData();
   }, [getDepartments]);
 
@@ -51,6 +53,11 @@ export default function Department() {
       console.log(data);
       if (data.message === "success") {
         alert(data.message);
+
+        const res = await getDepartments();
+        if (res.deps.length > 0) {
+          setTableData(res.deps);
+        }
       }
     } catch (error) {
       console.error("Submission error:", error);
@@ -110,7 +117,11 @@ export default function Department() {
         </form>
       </Box>
       <Box sx={{ my: 1, width: "80%" }}>
-        <CustomTable columns={tableColumns} data={tableData} onDelete={removeDepartment} />
+        <CustomTable
+          columns={tableColumns}
+          data={tableData}
+          onDelete={removeDepartment}
+        />
       </Box>
     </Box>
   );
