@@ -25,8 +25,9 @@ export default function Department() {
       const res = await getDepartments();
       if (res.deps.length > 0) {
         const departmentKeys = Object.keys(res.deps[0]);
-        const columns = departmentKeys.slice(0, -1);
+        const columns = ['_id', 'name', 'createdAt'];
         setTableColumns(columns);
+        
         setTableData(res.deps);
       }
     } catch (error) {
@@ -96,11 +97,11 @@ export default function Department() {
         <form onSubmit={formik.handleSubmit}>
           <InputCom
             type="text"
-            placeholder="department"
+            placeholder="Add Department Name"
             name="name"
             title="Department"
             value={formik.values.name}
-            onChange={formik.handleChange} // Use handleChange from Formik
+            onChange={formik.handleChange} 
           />
           <Button
             variant="contained"
@@ -115,14 +116,15 @@ export default function Department() {
             Submit
           </Button>
         </form>
-      </Box>
-      <Box sx={{ my: 1, width: "80%" }}>
+        <Box sx={{ my: 2, width: "100%" }}>
         <CustomTable
           columns={tableColumns}
           data={tableData}
           onDelete={removeDepartment}
         />
       </Box>
+      </Box>
+      
     </Box>
   );
 }
