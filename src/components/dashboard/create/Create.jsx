@@ -127,7 +127,7 @@ export default function Create() {
               />
             </Grid>
           </Grid>
-          <UploadFile onFileChange={handleImageChange} />
+          <UploadFile onFileChange={handleImageChange} buttonText="Add an image"/>
           <Button
             variant="contained"
             sx={{

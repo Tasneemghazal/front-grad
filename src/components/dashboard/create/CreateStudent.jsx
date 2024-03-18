@@ -110,7 +110,7 @@ export default function CreateStudent() {
               />
             </Grid>
             
-              <UploadFile  onFileChange={handleImageChange} />
+              <UploadFile  onFileChange={handleImageChange} buttonText="Add an image"/>
             
           </Grid>
           <Button
