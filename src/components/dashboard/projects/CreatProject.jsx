@@ -1,44 +1,110 @@
-import React, { useState } from "react";
-import { Box, Button, FormGroup, Grid, Typography } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import InputCom from "../../shared/InputCom.jsx";
-import { purple } from "@mui/material/colors";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import UploadFile from "../../shared/UploadFile.jsx";
 import IconButton from '@mui/material/IconButton';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
+import projectInputFields from "./projectInputFields.js";
+import SelectCom from "../../shared/SelectCom.jsx";
+import axios from "axios";
 
 export default function CreatProject() {
-  const Dep = [
-    "Computer Systems Engineering",
-    "Electrical Engineering",
-    "Energy Engineering",
-    "Mechanical Engineering",
-    "Electrical Eng-Industrial Automation",
-    "Communications Engineering Technology",
-    "Building Engineering",
-    "Sustainable Energy Engineering",
-    "Civil Engineering and Sustainable Structures/Co-operative",
-    "Automotive Engineering/Co-operative",
-  ];
+  const token = localStorage.getItem("userToken");
+  const { getDepartments } = useContext(DepartmentContext);
+  const [tableData, setTableData] = useState([]);
+  const [group, setGroup] = useState([""]);
 
-  const [studentNames, setStudentNames] = useState([""]);
+  async function fetchData() {
+    try {
+      const res = await getDepartments();
+      if (res.deps.length > 0) {
+        setTableData(res.deps);
+      }
+    } catch (error) {
+      console.error("Error fetching departments:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [getDepartments]);
+
+  const initialValues = {
+    name: "",
+    supervisorName: "",
+    img: "",
+    thesis: "",
+    depId: "",
+  };
+
+  const handleFieldChange = (event) => {
+    formik.setFieldValue("img", event.target.files[0]);
+  };
+
+  const handleFileChange = (event) => {
+    formik.setFieldValue("thesis", event.target.files[0]);
+  };
+
+  const onSubmit = async (values) => {
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("supervisorName", values.supervisorName);
+    formData.append("thesis", values.thesis);
+    formData.append("img", values.img);
+    formData.append("depId", values.depId);
+
+    group.forEach((studentName, index) => {
+      formData.append(`group[${index}]`, studentName);
+    });
+
+    try {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/admin/addProject`, formData, {
+        headers: { token: `Bearer ${token}` },
+      });
+      if (data.message === "success") {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
+  };
+
+  const { formik, inputs } = projectInputFields(initialValues, onSubmit, handleFieldChange, handleFileChange);
+
+  const renderInputs = inputs.map((input, index) => (
+    <InputCom
+      type={input.type}
+      name={input.name}
+      id={input.id}
+      title={input.title}
+      value={input.value}
+      key={index}
+      placeholder={input.title}
+      onChange={input.onChange || formik.handleChange}
+      onBlur={formik.handleBlur}
+      touched={formik.touched}
+    />
+  ));
 
   const handleAddStudent = () => {
-    setStudentNames([...studentNames, ""]);
+    setGroup([...group, ""]);
+  };
+
+  const handleDepartmentChange = (event) => {
+    formik.setFieldValue("depId", event.target.value);
   };
 
   const handleRemoveStudent = () => {
-    if (studentNames.length > 1) {
-      setStudentNames(studentNames.slice(0, -1));
+    if (group.length > 1) {
+      setGroup(group.slice(0, -1));
     }
   };
 
   const handleStudentNameChange = (index, newName) => {
-    const newStudentNames = [...studentNames];
-    newStudentNames[index] = newName;
-    setStudentNames(newStudentNames);
+    const newGroup = [...group];
+    newGroup[index] = newName;
+    setGroup(newGroup);
   };
 
   return (
@@ -51,22 +117,29 @@ export default function CreatProject() {
       }}
     >
       <Box sx={{ width: "50%", textAlign: "center" }}>
-        <FormGroup>
-          <Typography
-            variant="h3"
-            sx={{
-              textAlign: "center",
-              fontSize: "30px",
-              my: 2,
-              fontWeight: "bold",
-            }}
-          >
-            Add Project
-          </Typography>
-          <InputCom placeholder={"Project Name"} type={"text"} />
-          <InputCom placeholder={"Supervisor"} type={"text"} />
+        <Typography
+          variant="h3"
+          sx={{
+            textAlign: "center",
+            fontSize: "30px",
+            my: 2,
+            fontWeight: "bold",
+          }}
+        >
+          Add Project
+        </Typography>
+        <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
+          {renderInputs}
+          <SelectCom
+            labelId="department-label"
+            id="department"
+            value={formik.values.depId}
+            onChange={handleDepartmentChange}
+            label="Department"
+            options={tableData.map(dep => ({ value: dep._id, label: dep.name }))}
+          />
           <Grid container spacing={2}>
-            {studentNames.map((studentName, index) => (
+            {group.map((studentName, index) => (
               <Grid item xs={12} sm={6} key={index}>
                 <InputCom
                   placeholder={`Student ${index + 1} Name`}
@@ -91,16 +164,7 @@ export default function CreatProject() {
               </Grid>
             </Grid>
           </Grid>
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={Dep}
-            sx={{ my: 1 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Departments" />
-            )}
-          />
-          <UploadFile/>
+    
           <Button
             variant="contained"
             sx={{
@@ -109,10 +173,11 @@ export default function CreatProject() {
                 backgroundColor:"rgba(43, 1, 62, 0.8)",
               },
             }}
+            type="submit"
           >
             Submit
           </Button>
-        </FormGroup>
+        </form>
       </Box>
     </Box>
   );
