@@ -8,7 +8,34 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import { Avatar } from "@mui/material";
 import DotBadge from "../../shared/Badge.jsx";
+import { UserContext } from "../../context/UserContextProvider.jsx";
+import { useContext, useEffect, useState } from "react";
+
 export default function Navbar({ showDrawer }) {
+  const { getUsers } = useContext(UserContext);
+  const [adminName, setAdminName] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getUsers();
+        console.log(res);
+        
+       
+        const adminUser = res.users.find(user => user.role === "admin");
+        
+        
+        if (adminUser) {
+          setAdminName(adminUser.name);
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchData();
+  }, []);
+  
+
   return (
     <>
       <AppBar
@@ -30,20 +57,26 @@ export default function Navbar({ showDrawer }) {
               showDrawer();
             }}
           >
-            <MenuIcon style={{color:"#fff"}} />
+            <MenuIcon style={{ color: "#fff" }} />
           </IconButton>
           <Typography
             variant="h6"
             component="div"
             sx={{ flexGrow: 1, color: "#000" }}
+          ></Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              color: "#fff",
+            }}
           >
-          </Typography>
-          <Box sx={{display:"flex",flexDirection:"row",alignItems:"center", color:"#fff"}} >
-          <IconButton>
-          <DotBadge icon={NotificationsActiveIcon} />
+            <IconButton>
+              <DotBadge icon={NotificationsActiveIcon} />
             </IconButton>
-            <Avatar src="image/steve.png"sx={{mx:1}}/>
-            <Typography>Hi, Admin</Typography>
+            <Avatar src="image/steve.png" sx={{ mx: 1 }} />
+            <Typography>Hi, {adminName || 'Action'}</Typography>
           </Box>
         </Toolbar>
       </AppBar>
