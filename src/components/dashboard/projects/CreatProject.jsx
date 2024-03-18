@@ -8,12 +8,15 @@ import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
 import projectInputFields from "./projectInputFields.js";
 import SelectCom from "../../shared/SelectCom.jsx";
 import axios from "axios";
+import UploadFile from "../../shared/UploadFile.jsx";
 
-export default function CreatProject() {
+export default function CreateProject() {
   const token = localStorage.getItem("userToken");
   const { getDepartments } = useContext(DepartmentContext);
   const [tableData, setTableData] = useState([]);
   const [group, setGroup] = useState([""]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedThesis, setSelectedThesis] = useState(null);
 
   async function fetchData() {
     try {
@@ -33,25 +36,15 @@ export default function CreatProject() {
   const initialValues = {
     name: "",
     supervisorName: "",
-    img: "",
-    thesis: "",
     depId: "",
-  };
-
-  const handleFieldChange = (event) => {
-    formik.setFieldValue("img", event.target.files[0]);
-  };
-
-  const handleFileChange = (event) => {
-    formik.setFieldValue("thesis", event.target.files[0]);
   };
 
   const onSubmit = async (values) => {
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("supervisorName", values.supervisorName);
-    formData.append("thesis", values.thesis);
-    formData.append("img", values.img);
+    formData.append("img", selectedImage);
+    formData.append("thesis", selectedThesis);
     formData.append("depId", values.depId);
 
     group.forEach((studentName, index) => {
@@ -70,21 +63,22 @@ export default function CreatProject() {
     }
   };
 
-  const { formik, inputs } = projectInputFields(initialValues, onSubmit, handleFieldChange, handleFileChange);
+  const { formik, inputs } = projectInputFields(initialValues, onSubmit);
 
   const renderInputs = inputs.map((input, index) => (
-    <InputCom
-      type={input.type}
-      name={input.name}
-      id={input.id}
-      title={input.title}
-      value={input.value}
-      key={index}
-      placeholder={input.title}
-      onChange={input.onChange || formik.handleChange}
-      onBlur={formik.handleBlur}
-      touched={formik.touched}
-    />
+    <Grid item md={6} xs={12} key={index}>
+      <InputCom
+        type={input.type}
+        name={input.name}
+        id={input.id}
+        title={input.title}
+        value={input.value}
+        placeholder={input.title}
+        onChange={input.onChange || formik.handleChange}
+        onBlur={formik.handleBlur}
+        touched={formik.touched}
+      />
+    </Grid>
   ));
 
   const handleAddStudent = () => {
@@ -119,17 +113,14 @@ export default function CreatProject() {
       <Box sx={{ width: "50%", textAlign: "center" }}>
         <Typography
           variant="h3"
-          sx={{
-            textAlign: "center",
-            fontSize: "30px",
-            my: 2,
-            fontWeight: "bold",
-          }}
+          sx={{ textAlign: "center", fontSize: "30px", my: 5, fontWeight: "bold" }}
         >
-          Add Project
+          Add project
         </Typography>
         <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
-          {renderInputs}
+          <Grid container spacing={2}>
+            {renderInputs}
+          </Grid>
           <SelectCom
             labelId="department-label"
             id="department"
@@ -164,6 +155,9 @@ export default function CreatProject() {
               </Grid>
             </Grid>
           </Grid>
+
+          <UploadFile onFileChange={setSelectedImage} buttonText="Add an image" />
+          <UploadFile onFileChange={setSelectedThesis} buttonText="Upload Thesis File" />
     
           <Button
             variant="contained"
