@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Box, Button,Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import InputCom from "../../shared/InputCom.jsx";
 import axios from "axios";
 import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
@@ -11,6 +11,7 @@ export default function Create() {
   const token = localStorage.getItem("userToken");
   const { getDepartments } = useContext(DepartmentContext);
   const [departments, setDepartments] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null); // State to store the selected image file
 
   useEffect(() => {
     async function fetchData() {
@@ -31,8 +32,8 @@ export default function Create() {
     depId: "",
   };
 
-  const handleFieldChange = (event) => {
-    formik.setFieldValue("img", event.target.files[0]);
+  const handleImageChange = (image) => {
+    setSelectedImage(image); 
   };
 
   const onSubmit = async (values) => {
@@ -40,17 +41,17 @@ export default function Create() {
     formData.append("name", values.name);
     formData.append("email", values.email);
     formData.append("password", values.password);
-    formData.append("img", values.img);
+    formData.append("img", selectedImage);
     formData.append("depId", values.depId);
     formData.append("role", values.role);
     formData.append("phoneNumber", values.phoneNumber);
     formData.append("officeHours", values.officeHours);
 
     try {
-      const{data}=await axios.post(`${import.meta.env.VITE_API_URL}/auth/registerUser`, formData, {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/auth/registerUser`, formData, {
         headers: { token: `Bearer ${token}` },
       });
-      if(data.message === "success"){
+      if (data.message === "success") {
         alert(data.message);
       }
     } catch (error) {
@@ -58,21 +59,22 @@ export default function Create() {
     }
   };
 
-  const { formik, inputs } = userInputFields(initialValues, onSubmit, handleFieldChange);
+  const { formik, inputs } = userInputFields(initialValues, onSubmit);
 
   const renderInputs = inputs.map((input, index) => (
-    <InputCom
-      type={input.type}
-      name={input.name}
-      id={input.id}
-      title={input.title}
-      value={input.value}
-      key={index}
-      placeholder={input.title}
-      onChange={input.onChange || formik.handleChange}
-      onBlur={formik.handleBlur}
-      touched={formik.touched}
-    />
+    <Grid item md={6} xs={12} key={index}>
+      <InputCom
+        type={input.type}
+        name={input.name}
+        id={input.id}
+        title={input.title}
+        value={input.value}
+        placeholder={input.title}
+        onChange={input.onChange || formik.handleChange}
+        onBlur={formik.handleBlur}
+        touched={formik.touched}
+      />
+    </Grid>
   ));
 
   const handleDepartmentChange = (event) => {
@@ -97,35 +99,41 @@ export default function Create() {
       <Box sx={{ width: "50%", textAlign: "center" }}>
         <Typography
           variant="h3"
-          sx={{ textAlign: "center", fontSize: "30px", my: 2, fontWeight: "bold" }}
+          sx={{ textAlign: "center", fontSize: "30px", my: 5, fontWeight: "bold" }}
         >
           Create User
         </Typography>
         <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
-          {renderInputs}
-          <SelectCom
-            labelId="department-label"
-            id="department"
-            value={formik.values.depId}
-            onChange={handleDepartmentChange}
-            label="Department"
-            options={departments.map(dep => ({ value: dep._id, label: dep.name }))}
-          />
-          <SelectCom
-            labelId="role-label"
-            id="role"
-            value={formik.values.role}
-            onChange={handleRoleChange}
-            label="Role"
-            options={Role.map(role => ({ value: role, label: role }))}
-          />
-          <UploadFile />
+          <Grid container spacing={2}>
+            {renderInputs}
+            <Grid item md={6} xs={12}>
+              <SelectCom
+                labelId="department-label"
+                id="department"
+                value={formik.values.depId}
+                onChange={handleDepartmentChange}
+                label="Department"
+                options={departments.map(dep => ({ value: dep._id, label: dep.name }))}
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <SelectCom
+                labelId="role-label"
+                id="role"
+                value={formik.values.role}
+                onChange={handleRoleChange}
+                label="Role"
+                options={Role.map(role => ({ value: role, label: role }))}
+              />
+            </Grid>
+          </Grid>
+          <UploadFile onFileChange={handleImageChange} />
           <Button
             variant="contained"
             sx={{
               backgroundColor: "rgba(43, 1, 62, 0.5)",
               "&:hover": {
-                backgroundColor: " rgba(43, 1, 62, 0.8)",
+                backgroundColor: "rgba(43, 1, 62, 0.8)",
               },
             }}
             type="submit"
