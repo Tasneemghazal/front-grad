@@ -44,13 +44,7 @@ const userInputFields = (initialValues, onSubmit, handleFieldChange) => {
         title: "officeHours",
         value: formik.values.officeHours,
       },
-    {
-      id: "img",
-      type: "file",
-      name: "img",
-      title: "Image",
-      onChange: handleFieldChange,
-    },
+   
   ];
 
   return { formik, inputs };

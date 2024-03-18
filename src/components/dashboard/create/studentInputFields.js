@@ -44,13 +44,7 @@ const studentInputFields = (initialValues, onSubmit, handleFieldChange) => {
         title: "academicYear",
         value: formik.values.academicYear,
       },
-    {
-      id: "img",
-      type: "file",
-      name: "img",
-      title: "Image",
-      onChange: handleFieldChange,
-    },
+    
   ];
 
   return { formik, inputs };
