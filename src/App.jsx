@@ -4,9 +4,11 @@ import { router } from './layouts/Routes.jsx'
 import DepartmentContextProvider from './components/context/DepartmentContextProvider.jsx'
 import StudentContextProvider from './components/context/StudentContextProvider.jsx'
 import UserContextProvider from './components/context/UserContextProvider.jsx'
+import ProjectContextProvider from './components/context/ProjectContextProvider.jsx'
 
 export default function App() {
   return (
+    <ProjectContextProvider>
     <UserContextProvider>
     <StudentContextProvider>
     <DepartmentContextProvider>
@@ -14,5 +16,6 @@ export default function App() {
     </DepartmentContextProvider>
     </StudentContextProvider>
     </UserContextProvider>
+    </ProjectContextProvider>
   )
 }
