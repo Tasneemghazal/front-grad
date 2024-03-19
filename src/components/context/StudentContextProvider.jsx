@@ -1,4 +1,5 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext();
@@ -36,14 +37,30 @@ export default function StudentContextProvider({ children }) {
       throw error;
     }
   };
+  const extractNameFromToken =() => {
+    
+    const token = localStorage.getItem("userToken");
+    
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      
+      
+      return decodedToken;
+    } else {
+   
+      console.error("User token not found in localStorage.");
+      return null;
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
+    extractNameFromToken();
     setUserToken(token);
   }, []);
 
   return (
-    <UserContext.Provider value={{ userToken, getUsers, userData, removeUser }}>
+    <UserContext.Provider value={{ userToken, getUsers, userData, removeUser,extractNameFromToken }}>
       {children}
     </UserContext.Provider>
   );
