@@ -2,24 +2,31 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
-import { Box, CardContent, Link, Typography } from "@mui/material";
+import { Avatar, Box, CardContent, Link, Typography } from "@mui/material";
 import LinkIcon from "@mui/icons-material/Link";
 
 export default function CardComp({ image, name, supervisorName, thesis, group }) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, border: "1px solid rgba(43, 1, 62, 0.4)" }}>
       <CardMedia component="img" height="194" image={image} alt="Paella dish" />
       <CardContent>
-        <Typography>
+        <Typography sx={{ display: "flex" }}>
+          <Typography sx={{ fontWeight: "bold", mr: 1 }}>Project Name:</Typography>
           {name}
         </Typography>
-        <Typography>
-          {supervisorName}
+        <Typography sx={{ display: "flex" }}>
+          <Typography sx={{ fontWeight: "bold", mr: 1 }}>Super. Name:</Typography>
+          Dr.{supervisorName}
         </Typography>
-        <Typography>{group}</Typography>
-        <Link href={thesis} sx={{color:"rgba(43, 1, 62, 1)"}}>
-          <LinkIcon />
-        </Link>
+        <Typography sx={{ display: "flex" }}>
+          <Typography sx={{ fontWeight: "bold", mr: 1 }}>Group Name:</Typography>
+          {group}
+        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'center',mt:1 }}>
+          <Link href={thesis}>
+            <Avatar alt="pdf logo" src="/image/pdfIcon.png" />
+          </Link>
+        </Box>
       </CardContent>
     </Card>
   );
