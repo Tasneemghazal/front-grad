@@ -5,21 +5,28 @@ import { useFormik } from "formik";
 import axios from "axios";
 import CustomTable from "../../shared/CustomTable.jsx";
 import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
+import { useSnackbar } from "../../context/SnackbarProvider.jsx";
 
 export default function Department() {
   const token = localStorage.getItem("userToken");
   const { getDepartments, removeDep } = useContext(DepartmentContext);
   const [tableData, setTableData] = useState([]);
   const [tableColumns, setTableColumns] = useState([]);
+  const { showSnackbar } = useSnackbar();
 
   const removeDepartment = async (depId) => {
-    const res = await removeDep(depId);
-    console.log(res);
-    if (res.message === "success") {
-      setTableData(tableData.filter((dep) => dep._id !== depId));
+    try {
+      const res = await removeDep(depId);
+      if (res.message === "success") {
+        showSnackbar({ message: "Department deleted successfully", severity: "error" });
+        setTableData(tableData.filter((dep) => dep._id !== depId));
+      }
+      return res;
+    } catch (error) {
+      console.error("Error deleting department:", error);
     }
-    return res;
   };
+
   async function fetchData() {
     try {
       const res = await getDepartments();
@@ -27,13 +34,13 @@ export default function Department() {
         const departmentKeys = Object.keys(res.deps[0]);
         const columns = ['_id', 'name', 'createdAt'];
         setTableColumns(columns);
-        
         setTableData(res.deps);
       }
     } catch (error) {
       console.error("Error fetching departments:", error);
     }
   }
+
   useEffect(() => {
     fetchData();
   }, [getDepartments]);
@@ -53,8 +60,7 @@ export default function Department() {
       );
       console.log(data);
       if (data.message === "success") {
-        alert(data.message);
-
+        showSnackbar({ message: "Department added successfully", severity: "success" });
         const res = await getDepartments();
         if (res.deps.length > 0) {
           setTableData(res.deps);
@@ -118,14 +124,13 @@ export default function Department() {
           </Button>
         </form>
         <Box sx={{ my: 2, width: "100%" }}>
-        <CustomTable
-          columns={tableColumns}
-          data={tableData}
-          onDelete={removeDepartment}
-        />
+          <CustomTable
+            columns={tableColumns}
+            data={tableData}
+            onDelete={removeDepartment}
+          />
+        </Box>
       </Box>
-      </Box>
-      
     </Box>
   );
 }

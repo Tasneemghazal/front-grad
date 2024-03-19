@@ -6,12 +6,14 @@ import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
 import UploadFile from "../../shared/UploadFile.jsx";
 import SelectCom from "../../shared/SelectCom.jsx";
 import userInputFields from "./userInputFields.js";
+import { useSnackbar } from "../../context/SnackbarProvider.jsx";
 
 export default function Create() {
   const token = localStorage.getItem("userToken");
   const { getDepartments } = useContext(DepartmentContext);
+  const { showSnackbar } = useSnackbar();
   const [departments, setDepartments] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null); // State to store the selected image file
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -27,13 +29,13 @@ export default function Create() {
     password: "",
     img: "",
     phoneNumber: "",
-    officeHours:"",
+    officeHours: "",
     role: "",
     depId: "",
   };
 
   const handleImageChange = (image) => {
-    setSelectedImage(image); 
+    setSelectedImage(image);
   };
 
   const onSubmit = async (values) => {
@@ -52,7 +54,7 @@ export default function Create() {
         headers: { token: `Bearer ${token}` },
       });
       if (data.message === "success") {
-        alert(data.message);
+        showSnackbar({ message: "User added successfully", severity: "success" });
       }
     } catch (error) {
       console.error("Submission error:", error);

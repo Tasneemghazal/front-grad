@@ -14,8 +14,8 @@ import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
 import { ProjectContext } from "../../context/ProjectContextProvider.jsx";
 
 export default function Project() {
-  const [activeIndex, setActiveIndex] = useState(0); // Default active index set to 0
-  const [open, setOpen] = useState(false); // Dropdown open state
+  const [activeIndex, setActiveIndex] = useState(0); 
+  const [open, setOpen] = useState(false); 
   const [departments, setDepartments] = useState([]);
   const [selectedDepartmentProjects, setSelectedDepartmentProjects] = useState([]);
 
@@ -27,7 +27,6 @@ export default function Project() {
       const res = await getDepartments();
       if (res.deps.length > 0) {
         setDepartments(res.deps);
-        // Set the default selected department projects
         await getProjectsForDepartment(res.deps[0]._id);
       }
     } catch (error) {
@@ -52,7 +51,7 @@ export default function Project() {
 
   const handleListItemClick = async (index) => {
     setActiveIndex(index);
-    setOpen(false); // Close the dropdown when an item is clicked
+    setOpen(false); 
     const depId = departments[index]._id;
     await getProjectsForDepartment(depId);
   };

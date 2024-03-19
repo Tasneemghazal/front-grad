@@ -9,6 +9,7 @@ import projectInputFields from "./projectInputFields.js";
 import SelectCom from "../../shared/SelectCom.jsx";
 import axios from "axios";
 import UploadFile from "../../shared/UploadFile.jsx";
+import { useSnackbar } from "../../context/SnackbarProvider.jsx";
 
 export default function CreateProject() {
   const token = localStorage.getItem("userToken");
@@ -17,6 +18,7 @@ export default function CreateProject() {
   const [group, setGroup] = useState([""]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThesis, setSelectedThesis] = useState(null);
+  const { showSnackbar } = useSnackbar();
 
   async function fetchData() {
     try {
@@ -56,7 +58,7 @@ export default function CreateProject() {
         headers: { token: `Bearer ${token}` },
       });
       if (data.message === "success") {
-        alert(data.message);
+        showSnackbar({ message: "Project added successfully", severity: "success" });
       }
     } catch (error) {
       console.error("Submission error:", error);

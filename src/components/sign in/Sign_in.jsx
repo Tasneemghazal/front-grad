@@ -6,7 +6,8 @@ import { purple } from "@mui/material/colors";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
-import Toast from "../shared/Toast.jsx";
+import { useSnackbar } from "../context/SnackbarProvider.jsx";
+
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -26,6 +27,8 @@ export default function Sign_in() {
     password: "",
   };
 
+  const { showSnackbar } = useSnackbar(); 
+
   const onSubmit = async (users) => {
     try {
       const { data } = await axios.post("http://localhost:3000/api/v1/grad/auth/signIn", users);
@@ -35,7 +38,7 @@ export default function Sign_in() {
         setUserToken(data.token);
         if (data.role === "admin") {
           navigate("/dashboard");
-          <Toast message="Login successful" severity="success" />; 
+          showSnackbar({ message: "Login successful", severity: "success" }); 
         }
         else if(data.role === "student") {
           navigate("/student");

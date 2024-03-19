@@ -6,12 +6,15 @@ import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
 import UploadFile from "../../shared/UploadFile.jsx";
 import SelectCom from "../../shared/SelectCom.jsx";
 import studentInputFields from "./studentInputFields.js";
+import { useSnackbar } from "../../context/SnackbarProvider.jsx";
 
 export default function CreateStudent() {
   const token = localStorage.getItem("userToken");
   const { getDepartments } = useContext(DepartmentContext);
   const [departments, setDepartments] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const { showSnackbar } = useSnackbar();
+
 
   useEffect(() => {
     async function fetchData() {
@@ -51,7 +54,7 @@ export default function CreateStudent() {
         headers: { token: `Bearer ${token}` },
       });
       if (data.message === "Student created successfully") {
-        alert(data.message);
+        showSnackbar({ message: "Student added successfully", severity: "success" });
       }
     } catch (error) {
       console.error("Submission error:", error);

@@ -31,9 +31,7 @@ export default function UserContextProvider({ children }) {
         { headers: { token: `Bearer ${token}` } }
       );
       console.log(data);
-      if (data.message === "success") {
-        setUserData(userData.filter(user => user._id !== userId));
-      }
+   
       return data;
     } catch (error) {
       console.error("Error removing user:", error);

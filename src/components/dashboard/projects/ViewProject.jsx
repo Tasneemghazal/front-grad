@@ -2,19 +2,31 @@ import { Box, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import CustomTable from '../../shared/CustomTable';
 import { ProjectContext } from '../../context/ProjectContextProvider.jsx';
+import { useSnackbar } from '../../context/SnackbarProvider.jsx';
 
 export default function ViewProject() {
   const { getProjects, removeProject } = useContext(ProjectContext); 
   const [tableData, setTableData] = useState([]);
   const [tableColumns, setTableColumns] = useState([]);
-
+  const { showSnackbar } = useSnackbar();
   const removeMyProject = async (proId) => {
-    const res = await removeProject(proId);
-    console.log(res);
-    if (res.message === "success") {
-      setTableData(tableData.filter((pro) => pro._id !== proId));
+    
+    try {
+      const res = await removeProject(proId);
+      if (res.message === "success") {
+       
+        showSnackbar({ message: "Project deleted successfully", severity: "success" });
+        setTableData(tableData.filter(user => user._id !== proId));
+
+      }
+     
+      console.log(res);
+      return res;
+    } catch (error) {
+      console.error("Error removing user:", error);
+      showSnackbar({ message: "An error occurred while deleting user", severity: "error" });
     }
-    return res;
+    
   };
 
   useEffect(() => {

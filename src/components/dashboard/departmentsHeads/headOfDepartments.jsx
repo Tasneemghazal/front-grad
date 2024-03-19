@@ -2,18 +2,28 @@ import { Box, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import CustomTable from '../../shared/CustomTable';
 import { UserContext } from '../../context/UserContextProvider.jsx'; 
+import { useSnackbar } from '../../context/SnackbarProvider.jsx';
 
-export default function headOfDepartment() {
+export default function HeadOfDepartment() {
   const { getUsers, removeUser } = useContext(UserContext); 
   const [tableData, setTableData] = useState([]);
   const [tableColumns, setTableColumns] = useState([]);
+  const { showSnackbar } = useSnackbar();
 
-  const removeMyUser = async (userId) => {
+  const removeUserById = async (userId) => {
     try {
       const res = await removeUser(userId);
+      if (res.message === "success") {
+       
+        showSnackbar({ message: "User deleted successfully", severity: "success" });
+        setTableData(tableData.filter(user => user._id !== userId));
+
+      }
+     
       console.log(res);
     } catch (error) {
       console.error("Error removing user:", error);
+      showSnackbar({ message: "An error occurred while deleting user", severity: "error" });
     }
   };
 
@@ -23,10 +33,8 @@ export default function headOfDepartment() {
         const res = await getUsers();
         if (res.users.length > 0) {
           const userKeys = Object.keys(res.users[0]);
-       
           const columns = ['_id', 'name', 'email'];
           setTableColumns(columns);
-          
           const filteredUsers = res.users.filter(user => user.role === "headOfDepartment");
           setTableData(filteredUsers);
         }
@@ -35,7 +43,7 @@ export default function headOfDepartment() {
       }
     };
     fetchData();
-  }, [getUsers]);
+  }, [getUsers, showSnackbar]);
 
   return (
     <Box sx={{ width: { md: '60%' }, ml: { md: "400px" }, mt: 5, mx: { xs: 4 } }}>
@@ -49,7 +57,7 @@ export default function headOfDepartment() {
       <CustomTable
         columns={tableColumns}
         data={tableData}
-        onDelete={removeMyUser}
+        onDelete={removeUserById} // Renamed the function for clarity
       />
     </Box>
   );
