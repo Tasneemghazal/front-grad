@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 export const UserContext = createContext();
 
@@ -10,7 +11,8 @@ export default function UserContextProvider({ children }) {
   const getUsers = async () => {
     try {
       const token = localStorage.getItem("userToken");
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/admin/getUsers`, {
+      const depId = extractDepIdFromToken(); // Extract department ID
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/admin/getUsers?depId=${depId}`, {
         headers: { token: `Bearer ${token}` }
       });
       setUserData(data);
@@ -39,13 +41,31 @@ export default function UserContextProvider({ children }) {
     }
   };
 
+ 
+  const extractDepIdFromToken =() => {
+    
+    const token = localStorage.getItem("userToken");
+    
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      
+      const depId = decodedToken.depId;
+      
+      return depId;
+    } else {
+   
+      console.error("User token not found in localStorage.");
+      return null;
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     setUserToken(token);
   }, []);
 
   return (
-    <UserContext.Provider value={{ userToken, getUsers, userData, removeUser,setUserData }}>
+    <UserContext.Provider value={{ userToken, getUsers, userData, removeUser, extractDepIdFromToken }}>
       {children}
     </UserContext.Provider>
   );
