@@ -1,30 +1,66 @@
-import { Box, Button, Container, Grid, IconButton, Typography, useMediaQuery } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Box, Button, Container, Grid, Typography, useMediaQuery } from "@mui/material";
 import InputCom from "../../shared/InputCom.jsx";
-import BasicTimePicker from "../../shared/BasicTimePicker.jsx";
-import BasicDatePicker from "../../shared/BasicDatePicker.jsx";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import UploadFile from "../../shared/UploadFile.jsx";
+import SelectCom from "../../shared/SelectCom.jsx";
+import { UserContext } from "../../context/UserContextProvider.jsx";
+import axios from "axios";
+import { useFormik } from "formik";
 
 export default function HeadTab2() {
-  const [studentNames, setStudentNames] = useState([""]);
+  const { getUsers,extractDepIdFromToken  } = useContext(UserContext);
+  const [supervisors, setSupervisors] = useState([]);
+  const token = localStorage.getItem("userToken");
+  const initialValues = {
+    num: "", 
+    supervisorId: "", 
+  };
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
-  const handleAddStudent = () => {
-    setStudentNames([...studentNames, ""]);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        
+        const depId = extractDepIdFromToken();
+        
+        
+        const res = await getUsers();
+        if (res && res.users && res.users.length > 0) {
+          const filteredUsers = res.users.filter(user => user.role === "supervisor" && user.depId === depId);
+          setSupervisors(filteredUsers);
+          console.log(supervisors);
+        }
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchData();
+  }, []);
+  
 
-  const handleRemoveStudent = () => {
-    if (studentNames.length > 1) {
-      setStudentNames(studentNames.slice(0, -1));
+  const onSubmit = async (values) => {
+    try {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/head/addSection`, values, {
+        headers: { token: `Bearer ${token}` },
+      });
+      if(data.message === "success") {
+        alert(data.message);
+      }
+      return data;
+    } catch (error) {
+      console.error("Submission error:", error);
+      alert("Failed to add section. Please try again.");
     }
   };
 
-  const handleStudentNameChange = (index, newName) => {
-    const newStudentNames = [...studentNames];
-    newStudentNames[index] = newName;
-    setStudentNames(newStudentNames);
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validateOnBlur: true,
+    validateOnChange: false,
+  });
+
+  const handleSupervisorChange = (event) => {
+    formik.setFieldValue("supervisorId", event.target.value);
   };
 
   return (
@@ -40,80 +76,42 @@ export default function HeadTab2() {
             fontSize: { xs: 15, md: 40 },
           }}
         >
-          Add a new section
+          Add a New Section
         </Typography>
       </Box>
       <Box>
         <Grid container spacing={2}>
           <Grid item md={isSmallScreen ? 12 : 7}>
-            <InputCom placeholder={"Section name"} type={"text"} />
-            <InputCom placeholder={"Section number"} type={"number"} />
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <BasicTimePicker title={"Time for this section"} />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <BasicDatePicker title={"Day of this section"} />
-              </Grid>
-            </Grid>
-            <InputCom placeholder={"Supervisor name"} type={"text"} />
-            <Grid container spacing={2}>
-              {studentNames.map((studentName, index) => (
-                <Grid item xs={12} sm={6} key={index}>
-                  <InputCom
-                    placeholder={`Student ${index + 1} Name`}
-                    type={"text"}
-                    value={studentName}
-                    onChange={(e) =>
-                      handleStudentNameChange(index, e.target.value)
-                    }
-                  />
-                </Grid>
-              ))}
-              <Grid item xs={12} sm={6}>
-                <Grid container spacing={1}>
-                  <Grid item xs={6} sm={6}>
-                    <IconButton
-                      onClick={handleAddStudent}
-                      size="large"
-                      sx={{
-                        width: "40%",
-                        color: "black",
-                        "&:hover": { color: "rgba(43, 1, 62, 0.8)" },
-                      }}
-                    >
-                      <AddCircleIcon sx={{ fontSize: 30 }} />
-                    </IconButton>
-                  </Grid>
-                  <Grid item xs={6} sm={6}>
-                    <IconButton
-                      onClick={handleRemoveStudent}
-                      size="large"
-                      sx={{
-                        width: "40%",
-                        color: "black",
-                        "&:hover": { color: "rgba(43, 1, 62, 0.8)" },
-                      }}
-                    >
-                      <RemoveCircleIcon sx={{ fontSize: 30 }} />
-                    </IconButton>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-            <UploadFile />
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "rgba(43, 1, 62, 0.5)",
-                width: "100%",
-                "&:hover": {
-                  backgroundColor: "rgba(43, 1, 62, 0.8)",
-                },
-              }}
-            >
-              Submit
-            </Button>
+            <form onSubmit={formik.handleSubmit}>
+              <InputCom
+                placeholder="Section Number"
+                type="number"
+                name="num"
+                onChange={formik.handleChange}
+                value={formik.values.num}
+              />
+              <SelectCom
+                labelId="supervisor-label"
+                id="supervisor"
+                value={formik.values.supervisorId}
+                onChange={handleSupervisorChange}
+                label="Supervisor"
+                options={supervisors.map(supervisor => ({ value: supervisor._id, label: supervisor.name }))}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  backgroundColor: "rgba(43, 1, 62, 0.5)",
+                  width: "100%",
+                  "&:hover": {
+                    backgroundColor: "rgba(43, 1, 62, 0.8)",
+                  },
+                }}
+              >
+                Submit
+              </Button>
+            </form>
           </Grid>
           {!isSmallScreen && (
             <Grid item xs={12} sm={5}>
