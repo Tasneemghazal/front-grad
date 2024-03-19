@@ -5,14 +5,20 @@ export default function ProjectContextProvider({children}) {
     const getProjects =async()=>{
         try {
             const token = localStorage.getItem("userToken");
-            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/admin/getprojects`, {
-              headers: { token: `Bearer ${token}` },
-            });
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/admin/getprojects`);
             return data;
           } catch (err) {
             console.log(err);
           }
     }
+    const getDepProject =async(depId)=>{
+      try {
+          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/admin/getprojects/${depId}`);
+          return data;
+        } catch (err) {
+          console.log(err);
+        }
+  }
     const removeProject = async (proId) => {
       try {
         const token = localStorage.getItem("userToken");
@@ -32,7 +38,8 @@ export default function ProjectContextProvider({children}) {
     <ProjectContext.Provider
       value={{
         getProjects,
-        removeProject
+        removeProject,
+        getDepProject
       }}
     >
       {children}
