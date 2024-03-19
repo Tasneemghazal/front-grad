@@ -1,9 +1,7 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import { Avatar, Box, CardContent, Link, Typography } from "@mui/material";
-import LinkIcon from "@mui/icons-material/Link";
 
 export default function CardComp({ image, name, supervisorName, thesis, group }) {
   return (
