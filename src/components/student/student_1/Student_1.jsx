@@ -1,5 +1,5 @@
 import { Box, Container, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import "./student_1.css";
 import Divider from "@mui/material/Divider";
@@ -7,7 +7,22 @@ import CoPresentOutlinedIcon from "@mui/icons-material/CoPresentOutlined";
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import MarkEmailUnreadOutlinedIcon from "@mui/icons-material/MarkEmailUnreadOutlined";
 import { Link } from "react-router-dom";
+import { UserContext } from "../../context/StudentContextProvider.jsx";
 export default function Student_1() {
+  const {extractNameFromToken} = useContext(UserContext);
+  const [studentName,setStudentName] = useState();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        
+        const name = extractNameFromToken();
+        setStudentName(name.name);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
  
      <Box sx={{ marginX: 2}}>
@@ -61,7 +76,7 @@ export default function Student_1() {
                   }}
                   variant="h1"
                 >
-                  Welcome, Eng. Sahar
+                  {`Welcome Eng. ${studentName}`}
                 </Typography>
 
                 <Typography
