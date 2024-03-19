@@ -44,7 +44,7 @@ const SnackbarProvider = ({ children }) => {
       {children}
       <Snackbar
         open={state.open}
-        autoHideDuration={6000}
+        autoHideDuration={3000} 
         onClose={hideSnackbar}
       >
         <Alert
