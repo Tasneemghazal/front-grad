@@ -139,7 +139,7 @@ export const router = createBrowserRouter([
             element: <Profile />
           },{
             path:"editProfile",
-            element: <EditProfile />
+            element: <EditProfile role={"student"}/>
           }
         ]
       },
@@ -170,7 +170,7 @@ export const router = createBrowserRouter([
             element: <Profile />
           },{
             path:"editProfile",
-            element: <EditProfile />
+            element: <EditProfile  role={"supervisor"}/>
           }
         ]
       },
@@ -193,7 +193,7 @@ export const router = createBrowserRouter([
             element: <Profile />
           },{
             path:"editProfile",
-            element: <EditProfile />
+            element: <EditProfile role={"head"}/>
           }
         ]
       },
