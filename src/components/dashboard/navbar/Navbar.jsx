@@ -19,7 +19,6 @@ export default function Navbar({ showDrawer }) {
     const fetchData = async () => {
       try {
         const res = await getUsers();
-        console.log(res);
         
        
         const adminUser = res.users.find(user => user.role === "admin");

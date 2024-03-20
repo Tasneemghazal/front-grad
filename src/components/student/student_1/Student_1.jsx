@@ -7,9 +7,9 @@ import CoPresentOutlinedIcon from "@mui/icons-material/CoPresentOutlined";
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import MarkEmailUnreadOutlinedIcon from "@mui/icons-material/MarkEmailUnreadOutlined";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../context/StudentContextProvider.jsx";
+import { userContext } from "../../context/StudentContextProvider.jsx";
 export default function Student_1() {
-  const {extractNameFromToken} = useContext(UserContext);
+  const {extractNameFromToken} = useContext(userContext);
   const [studentName,setStudentName] = useState();
   useEffect(() => {
     const fetchData = async () => {

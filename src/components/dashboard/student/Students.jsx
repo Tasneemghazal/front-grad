@@ -1,11 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import CustomTable from '../../shared/CustomTable';
-import { UserContext } from '../../context/StudentContextProvider';
+import { userContext } from '../../context/StudentContextProvider';
 import { useSnackbar } from '../../context/SnackbarProvider.jsx';
 
 export default function Students() {
-  const { getUsers, userData, removeUser } = useContext(UserContext);
+  const { getUsers, userData, removeUser } = useContext(userContext);
   const [tableData, setTableData] = useState([]);
   const [tableColumns, setTableColumns] = useState([]);
   const { showSnackbar } = useSnackbar();

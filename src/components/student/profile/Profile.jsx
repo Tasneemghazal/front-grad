@@ -1,11 +1,11 @@
 import { Avatar, Box, Button, Typography } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { UserContext } from '../../context/StudentContextProvider.jsx';
+import { userContext } from '../../context/StudentContextProvider.jsx';
 import { DepartmentContext } from '../../context/DepartmentContextProvider.jsx';
 
 export default function Profile() {
-  const {extractNameFromToken} = useContext(UserContext);
+  const {extractNameFromToken} = useContext(userContext);
   const [studentName,setStudentName] = useState();
   const [studentEmail,setStudentEmail] = useState();
   const { getDepartments } = useContext(DepartmentContext); 

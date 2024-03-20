@@ -9,12 +9,12 @@ import {
 } from "@mui/material";
 import WavingHandIcon from "@mui/icons-material/WavingHand";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import { UserContext } from "../../context/StudentContextProvider.jsx";
+import { userContext } from "../../context/StudentContextProvider.jsx";
 import InputCom from "../../shared/InputCom.jsx";
 import { useFormik } from "formik";
 import axios from "axios";
 export default function EditProfile({role}) {
-  const { extractNameFromToken } = useContext(UserContext);
+  const { extractNameFromToken } = useContext(userContext);
   const token = localStorage.getItem("userToken");
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
