@@ -9,15 +9,30 @@ import {
     ListItemText,
     Typography,
   } from "@mui/material";
-  import React from "react";
+  import React, { useContext, useEffect, useState } from "react";
   import CoPresentOutlinedIcon from "@mui/icons-material/CoPresentOutlined";
   import AutoStoriesIcon from "@mui/icons-material/AutoStories";
   import MarkEmailUnreadOutlinedIcon from "@mui/icons-material/MarkEmailUnreadOutlined";
   import HdrStrongIcon from "@mui/icons-material/HdrStrong";
   import HdrWeakIcon from "@mui/icons-material/HdrWeak";
   import { Link } from "react-router-dom";
+import { UserContext } from "../context/StudentContextProvider.jsx";
   
   export default function SuperHeadCover({ background,image }) {
+    const {extractNameFromToken} = useContext(UserContext);
+  const [supervisorName,setSuperName] = useState();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        
+        const name = extractNameFromToken();
+        setSuperName(name.name);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchData();
+  }, []);
     return (
       <Box
         sx={{
@@ -48,7 +63,7 @@ import {
                   sx={{ fontSize: { xs: "20px", md: "40px" }, fontWeight: "bold", py: {xs:1,sm:4} }}
                   variant="h1"
                 >
-                  Welcome Dr. Thaer
+                  Welcome Dr. {supervisorName}
                 </Typography>
                 <List>
                   <Link to="https://lms.ptuk.edu.ps/" style={{ color: "black", textDecoration: "none" }}>
