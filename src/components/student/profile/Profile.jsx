@@ -11,6 +11,7 @@ export default function Profile() {
   const { getDepartments } = useContext(DepartmentContext); 
   const[ depName,setDepName]=useState();
   const[ academicYear,setAcademicYear]=useState();
+  const[ officeHours,setOfficeHours]=useState();
   const[ image,setAStudentImage]=useState();
   const getDepName = async () => {
     try {
@@ -34,6 +35,7 @@ export default function Profile() {
         setStudentName(name.name);
         setStudentEmail(name.email);
         setAcademicYear(name.academicYear);
+        setOfficeHours(name.officeHours);
         setAStudentImage(name.img);
         
       } catch (error) {
@@ -64,6 +66,7 @@ export default function Profile() {
       <Typography sx={{py:2}}>{depName}</Typography>
       <Typography sx={{py:1}}>{studentEmail}</Typography>
       <Typography sx={{py:1}}>{academicYear}</Typography>
+      <Typography sx={{py:1}}>{officeHours}</Typography>
       <Box sx={{display: "flex",justifyContent:"center",flexWrap: "wrap",py:2}}>
           <Link to='editProfile' style={{width:"100%"}}>
           <Button variant='contained' color="success" sx={{mx: { xs: 1, md: 2 }, my: { xs: 1, md: 0 },width:"20%"}}>Edit</Button>
