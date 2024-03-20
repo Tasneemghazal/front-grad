@@ -160,7 +160,20 @@ export const router = createBrowserRouter([
       },{
         path:"edittask",
         element:<EditTask/>
-      }
+      },
+      {
+        path: "profile",
+        element: <AllProfile />,
+        children:[
+          {
+            index:true,
+            element: <Profile />
+          },{
+            path:"editProfile",
+            element: <EditProfile />
+          }
+        ]
+      },
     ],
   },
   {
@@ -170,7 +183,21 @@ export const router = createBrowserRouter([
       {
         index:true,
         element:<TotalHead/>
-      }
+      },
+      {
+        path: "profile",
+        element: <AllProfile />,
+        children:[
+          {
+            index:true,
+            element: <Profile />
+          },{
+            path:"editProfile",
+            element: <EditProfile />
+          }
+        ]
+      },
+
     ]
   },
   {
