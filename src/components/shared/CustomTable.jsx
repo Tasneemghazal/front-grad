@@ -6,7 +6,8 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Paper, IconButton, TextField, Box } from '@mui/material';
+import { Paper, IconButton, TextField } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
@@ -15,7 +16,7 @@ const RedTableHead = styled(TableHead)({
   backgroundColor: 'rgba(45, 3, 62, 0.4)', 
 });
 
-export default function CustomTable({ columns, data, onDelete }) {
+export default function CustomTable({ columns, data, onDelete, onEdit }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
 
@@ -87,6 +88,9 @@ export default function CustomTable({ columns, data, onDelete }) {
                   </TableCell>
                 ))}
                 <TableCell align="center">
+                  <IconButton onClick={() => onEdit(row._id)} aria-label="edit">
+                    <EditIcon sx={{ color: '#1976d2' }} />
+                  </IconButton>
                   <IconButton onClick={() => onDelete(row._id)} aria-label="delete">
                     <DeleteIcon sx={{ color: '#880909' }} />
                   </IconButton>
