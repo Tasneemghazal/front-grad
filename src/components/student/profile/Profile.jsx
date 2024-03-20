@@ -11,6 +11,7 @@ export default function Profile() {
   const { getDepartments } = useContext(DepartmentContext); 
   const[ depName,setDepName]=useState();
   const[ academicYear,setAcademicYear]=useState();
+  const[ image,setAStudentImage]=useState();
   const getDepName = async () => {
     try {
       const departmentRes = await getDepartments(); 
@@ -33,6 +34,7 @@ export default function Profile() {
         setStudentName(name.name);
         setStudentEmail(name.email);
         setAcademicYear(name.academicYear);
+        setAStudentImage(name.img);
         
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -54,7 +56,7 @@ export default function Profile() {
         alignItems: "flex-end",
         width: "100%"
       }}>
-        <Avatar src={"/image/toto.jpeg"} sx={{width:{xs:"90px",md:"150px"}, height:{xs:"90px",md:"150px"},border:"2px solid rgba(43, 1, 62, 1)"}}/>
+        <Avatar src={image} sx={{width:{xs:"90px",md:"150px"}, height:{xs:"90px",md:"150px"},border:"2px solid rgba(43, 1, 62, 1)"}}/>
       </Box>
     </Box>
     <Box sx={{my:{xs:2,md:4, textAlign:"center"}}}>
