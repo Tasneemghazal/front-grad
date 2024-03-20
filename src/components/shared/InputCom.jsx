@@ -8,7 +8,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-export default function InputCom({ placeholder, type, name,value,onChange,title }) {
+export default function InputCom({ placeholder, type, name,value,onChange,title, disabled }) {
   return (
     <TextField
       sx={{ my: 1 }}
@@ -17,6 +17,7 @@ export default function InputCom({ placeholder, type, name,value,onChange,title 
       value={value}
       onChange={onChange}
       title={title}
+      disabled={disabled}
       fullWidth
       label={placeholder} variant="outlined"
       InputProps={{
