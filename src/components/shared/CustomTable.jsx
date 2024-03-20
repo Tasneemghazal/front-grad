@@ -55,6 +55,14 @@ export default function CustomTable({ columns, data, onDelete, onEdit }) {
     )
   );
 
+  // Function to display custom column names
+  const getColumnName = (columnName) => {
+    if (columnName === 'depId') {
+      return 'Department Name';
+    }
+    return columnName;
+  };
+
   return (
     <div>
       <TextField
@@ -70,7 +78,7 @@ export default function CustomTable({ columns, data, onDelete, onEdit }) {
             <TableRow>
               {columns.map((column, index) => (
                 <TableCell key={index} align="center" onClick={() => handleSort(column)}>
-                  {column}
+                  {getColumnName(column)} {/* Display custom column name */}
                   {sortConfig.key === column && (
                     sortConfig.direction === 'ascending' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />
                   )}
