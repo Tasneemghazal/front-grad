@@ -13,7 +13,7 @@ import { UserContext } from "../../context/StudentContextProvider.jsx";
 import InputCom from "../../shared/InputCom.jsx";
 import { useFormik } from "formik";
 import axios from "axios";
-export default function EditProfile() {
+export default function EditProfile({role}) {
   const { extractNameFromToken } = useContext(UserContext);
   const token = localStorage.getItem("userToken");
   const [userName, setUserName] = useState("");
@@ -22,7 +22,7 @@ export default function EditProfile() {
   const onSubmit = async (users) => {
     try {
       const { data } = await axios.patch(
-        "http://localhost:3000/api/v1/grad/supervisor/editProfile",
+        `http://localhost:3000/api/v1/grad/${role}/editProfile`,
         users, {
           headers: { token: `Bearer ${token}` }}
       );
@@ -37,6 +37,7 @@ export default function EditProfile() {
         const name = extractNameFromToken();
         setUserName(name.name);
         setUserEmail(name.email);
+        setPhoneNumber(name.phoneNumber);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
