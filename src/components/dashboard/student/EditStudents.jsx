@@ -101,7 +101,7 @@ export default function EditStudents() {
           variant="h3"
           sx={{ textAlign: "center", fontSize: "30px", my: 5, fontWeight: "bold" }}
         >
-          Create User
+          Edit student
         </Typography>
         <form onSubmit={formik.handleSubmit} >
           <Grid container spacing={2}>

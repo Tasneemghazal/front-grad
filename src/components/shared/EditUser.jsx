@@ -107,7 +107,7 @@ export default function EditUser() {
           variant="h3"
           sx={{ textAlign: "center", fontSize: "30px", my: 5, fontWeight: "bold" }}
         >
-          Create User
+          Edit user
         </Typography>
         <form onSubmit={formik.handleSubmit} >
           <Grid container spacing={2}>
