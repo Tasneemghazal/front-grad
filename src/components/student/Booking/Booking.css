@@ -1,0 +1,44 @@
+.marquee-container {
+  display: flex;
+  justify-content: center;
+}
+
+.marquee {
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  min-width: 100%;
+  animation-play-state: running;
+}
+.marquee:hover span {
+  animation-play-state: paused;
+  cursor: pointer;
+
+}
+
+.marquee span {
+  display: inline-block;
+  padding-left: 100%;
+  text-align: center;
+  -webkit-text-stroke: 1px red;
+  white-space: nowrap;
+  min-width: 100%;
+  height: 100%;
+  line-height: 140px;
+  font-size: 20px;
+  animation: marquee 10s linear infinite;
+}
+
+.marquee2 {
+  animation-delay: 5s;
+  animation-play-state: running;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+}
