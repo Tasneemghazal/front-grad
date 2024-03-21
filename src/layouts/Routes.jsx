@@ -30,6 +30,7 @@ import EditProfile from "../components/student/profile/EditProfile.jsx";
 import AllProfile from "../components/student/profile/AllProfile.jsx";
 import CreateStudent from "../components/dashboard/create/CreateStudent.jsx";
 import Department from "../components/dashboard/departmet/Department.jsx";
+import EditUser from "../components/shared/EditUser.jsx";
 const handleGoBack = () => {
   window.history.back();
 };
@@ -89,8 +90,16 @@ export const router = createBrowserRouter([
         element: <HeadOfDepartments />,
       },
       {
+        path: "departmentheads/:id",
+        element: <EditUser/>,
+      },
+      {
         path: "supervisors",
         element: <Supervisor />,
+      },
+      {
+        path: "supervisors/:id",
+        element: <EditUser/>,
       },
       {
         path: "students",
