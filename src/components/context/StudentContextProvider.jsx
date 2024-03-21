@@ -22,6 +22,19 @@ export default function StudentContextProvider({ children }) {
     }
   };
 
+  const getStudentById = async (studentId) => {
+    try {
+      const token = localStorage.getItem("userToken");
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/admin/getStudent/${studentId}`, {
+        headers: { token: `Bearer ${token}` }
+      });
+      return data;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw error;
+    }
+  };
+
   const removeUser = async (userId) => {
     try {
       const token = localStorage.getItem("userToken");
@@ -61,7 +74,7 @@ export default function StudentContextProvider({ children }) {
   }, []);
 
   return (
-    <userContext.Provider value={{ userToken, getUsers, userData, removeUser,extractNameFromToken }}>
+    <userContext.Provider value={{ userToken, getUsers, userData, removeUser,extractNameFromToken,getStudentById }}>
       {children}
     </userContext.Provider>
   );
