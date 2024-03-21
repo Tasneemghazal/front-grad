@@ -22,12 +22,11 @@ export default function Chart1() {
         const counts = [];
         for (const dep of departments) {
           const projectsResponse = await getDepProject(dep._id);
-          console.log('Projects for', dep.name, ':', projectsResponse); 
+          console.log('Projects for', dep.name, ':', projectsResponse);
           counts.push({ department: dep.name, count: projectsResponse.projects.length });
         }
         
-        const truncatedDepartmentNames = departments.map(dep => dep.name.slice(0, 3) + ".");
-        setDepartmentData(truncatedDepartmentNames);
+        setDepartmentData(departments.map(dep => dep.name.slice(0,3)+"."));
         setProjectCounts(counts);
       
       } catch (error) {
@@ -38,7 +37,9 @@ export default function Chart1() {
     fetchData();
   }, [getDepartments, getDepProject]);
 
-  
+  if (departmentData.length === 0 || projectCounts.length === 0) {
+    return <div>Loading...</div>;
+  }
 
   const data = projectCounts.map(dep => dep.count);
 
