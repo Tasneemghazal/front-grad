@@ -11,6 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { Link } from 'react-router-dom';
 
 const RedTableHead = styled(TableHead)({
   backgroundColor: 'rgba(45, 3, 62, 0.4)', 
@@ -96,9 +97,11 @@ export default function CustomTable({ columns, data, onDelete, onEdit }) {
                   </TableCell>
                 ))}
                 <TableCell align="center">
-                  <IconButton onClick={() => onEdit(row._id)} aria-label="edit">
-                    <EditIcon sx={{ color: '#1976d2' }} />
+                 <Link to={`${row._id}`} >
+                 <IconButton aria-label="edit">
+                    <EditIcon sx={{ color: '#0b731b' }} />
                   </IconButton>
+                 </Link>
                   <IconButton onClick={() => onDelete(row._id)} aria-label="delete">
                     <DeleteIcon sx={{ color: '#880909' }} />
                   </IconButton>

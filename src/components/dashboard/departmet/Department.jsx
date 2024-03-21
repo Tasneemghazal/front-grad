@@ -14,11 +14,15 @@ export default function Department() {
   const [tableColumns, setTableColumns] = useState([]);
   const { showSnackbar } = useSnackbar();
 
+  // Function to remove a department
   const removeDepartment = async (depId) => {
     try {
       const res = await removeDep(depId);
       if (res.message === "success") {
-        showSnackbar({ message: "Department deleted successfully", severity: "error" });
+        showSnackbar({
+          message: "Department deleted successfully",
+          severity: "error",
+        });
         setTableData(tableData.filter((dep) => dep._id !== depId));
       }
       return res;
@@ -27,12 +31,13 @@ export default function Department() {
     }
   };
 
+  // Fetch departments data
   async function fetchData() {
     try {
       const res = await getDepartments();
       if (res.deps.length > 0) {
         const departmentKeys = Object.keys(res.deps[0]);
-        const columns = ['_id', 'name', 'createdAt'];
+        const columns = ["_id", "name", "createdAt"];
         setTableColumns(columns);
         setTableData(res.deps);
       }
@@ -45,6 +50,7 @@ export default function Department() {
     fetchData();
   }, [getDepartments]);
 
+  // Formik configuration
   const initialValues = {
     name: "",
   };
@@ -58,13 +64,12 @@ export default function Department() {
           headers: { token: `Bearer ${token}` },
         }
       );
-      console.log(data);
       if (data.message === "success") {
-        showSnackbar({ message: "Department added successfully", severity: "success" });
-        const res = await getDepartments();
-        if (res.deps.length > 0) {
-          setTableData(res.deps);
-        }
+        showSnackbar({
+          message: "Department added successfully",
+          severity: "success",
+        });
+        fetchData(); // Fetch updated data after adding department
       }
     } catch (error) {
       console.error("Submission error:", error);
@@ -85,7 +90,7 @@ export default function Department() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        ml: { xs: 0, md: 20 },
+        ml: { xs: 0, lg: 20 },
       }}
     >
       <Typography
@@ -94,13 +99,13 @@ export default function Department() {
           textAlign: "center",
           fontSize: "30px",
           mt: 5,
-          mb:2,
+          mb: 2,
           fontWeight: "bold",
         }}
       >
         Departments
       </Typography>
-      <Box sx={{ textAlign: "center" }}>
+      <Box sx={{ textAlign: "center", width: "80%",ml:{lg:"150px"}, margin: "auto" }}> {/* Adjust width and margin here */}
         <form onSubmit={formik.handleSubmit}>
           <InputCom
             type="text"
@@ -108,7 +113,7 @@ export default function Department() {
             name="name"
             title="Department"
             value={formik.values.name}
-            onChange={formik.handleChange} 
+            onChange={formik.handleChange}
           />
           <Button
             variant="contained"

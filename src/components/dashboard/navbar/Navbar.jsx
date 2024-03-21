@@ -39,8 +39,8 @@ export default function Navbar({ showDrawer }) {
     <>
       <AppBar
         sx={{
-          width: { md: "calc(100% - 240px)" },
-          ml: { xs: 0, md: "240px" },
+          width: { lg: "calc(100% - 240px)" },
+          ml: { xs: 0, lg: "240px" },
           backgroundColor: "rgba(43, 1, 62, 0.5)",
         }}
         position="static"
@@ -51,7 +51,7 @@ export default function Navbar({ showDrawer }) {
             edge="start"
             color="#fff"
             aria-label="menu"
-            sx={{ mr: 2, display: { md: "none" } }}
+            sx={{ mr: 2, display: { lg: "none" } }}
             onClick={() => {
               showDrawer();
             }}

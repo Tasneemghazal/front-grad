@@ -5,12 +5,7 @@ import { UserContext } from '../../context/UserContextProvider.jsx';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { userContext } from '../../context/StudentContextProvider.jsx';
-const data = [
-  { value: 7, label: 'HOD' },
-  { value: 10, label: 'Supervisor' },
-  { value: 10, label: 'Student' },
 
-];
 
 const size = {
   width: 400,

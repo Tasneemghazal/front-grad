@@ -1,33 +1,49 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import InputCom from "../../shared/InputCom.jsx";
+import InputCom from "./InputCom.jsx";
 import axios from "axios";
-import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
-import UploadFile from "../../shared/UploadFile.jsx";
-import SelectCom from "../../shared/SelectCom.jsx";
-import userInputFields from "./userInputFields.js";
-import { useSnackbar } from "../../context/SnackbarProvider.jsx";
+import { DepartmentContext } from "../context/DepartmentContextProvider.jsx";
+import SelectCom from "./SelectCom.jsx";
+import userInputFields from "../dashboard/create/userInputFields.js";
+import { useSnackbar } from "../context/SnackbarProvider.jsx";
+import { useParams } from "react-router-dom";
+import { UserContext } from "../context/UserContextProvider.jsx";
 
-export default function Create() {
+export default function EditUser() {
+  const { id } = useParams();
   const token = localStorage.getItem("userToken");
   const { getDepartments } = useContext(DepartmentContext);
   const { showSnackbar } = useSnackbar();
+  const { getUserById } = useContext(UserContext);
   const [departments, setDepartments] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
+  
+
+  async function fetchUserData(userId) {
+    const res = await getUserById(userId);
+    formik.setValues({
+      name: res.user.name,
+      email: res.user.email,
+      password: "", // Assuming you don't want to show password initially
+      phoneNumber: res.user.phoneNumber,
+      officeHours: res.user.officeHours,
+      role: res.user.role, // Assuming role will not be set initially
+      depId: res.user.depId, // Assuming department will not be set initially
+    });
+  }
 
   useEffect(() => {
     async function fetchData() {
       const res = await getDepartments();
       setDepartments(res.deps);
     }
+    fetchUserData(id);
     fetchData();
-  }, [getDepartments]);
+  }, []);
 
   const initialValues = {
     name: "",
     email: "",
     password: "",
-    img: "",
     phoneNumber: "",
     officeHours: "",
     role: "",
@@ -39,22 +55,10 @@ export default function Create() {
   };
 
   const onSubmit = async (values) => {
-    const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("email", values.email);
-    formData.append("password", values.password);
-    formData.append("img", selectedImage);
-    formData.append("depId", values.depId);
-    formData.append("role", values.role);
-    formData.append("phoneNumber", values.phoneNumber);
-    formData.append("officeHours", values.officeHours);
-
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/auth/registerUser`, formData, {
-        headers: { token: `Bearer ${token}` },
-      });
+      const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/admin/updateSupervisor/${id}`, values, { headers: { token: `Bearer ${token}` } });
       if (data.message === "success") {
-        showSnackbar({ message: "User added successfully", severity: "success" });
+        showSnackbar({ message: "User updated successfully", severity: "success" });
       }
     } catch (error) {
       console.error("Submission error:", error);
@@ -103,9 +107,9 @@ export default function Create() {
           variant="h3"
           sx={{ textAlign: "center", fontSize: "30px", my: 5, fontWeight: "bold" }}
         >
-          Create User
+          Edit user
         </Typography>
-        <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
+        <form onSubmit={formik.handleSubmit} >
           <Grid container spacing={2}>
             {renderInputs}
             <Grid item md={6} xs={12}>
@@ -129,7 +133,7 @@ export default function Create() {
               />
             </Grid>
           </Grid>
-          <UploadFile onFileChange={handleImageChange} buttonText="Add an image"/>
+          
           <Button
             variant="contained"
             sx={{

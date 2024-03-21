@@ -89,7 +89,7 @@ export default function CreateStudent() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        ml: { xs: 0, md: 20 },
+        ml: { xs: 0, lg: 20 },
       }}
     >
       <Box sx={{ width: "50%", textAlign: "center" }}>

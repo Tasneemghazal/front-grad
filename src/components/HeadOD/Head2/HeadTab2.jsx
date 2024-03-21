@@ -5,10 +5,12 @@ import SelectCom from "../../shared/SelectCom.jsx";
 import { UserContext } from "../../context/UserContextProvider.jsx";
 import axios from "axios";
 import { useFormik } from "formik";
+import { useSnackbar } from "../../context/SnackbarProvider.jsx";
 
 export default function HeadTab2() {
   const { getUsers,extractDepIdFromToken  } = useContext(UserContext);
   const [supervisors, setSupervisors] = useState([]);
+  const { showSnackbar } = useSnackbar();
   const token = localStorage.getItem("userToken");
   const initialValues = {
     num: "", 
@@ -43,7 +45,7 @@ export default function HeadTab2() {
         headers: { token: `Bearer ${token}` },
       });
       if(data.message === "success") {
-        alert(data.message);
+        showSnackbar({ message: "Section added successfully", severity: "success" });
       }
       return data;
     } catch (error) {
