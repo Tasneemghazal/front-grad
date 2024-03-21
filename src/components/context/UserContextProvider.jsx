@@ -22,6 +22,18 @@ export default function UserContextProvider({ children }) {
       throw error;
     }
   };
+  const getUserById = async (userId) => {
+    try {
+      const token = localStorage.getItem("userToken");
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/admin/getUser/${userId}`, {
+        headers: { token: `Bearer ${token}` }
+      });
+      return data;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw error;
+    }
+  };
 
   const removeUser = async (userId) => {
     try {
@@ -63,7 +75,7 @@ export default function UserContextProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ userToken, getUsers, userData, removeUser, extractDepIdFromToken }}>
+    <UserContext.Provider value={{ userToken, getUsers, userData, removeUser, extractDepIdFromToken,getUserById }}>
       {children}
     </UserContext.Provider>
   );
