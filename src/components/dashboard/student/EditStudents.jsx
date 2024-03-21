@@ -123,6 +123,7 @@ export default function EditStudents() {
             variant="contained"
             sx={{
               backgroundColor: "rgba(43, 1, 62, 0.5)",
+              mt:3,
               "&:hover": {
                 backgroundColor: "rgba(43, 1, 62, 0.8)",
               },
