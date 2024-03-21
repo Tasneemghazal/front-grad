@@ -16,10 +16,10 @@ import {
   import HdrStrongIcon from "@mui/icons-material/HdrStrong";
   import HdrWeakIcon from "@mui/icons-material/HdrWeak";
   import { Link } from "react-router-dom";
-import { UserContext } from "../context/UserContextProvider.jsx";
+import { userContext } from "../context/StudentContextProvider.jsx";
   
   export default function SuperHeadCover({ background,image }) {
-    const {extractNameFromToken} = useContext(UserContext);
+    const {extractNameFromToken} = useContext(userContext);
   const [supervisorName,setSuperName] = useState();
   useEffect(() => {
     const fetchData = async () => {
