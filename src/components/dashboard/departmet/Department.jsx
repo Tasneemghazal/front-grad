@@ -90,7 +90,7 @@ export default function Department() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        ml: { xs: 0, md: 20 },
+        ml: { xs: 0, lg: 20 },
       }}
     >
       <Typography
@@ -105,7 +105,7 @@ export default function Department() {
       >
         Departments
       </Typography>
-      <Box sx={{ textAlign: "center", width: "80%",ml:{md:"150px"}, margin: "auto" }}> {/* Adjust width and margin here */}
+      <Box sx={{ textAlign: "center", width: "80%",ml:{lg:"150px"}, margin: "auto" }}> {/* Adjust width and margin here */}
         <form onSubmit={formik.handleSubmit}>
           <InputCom
             type="text"

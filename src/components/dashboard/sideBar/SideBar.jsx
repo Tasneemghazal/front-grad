@@ -32,7 +32,7 @@ export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
           boxSizing: "border-box",
           backgroundColor: "rgba(43, 1, 62, 0.5)",
         },
-        display: { xs: noneOrBlock, md: "block" },
+        display: { xs: noneOrBlock, lg: "block" },
       }}
       variant={drawerType}
       anchor="left"

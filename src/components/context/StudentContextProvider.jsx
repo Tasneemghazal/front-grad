@@ -15,7 +15,6 @@ export default function StudentContextProvider({ children }) {
         headers: { token: `Bearer ${token}` }
       });
       setUserData(data.users.length);
-     
       return data;
     } catch (error) {
       console.error("Error fetching users:", error);
