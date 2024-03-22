@@ -1,4 +1,3 @@
-import React from 'react'
 import Navbar from '../components/shared/Navbar.jsx'
 import { Outlet } from 'react-router-dom'
 

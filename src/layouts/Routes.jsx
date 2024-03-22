@@ -158,12 +158,12 @@ export const router = createBrowserRouter([
           },
         ],
       },
-    
-    ],  
-  },{
+    {
         path: "section-booking", 
         element: <SectionRegistration />, 
       },
+    ],  
+  },
   {
     path: "/supervisor",
     element: <SupervisorLayout />,

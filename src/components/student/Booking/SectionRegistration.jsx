@@ -38,6 +38,8 @@ const SectionRegistration = () => {
   };
 
   return (
+    <>
+
     <Container>
       <ToastContainer />
       <Box sx={{ width: { xs: "60%", md: "40%" }, my: 5 }}>
@@ -124,6 +126,7 @@ const SectionRegistration = () => {
         ))}
       </Grid>
     </Container>
+    </>
   );
 };
 

@@ -6,7 +6,7 @@ const Booking = () => {
   const navigate = useNavigate();
 
   const handleBookingClick = () => {
-    navigate("/section-booking");
+    navigate("/student/section-booking");
   };
   return (
     <Container>
