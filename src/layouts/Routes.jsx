@@ -32,6 +32,7 @@ import CreateStudent from "../components/dashboard/create/CreateStudent.jsx";
 import Department from "../components/dashboard/departmet/Department.jsx";
 import EditUser from "../components/shared/EditUser.jsx";
 import EditStudents from "../components/dashboard/student/EditStudents.jsx";
+import SectionRegistration from "../components/student/Booking/SectionRegistration.jsx";
 const handleGoBack = () => {
   window.history.back();
 };
@@ -92,7 +93,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "departmentheads/:id",
-        element: <EditUser/>,
+        element: <EditUser />,
       },
       {
         path: "supervisors",
@@ -100,7 +101,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "supervisors/:id",
-        element: <EditUser/>,
+        element: <EditUser />,
       },
       {
         path: "students",
@@ -108,7 +109,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "students/:id",
-        element: <EditStudents/>,
+        element: <EditStudents />,
       },
       {
         path: "projects",
@@ -138,8 +139,7 @@ export const router = createBrowserRouter([
     path: "/student",
     element: <StudentLayout />,
     children: [
-      { index: true,
-         element: <TotalStudent /> },
+      { index: true, element: <TotalStudent /> },
       {
         path: "home",
         element: <TotalStudent />,
@@ -147,72 +147,79 @@ export const router = createBrowserRouter([
       {
         path: "profile",
         element: <AllProfile />,
-        children:[
+        children: [
           {
-            index:true,
-            element: <Profile />
-          },{
-            path:"editProfile",
-            element: <EditProfile role={"student"}/>
-          }
-        ]
+            index: true,
+            element: <Profile />,
+          },
+          {
+            path: "editProfile",
+            element: <EditProfile role={"student"} />,
+          },
+        ],
       },
-    ],
-  },
+    
+    ],  
+  },{
+        path: "section-booking", 
+        element: <SectionRegistration />, 
+      },
   {
     path: "/supervisor",
     element: <SupervisorLayout />,
     children: [
-      { index: true, 
-        element: <TotalSupervisor /> },
+      { index: true, element: <TotalSupervisor /> },
       {
         path: "home",
         element: <TotalSupervisor />,
-      },{
-        path:"addtask",
-        element:<AddTask title={"Add a new task"}/>
-      },{
-        path:"edittask",
-        element:<EditTask/>
+      },
+      {
+        path: "addtask",
+        element: <AddTask title={"Add a new task"} />,
+      },
+      {
+        path: "edittask",
+        element: <EditTask />,
       },
       {
         path: "profile",
         element: <AllProfile />,
-        children:[
+        children: [
           {
-            index:true,
-            element: <Profile />
-          },{
-            path:"editProfile",
-            element: <EditProfile  role={"supervisor"}/>
-          }
-        ]
+            index: true,
+            element: <Profile />,
+          },
+          {
+            path: "editProfile",
+            element: <EditProfile role={"supervisor"} />,
+          },
+        ],
       },
     ],
   },
   {
-    path:"/headOfDepartment",
-    element:<HeadLayout/>,
-    children:[
+    path: "/headOfDepartment",
+    element: <HeadLayout />,
+    children: [
       {
-        index:true,
-        element:<TotalHead/>
+        index: true,
+        element: <TotalHead />,
       },
       {
         path: "profile",
         element: <AllProfile />,
-        children:[
+        children: [
           {
-            index:true,
-            element: <Profile />
-          },{
-            path:"editProfile",
-            element: <EditProfile role={"head"}/>
-          }
-        ]
+            index: true,
+            element: <Profile />,
+          },
+          {
+            path: "editProfile",
+            element: <EditProfile role={"head"} />,
+          },
+        ],
       },
-
-    ]
+    ],
   },
   {
     path: "*",
