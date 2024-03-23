@@ -15,11 +15,13 @@ import InputCom from "../../shared/InputCom.jsx";
 import { useFormik } from "formik";
 import { userContext } from "../../context/StudentContextProvider.jsx";
 import { SectionContext } from "../../context/SectionContextProvider.jsx";
+import { UserContext } from "../../context/UserContextProvider.jsx";
+
 const SectionRegistration = () => {
   const token = localStorage.getItem("userToken");
   const [section, setSection] = useState([]);
   const { getSections } = useContext(SectionContext);
-  const { extractNameFromToken } = useContext(userContext);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -86,15 +88,37 @@ const SectionRegistration = () => {
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                 Section Number: {sec.num}
               </Typography>
-              <Typography sx={{ fontStyle: "italic" }}>
-                Supervisor: {sec.userId}
-              </Typography>
+              <SupervisorName userId={sec.userId} />
               <SectionForm section={sec} token={token} />
             </Paper>
           </Grid>
         ))}
       </Grid>
     </Container>
+  );
+};
+
+const SupervisorName = ({ userId }) => {
+  const { getUserById } = useContext(UserContext);
+  const [supervisorName, setSupervisorName] = useState("");
+
+  useEffect(() => {
+    const fetchSupervisorName = async () => {
+      try {
+        const name = await getUserById(userId);
+        setSupervisorName(name.user.name);
+      } catch (error) {
+        console.error("Error fetching supervisor name:", error);
+      }
+    };
+
+    fetchSupervisorName();
+  }, [getUserById, userId]);
+
+  return (
+    <Typography sx={{ fontStyle: "italic" }}>
+      Supervisor: {supervisorName}
+    </Typography>
   );
 };
 
@@ -151,7 +175,22 @@ const SectionForm = ({ section, token }) => {
         onChange={formik.handleChange}
         value={formik.values.text}
       />
-      <Button type="submit">Book</Button>
+<Box sx={{ textAlign: "center" }}>
+  <Button
+    type="submit"
+    sx={{
+      border: "1px solid rgba(43, 1, 62, 0.4)",
+      color: "white",
+      backgroundColor: "rgba(43, 1, 62, 0.7)",
+      '&:hover': {
+        
+        backgroundColor: "rgba(43, 1, 62, 0.9)",
+      },
+    }}
+  >
+    Book
+  </Button>
+</Box>
     </form>
   );
 };
