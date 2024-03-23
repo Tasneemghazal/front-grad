@@ -30,6 +30,8 @@ export default function MainPage_1() {
           borderRadius: "30px",
           top: -70,
           textAlign: { xs: "center", sm: "left" },
+          overflowX: "hidden", 
+          overflowY: "hidden",
         }}
       >
         <Container>
@@ -109,7 +111,7 @@ export default function MainPage_1() {
                     alt=""
                     style={{
                       position: "absolute",
-                      top: -60,
+                      top: -20,
                       left: 0,
                       width: "100%", 
                       objectFit: "cover",
