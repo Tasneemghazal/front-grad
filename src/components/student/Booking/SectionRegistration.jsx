@@ -21,18 +21,18 @@ const SectionRegistration = () => {
   const token = localStorage.getItem("userToken");
   const [section, setSection] = useState([]);
   const { getSections } = useContext(SectionContext);
-
-
+  const {extractDepIdFromToken}= useContext(UserContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const sections = await getSections();
-        setSection(sections);
+        const depSections = sections.filter(sec => sec.depId === extractDepIdFromToken() )
+        setSection(depSections);
       } catch (error) {
         console.error("Error fetching sections:", error);
       }
     };
-
+   
     fetchData();
   }, [getSections]);
 
@@ -55,43 +55,45 @@ const SectionRegistration = () => {
       </Box>
       <Grid container justifyContent="center" spacing={2}>
         {section.map((sec) => (
-          <Grid key={sec._id} item xs={12} sm={6} md={4}>
-            <Paper
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                padding: 3,
-                border: "1px solid rgba(43, 1, 62, 0.4)",
-                transition: "box-shadow 0.3s, transform 0.3s",
-                "&:hover": {
-                  transform: "translateY(-5px)",
-                  boxShadow: "0px 10px 15px rgba(0, 0, 0, 0.2)",
-                  cursor: "pointer",
-                },
-              }}
-            >
-              <Box
+          sec.visible && (
+            <Grid key={sec._id} item xs={12} sm={6} md={4}>
+              <Paper
                 sx={{
-                  borderRadius: "50%",
-                  width: "50px",
-                  height: "50px",
                   display: "flex",
-                  justifyContent: "center",
+                  flexDirection: "column",
                   alignItems: "center",
-                  backgroundColor: "#7f668b",
-                  marginBottom: 2,
+                  padding: 3,
+                  border: "1px solid rgba(43, 1, 62, 0.4)",
+                  transition: "box-shadow 0.3s, transform 0.3s",
+                  "&:hover": {
+                    transform: "translateY(-5px)",
+                    boxShadow: "0px 10px 15px rgba(0, 0, 0, 0.2)",
+                    cursor: "pointer",
+                  },
                 }}
               >
-                <EventIcon sx={{ color: "white" }} />
-              </Box>
-              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                Section Number: {sec.num}
-              </Typography>
-              <SupervisorName userId={sec.userId} />
-              <SectionForm section={sec} token={token} />
-            </Paper>
-          </Grid>
+                <Box
+                  sx={{
+                    borderRadius: "50%",
+                    width: "50px",
+                    height: "50px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#7f668b",
+                    marginBottom: 2,
+                  }}
+                >
+                  <EventIcon sx={{ color: "white" }} />
+                </Box>
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Section Number: {sec.num}
+                </Typography>
+                <SupervisorName userId={sec.userId} />
+                <SectionForm section={sec} token={token} />
+              </Paper>
+            </Grid>
+          )
         ))}
       </Grid>
     </Container>
@@ -140,24 +142,39 @@ const SectionForm = ({ section, token }) => {
     fetchStudentId();
   }, [extractNameFromToken]);
 
-  const onSubmit = async (values) => {
-    try {
-      const data = {
-        text: values.text,
-        studentId: studentId,
-        sectionId: section._id,
-      };
+ const onSubmit = async (values) => {
+  try {
+    const data = {
+      text: values.text,
+      studentId: studentId,
+      sectionId: section._id,
+    };
 
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/grad/student/bookSection",
-        data,
-        { headers: { token: `Bearer ${token}` } }
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.log("Error occurred:", error);
+    const response = await axios.post(
+      "http://localhost:3000/api/v1/grad/student/bookSection",
+      data,
+      { headers: { token: `Bearer ${token}` } }
+    );
+
+    // Check if booking was successful
+    if (response.data.success) {
+      // Update the visibility of the booked section to false
+      setSection(prevSections => prevSections.map(sec => {
+        if (sec._id === section._id) {
+          return { ...sec, visible: false };
+        }
+        return sec;
+      }));
+      
+      console.log("Booking successful");
+    } else {
+      console.log("Booking failed");
     }
-  };
+  } catch (error) {
+    console.log("Error occurred:", error);
+  }
+};
+
 
   const formik = useFormik({
     initialValues,
@@ -175,22 +192,21 @@ const SectionForm = ({ section, token }) => {
         onChange={formik.handleChange}
         value={formik.values.text}
       />
-<Box sx={{ textAlign: "center" }}>
-  <Button
-    type="submit"
-    sx={{
-      border: "1px solid rgba(43, 1, 62, 0.4)",
-      color: "white",
-      backgroundColor: "rgba(43, 1, 62, 0.7)",
-      '&:hover': {
-        
-        backgroundColor: "rgba(43, 1, 62, 0.9)",
-      },
-    }}
-  >
-    Book
-  </Button>
-</Box>
+      <Box sx={{ textAlign: "center" }}>
+        <Button
+          type="submit"
+          sx={{
+            border: "1px solid rgba(43, 1, 62, 0.4)",
+            color: "white",
+            backgroundColor: "rgba(43, 1, 62, 0.7)",
+            '&:hover': {
+              backgroundColor: "rgba(43, 1, 62, 0.9)",
+            },
+          }}
+        >
+          Book
+        </Button>
+      </Box>
     </form>
   );
 };
