@@ -17,7 +17,7 @@ const RedTableHead = styled(TableHead)({
   backgroundColor: 'rgba(45, 3, 62, 0.4)', 
 });
 
-export default function CustomTable({ columns, data, onDelete, onEdit }) {
+export default function CustomTable({ columns, data, onDelete, flag=true }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
 
@@ -97,11 +97,11 @@ export default function CustomTable({ columns, data, onDelete, onEdit }) {
                   </TableCell>
                 ))}
                 <TableCell align="center">
-                 <Link to={`${row._id}`} >
+                 {flag &&<Link to={`${row._id}`} >
                  <IconButton aria-label="edit">
                     <EditIcon sx={{ color: '#0b731b' }} />
                   </IconButton>
-                 </Link>
+                 </Link>}
                   <IconButton onClick={() => onDelete(row._id)} aria-label="delete">
                     <DeleteIcon sx={{ color: '#880909' }} />
                   </IconButton>

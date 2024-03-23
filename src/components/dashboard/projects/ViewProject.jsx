@@ -61,6 +61,7 @@ export default function ViewProject() {
         columns={tableColumns}
         data={tableData}
         onDelete={removeMyProject}
+        flag={false}
       />
     </Box>
   );
