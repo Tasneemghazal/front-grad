@@ -14,7 +14,7 @@ export default function HeadTab2() {
   const token = localStorage.getItem("userToken");
   const initialValues = {
     num: "", 
-    supervisorId: "", 
+    userId: "", 
   };
   const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
@@ -62,7 +62,7 @@ export default function HeadTab2() {
   });
 
   const handleSupervisorChange = (event) => {
-    formik.setFieldValue("supervisorId", event.target.value);
+    formik.setFieldValue("userId", event.target.value);
   };
 
   return (
@@ -95,7 +95,7 @@ export default function HeadTab2() {
               <SelectCom
                 labelId="supervisor-label"
                 id="supervisor"
-                value={formik.values.supervisorId}
+                value={formik.values.userId}
                 onChange={handleSupervisorChange}
                 label="Supervisor"
                 options={supervisors.map(supervisor => ({ value: supervisor._id, label: supervisor.name }))}
