@@ -44,6 +44,13 @@ const studentInputFields = (initialValues, onSubmit, handleFieldChange) => {
         title: "academicYear",
         value: formik.values.academicYear,
       },
+      {
+        id: "universityNum",
+        type: "text",
+        name: "universityNum",
+        title: "universityNum",
+        value: formik.values.universityNum,
+      },
     
   ];
 

@@ -48,6 +48,7 @@ export default function CreateStudent() {
     formData.append("depId", values.depId);
     formData.append("phoneNumber", values.phoneNumber);
     formData.append("academicYear", values.academicYear);
+    formData.append("universityNum", values.universityNum);
 
     try {
       const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/auth/registerStudent`, formData, {
