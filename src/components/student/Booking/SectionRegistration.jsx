@@ -21,20 +21,25 @@ const SectionRegistration = () => {
   const token = localStorage.getItem("userToken");
   const [section, setSection] = useState([]);
   const { getSections } = useContext(SectionContext);
-  const {extractDepIdFromToken}= useContext(UserContext);
+  const { extractDepIdFromToken } = useContext(UserContext);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const sections = await getSections();
-        const depSections = sections.filter(sec => sec.depId === extractDepIdFromToken() )
+        const depSections = sections.filter(sec => sec.depId === extractDepIdFromToken())
         setSection(depSections);
       } catch (error) {
         console.error("Error fetching sections:", error);
       }
     };
-   
+
     fetchData();
   }, [getSections]);
+
+  const handleSectionUpdate = (updatedSection) => {
+    setSection(prevSections => prevSections.map(sec => sec._id === updatedSection._id ? updatedSection : sec));
+  };
 
   return (
     <Container>
@@ -90,7 +95,7 @@ const SectionRegistration = () => {
                   Section Number: {sec.num}
                 </Typography>
                 <SupervisorName userId={sec.userId} />
-                <SectionForm section={sec} token={token} />
+                <SectionForm section={sec} token={token} onUpdateSection={handleSectionUpdate} />
               </Paper>
             </Grid>
           )
@@ -124,7 +129,7 @@ const SupervisorName = ({ userId }) => {
   );
 };
 
-const SectionForm = ({ section, token }) => {
+const SectionForm = ({ section, token, onUpdateSection }) => {
   const { extractNameFromToken } = useContext(userContext);
   const [studentId, setStudentId] = useState("");
   const initialValues = { text: "" };
@@ -142,39 +147,32 @@ const SectionForm = ({ section, token }) => {
     fetchStudentId();
   }, [extractNameFromToken]);
 
- const onSubmit = async (values) => {
-  try {
-    const data = {
-      text: values.text,
-      studentId: studentId,
-      sectionId: section._id,
-    };
+  const onSubmit = async (values) => {
+    try {
+      const data = {
+        text: values.text,
+        studentId: studentId,
+        sectionId: section._id,
+      };
 
-    const response = await axios.post(
-      "http://localhost:3000/api/v1/grad/student/bookSection",
-      data,
-      { headers: { token: `Bearer ${token}` } }
-    );
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/grad/student/bookSection",
+        data,
+        { headers: { token: `Bearer ${token}` } }
+      );
+      console.log(response)
 
-    // Check if booking was successful
-    if (response.data.success) {
-      // Update the visibility of the booked section to false
-      setSection(prevSections => prevSections.map(sec => {
-        if (sec._id === section._id) {
-          return { ...sec, visible: false };
-        }
-        return sec;
-      }));
-      
-      console.log("Booking successful");
-    } else {
-      console.log("Booking failed");
+      if (response.data.message === "success") {
+        // Update the visibility of the booked section to false
+        onUpdateSection({ ...section, visible: false });
+        console.log("Booking successful");
+      } else {
+        console.log("Booking failed");
+      }
+    } catch (error) {
+      console.log("Error occurred:", error);
     }
-  } catch (error) {
-    console.log("Error occurred:", error);
-  }
-};
-
+  };
 
   const formik = useFormik({
     initialValues,
