@@ -6,9 +6,11 @@ import StudentContextProvider from './components/context/StudentContextProvider.
 import UserContextProvider from './components/context/UserContextProvider.jsx'
 import ProjectContextProvider from './components/context/ProjectContextProvider.jsx'
 import SnackbarProvider from './components/context/SnackbarProvider.jsx'
+import SectionContextProvider from './components/context/SectionContextProvider.jsx'
 
 export default function App() {
   return (
+    <SectionContextProvider>
     <SnackbarProvider>
     <ProjectContextProvider>
     <UserContextProvider>
@@ -20,5 +22,6 @@ export default function App() {
     </UserContextProvider>
     </ProjectContextProvider>
     </SnackbarProvider>
+    </SectionContextProvider>
   )
 }
