@@ -1,5 +1,5 @@
 import EventIcon from "@mui/icons-material/Event";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   Container,
   Typography,
@@ -7,39 +7,34 @@ import {
   Grid,
   Paper,
   Button,
-  TextField,
 } from "@mui/material";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios"; 
-
+import axios from "axios";
+import InputCom from "../../shared/InputCom.jsx";
+import { useFormik } from "formik";
+import { userContext } from "../../context/StudentContextProvider.jsx";
+import { SectionContext } from "../../context/SectionContextProvider.jsx";
 const SectionRegistration = () => {
-  const [sections, setSections] = useState([]);
-  const [studentData, setStudentData] = useState([]);
+  const token = localStorage.getItem("userToken");
+  const [section, setSection] = useState([]);
+  const { getSections } = useContext(SectionContext);
+  const { extractNameFromToken } = useContext(userContext);
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:3000/api/v1/grad/head/getHeadSections") 
-      .then((response) => {
-        setSections(response.data); 
-      })
-      .catch((error) => {
-        console.error("Error fetching sections data:", error);
-      });
-  }, []);
+    const fetchData = async () => {
+      try {
+        const sections = await getSections();
+        setSection(sections);
+      } catch (error) {
+        console.error("Error fetching sections:", error);
+      }
+    };
 
-  const handleStudentDataChange = (event, index, field) => {
-    const newStudentData = [...studentData];
-    newStudentData[index][field] = event.target.value;
-    setStudentData(newStudentData);
-  };
-
-  const handleSubmit = () => {
-    console.log("Booking Done", studentData);
-  };
+    fetchData();
+  }, [getSections]);
 
   return (
-    <>
-
     <Container>
       <ToastContainer />
       <Box sx={{ width: { xs: "60%", md: "40%" }, my: 5 }}>
@@ -57,8 +52,8 @@ const SectionRegistration = () => {
         </Typography>
       </Box>
       <Grid container justifyContent="center" spacing={2}>
-        {sections.map((section) => (
-          <Grid key={section._id} item xs={12} sm={6} md={4}>
+        {section.map((sec) => (
+          <Grid key={sec._id} item xs={12} sm={6} md={4}>
             <Paper
               sx={{
                 display: "flex",
@@ -89,45 +84,76 @@ const SectionRegistration = () => {
                 <EventIcon sx={{ color: "white" }} />
               </Box>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                Section Number: {section.num}
+                Section Number: {sec.num}
               </Typography>
               <Typography sx={{ fontStyle: "italic" }}>
-                Supervisor: {section.depId}
+                Supervisor: {sec.userId}
               </Typography>
-
-              {studentData.map((student, index) => (
-                <div key={index} style={{ marginBottom: "1rem" }}>
-                  <TextField
-                    label={`Group Member`}
-                    variant="outlined"
-                    onChange={(event) =>
-                      handleStudentDataChange(event, index, "name")
-                    }
-                    sx={{ marginTop: 2, width: "70%" }}
-                  />
-                </div>
-              ))}
-
-              <Button
-                onClick={handleSubmit}
-                sx={{
-                  marginTop: 2,
-                  background: "#7f668b",
-                  color: "white",
-                  "&:hover": {
-                    background: "#624a73",
-                  },
-                }}
-              >
-                Booking
-              </Button>
+              <SectionForm section={sec} token={token} />
             </Paper>
           </Grid>
         ))}
       </Grid>
     </Container>
-    </>
   );
 };
 
-export default SectionRegistration
+const SectionForm = ({ section, token }) => {
+  const { extractNameFromToken } = useContext(userContext);
+  const [studentId, setStudentId] = useState("");
+  const initialValues = { text: "" };
+
+  useEffect(() => {
+    const fetchStudentId = async () => {
+      try {
+        const name = extractNameFromToken();
+        setStudentId(name._id);
+      } catch (error) {
+        console.error("Error fetching student id:", error);
+      }
+    };
+
+    fetchStudentId();
+  }, [extractNameFromToken]);
+
+  const onSubmit = async (values) => {
+    try {
+      const data = {
+        text: values.text,
+        studentId: studentId,
+        sectionId: section._id,
+      };
+
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/grad/student/bookSection",
+        data,
+        { headers: { token: `Bearer ${token}` } }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log("Error occurred:", error);
+    }
+  };
+
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validateOnBlur: true,
+    validateOnChange: false,
+  });
+
+  return (
+    <form onSubmit={formik.handleSubmit}>
+      <InputCom
+        type="text"
+        placeholder="Enter your info"
+        name="text"
+        onChange={formik.handleChange}
+        value={formik.values.text}
+      />
+      <Button type="submit">Book</Button>
+    </form>
+  );
+};
+
+export default SectionRegistration;
