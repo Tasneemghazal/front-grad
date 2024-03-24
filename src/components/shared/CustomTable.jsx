@@ -21,7 +21,7 @@ const RedTableHead = styled(TableHead)({
   backgroundColor: 'rgba(45, 3, 62, 0.4)', 
 });
 
-export default function CustomTable({ columns, data, onDelete, flag = true, request }) {
+export default function CustomTable({ columns, data, onDelete, flag = true, request=true }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal open/close
