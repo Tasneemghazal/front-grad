@@ -7,7 +7,7 @@ export default function SupervisorTab3() {
     const { getRequests } = useContext(RequestContext);
     const [tableData, setTableData] = useState([]);
     const [tableColumns, setTableColumns] = useState([]);
-    const [rejRequest, setRejRequest] = useState([]); // Initialize as an object
+    const [rejRequest, setRejRequest] = useState([]); 
     const reject = async (requestId,sectionId) => {
         const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/reject`,{requestId,sectionId});
         console.log(data);
