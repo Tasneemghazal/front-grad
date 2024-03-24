@@ -11,7 +11,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 import DoneIcon from '@mui/icons-material/Done';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { Link } from 'react-router-dom';
+import SpringModal from './SpringModal'; // Import your SpringModal component
+import Confirm from '../Supervisor/supervisor_2/Confirm.jsx';
 
 const RedTableHead = styled(TableHead)({
   backgroundColor: 'rgba(45, 3, 62, 0.4)', 
@@ -20,6 +24,8 @@ const RedTableHead = styled(TableHead)({
 export default function CustomTable({ columns, data, onDelete, flag = true, request }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal open/close
+  const [rowDataForConfirm, setRowDataForConfirm] = useState(null); // State to manage row data for Confirm component
 
   const sortedData = () => {
     let sortableData = [...data];
@@ -47,6 +53,15 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
       direction = 'descending';
     }
     setSortConfig({ key, direction });
+  };
+
+  const handleConfirmClick = (rowId, sectionId) => {
+    setRowDataForConfirm({ rowId, sectionId });
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   const filteredData = sortedData().filter((row) =>
@@ -85,7 +100,7 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
                   )}
                 </TableCell>
               ))}
-               <TableCell align="center">Actions</TableCell>
+              <TableCell align="center">Actions</TableCell>
             </TableRow>
           </RedTableHead>
           <TableBody>
@@ -96,25 +111,36 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
                     {row[column]}
                   </TableCell>
                 ))}
-               
-                  <TableCell align="center">
-                    {flag && (
+                <TableCell align="center">
+                  {flag && (
+                    request ? (
                       <Link to={`${row._id}`}>
                         <IconButton aria-label="edit">
-                          {request ? <EditIcon sx={{ color: '#0b731b' }} /> : <DoneIcon sx={{ color: '#0b731b' }} />}
+                          <EditIcon sx={{ color: '#0b731b' }} />
                         </IconButton>
                       </Link>
-                    )}
+                    ) : (
+                      <IconButton aria-label="edit" onClick={() => handleConfirmClick(row._id, row.sectionId)}>
+                        <DoneIcon sx={{ color: '#0b731b' }} />
+                      </IconButton>
+                    )
+                  )}
+                  {request ? (
                     <IconButton onClick={() => onDelete(row._id)} aria-label="delete">
-                      {request ? <DeleteIcon sx={{ color: '#880909' }} /> : <CloseIcon sx={{ color: '#880909' }} />}
+                      <DeleteIcon sx={{ color: '#880909' }} />
                     </IconButton>
-                  </TableCell>
-              
+                  ) : (
+                    <IconButton onClick={() => onDelete(row._id, row.sectionId)} aria-label="delete">
+                      <CloseIcon sx={{ color: '#880909' }} />
+                    </IconButton>
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <SpringModal closeModal={handleCloseModal} isModalOpen={isModalOpen} modalContent={<Confirm {...rowDataForConfirm} />} />
     </div>
   );
 }
