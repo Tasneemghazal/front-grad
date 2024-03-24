@@ -8,8 +8,8 @@ export default function SupervisorTab3() {
     const [tableData, setTableData] = useState([]);
     const [tableColumns, setTableColumns] = useState([]);
     const [rejRequest, setRejRequest] = useState([]); // Initialize as an object
-    const reject = async () => {
-        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/reject`, rejRequest);
+    const reject = async (requestId,sectionId) => {
+        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/reject`,{requestId,sectionId});
         console.log(data);
     }
     useEffect(() => {
@@ -21,13 +21,6 @@ export default function SupervisorTab3() {
                     const columns = ["sectionId", "studentId", "text"];
                     setTableColumns(columns);
                     setTableData(requests);
-                    const requestData = requests.map(request => ({
-                        sectionId: request.sectionId,
-                        requestId: request._id
-                    }));
-                    
-                    setRejRequest(requestData[0]);
-                
                 }
             } catch (e) {
                 console.log(e);
