@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -18,14 +18,33 @@ import SpringModal from './SpringModal'; // Import your SpringModal component
 import Confirm from '../Supervisor/supervisor_2/Confirm.jsx';
 
 const RedTableHead = styled(TableHead)({
-  backgroundColor: 'rgba(45, 3, 62, 0.4)', 
+  backgroundColor: 'rgba(45, 3, 62, 0.4)',
 });
 
-export default function CustomTable({ columns, data, onDelete, flag = true, request=true }) {
+export default function CustomTable({ columns, data, onDelete, flag = true, request = true, getSectionNum }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal open/close
   const [rowDataForConfirm, setRowDataForConfirm] = useState(null); // State to manage row data for Confirm component
+  const [sectionNumbers, setSectionNumbers] = useState({}); // State to store section numbers
+
+  useEffect(() => {
+    const fetchSectionNumbers = async () => {
+      const sectionNums = {};
+      for (const row of data) {
+        try {
+          const res = await getSectionNum(row.sectionId);
+          
+            sectionNums[row.sectionId] = res;
+         
+        } catch (error) {
+          console.error('Error fetching section number:', error);
+        }
+      }
+      setSectionNumbers(sectionNums);
+    };
+    fetchSectionNumbers();
+  }, [data, getSectionNum]);
 
   const sortedData = () => {
     let sortableData = [...data];
@@ -71,10 +90,12 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
     )
   );
 
-  // Function to display custom column names
   const getColumnName = (columnName) => {
     if (columnName === 'depId') {
       return 'Department Name';
+    }
+    if (columnName === 'sectionId') {
+      return 'Section Number';
     }
     return columnName;
   };
@@ -108,7 +129,7 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
               <TableRow key={rowIndex}>
                 {columns.map((column, colIndex) => (
                   <TableCell key={colIndex} align="center">
-                    {row[column]}
+                    {column === 'sectionId' ? sectionNumbers[row[column]] : row[column]}
                   </TableCell>
                 ))}
                 <TableCell align="center">
@@ -140,7 +161,7 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
           </TableBody>
         </Table>
       </TableContainer>
-      <SpringModal closeModal={handleCloseModal} isModalOpen={isModalOpen} modalContent={<Confirm {...rowDataForConfirm} />} />
+      <SpringModal closeModal={handleCloseModal} isModalOpen={isModalOpen} modalContent={<Confirm {...rowDataForConfirm} closeModal={handleCloseModal}/>} />
     </div>
   );
 }
