@@ -1,8 +1,31 @@
 import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { userContext } from "../../context/StudentContextProvider.jsx";
+import { useState } from "react";
+import { UserContext } from "../../context/UserContextProvider.jsx";
+
 
 
 export default function StudentTab1() {
+  const{getStudentSection}= useContext(userContext);
+  const [ Id,setId]= useState();
+  const [ data,setData]= useState();
+  const {getUserById}=useContext(UserContext);
+
+  const superData= async(userId)=>{
+       const supervisor = await getUserById(userId);
+       setData(supervisor);
+       console.log(data)
+       
+  }
+  useEffect(()=>{
+    const fetchData=async()=>{
+      const studentSection = await getStudentSection();
+      setId(studentSection.section.userId);
+    }
+    fetchData();
+    superData(Id);
+  },[])
   return (
     <Box>
       <Box sx={{ width: { xs: "60%", md: "40%" }, my: 5 }}>
@@ -57,7 +80,7 @@ export default function StudentTab1() {
                   }
                 }}
               >
-                Email: ThareSammar@gmail.com
+                Email: {data && data.user.email}
               </Typography>
               <Typography 
                 sx={{ 
@@ -69,7 +92,7 @@ export default function StudentTab1() {
                   }
                 }}
               >
-                Phone: 0595432344
+                Phone: {data&&data.user.phoneNumber}
               </Typography>
             </Box>
           </Paper>
@@ -93,7 +116,7 @@ export default function StudentTab1() {
           >
             <Box sx={{ width: "30%", mt: 2 }}>
               <Avatar
-                src="image/Dr.Thear.jpeg"
+                src={data && data.user.img}
                 alt=""
                 style={{ width: "100%", height: "100%" }}
                 sx={{ borderRadius: "50%", width: "100%", aspectRatio: "1 / 1" , "&:hover": {
@@ -117,7 +140,7 @@ export default function StudentTab1() {
                   }
                 }}
               >
-                Dr. Thaer Sammar
+                Dr. {data&&data.user.name}
               </Typography>
               <Typography 
                 sx={{ 
@@ -183,7 +206,7 @@ export default function StudentTab1() {
                   }
                 }}
               >
-                 Office hours:8Am - 2Pm /Sat. _ Thu.
+                 Office hours:{data && data.user.officeHours}
               </Typography>
             </Box>
           </Paper>
