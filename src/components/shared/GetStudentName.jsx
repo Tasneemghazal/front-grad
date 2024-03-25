@@ -21,7 +21,7 @@ const GetStudentName = ({ userId }) => {
 
   return (
     <Typography sx={{ fontStyle: "italic" }}>
-      Student: {studentName}
+      {studentName}
     </Typography>
   );
 };
