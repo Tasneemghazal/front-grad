@@ -5,6 +5,7 @@ import axios from 'axios';
 import SpringModal from '../../shared/SpringModal.jsx';
 import { Box, Button, Typography } from '@mui/material';
 import { SectionContext } from '../../context/SectionContextProvider.jsx';
+import DeleteContent from '../../shared/DeleteContent.jsx';
 
 export default function SupervisorTab3() {
     const { getRequests } = useContext(RequestContext);
@@ -29,6 +30,7 @@ export default function SupervisorTab3() {
         }
         setIsModalOpen(false);
     }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -61,9 +63,8 @@ export default function SupervisorTab3() {
         fetchSections();
     }, []);
 
-    // Define a function to handle deletion from table
     const handleDelete = async (requestId, sectionId) => {
-        reject(requestId, sectionId); // Trigger reject action
+        reject(requestId, sectionId); 
     };
 
     return (
@@ -72,39 +73,7 @@ export default function SupervisorTab3() {
             <SpringModal
                 isModalOpen={isModalOpen}
                 closeModal={() => setIsModalOpen(false)}
-                modalContent={
-                    <Box>
-                    <Typography>Are you sure you want to reject this request?</Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
-                        <Button 
-                            onClick={handleRejectConfirmation} 
-                            sx={{
-                                border: "1px solid red",
-                                color: "white",
-                                backgroundColor: "red",
-                                '&:hover': {
-                                    backgroundColor: "rgba(255, 0, 0, 0.7)",
-                                },
-                            }}
-                        >
-                            Yes
-                        </Button>
-                        <Button 
-                            onClick={() => setIsModalOpen(false)}
-                            sx={{
-                                border: "1px solid #1b5e20",
-                                color: "white",
-                                backgroundColor: "#1b5e20",
-                                '&:hover': {
-                                    backgroundColor: "#4caf50",
-                                },
-                            }}
-                        >
-                            No
-                        </Button>
-                    </Box>
-                </Box>
-                }
+                modalContent={<DeleteContent handleRejectConfirmation={handleRejectConfirmation} setIsModalOpen={setIsModalOpen} />}
             />
         </>
     );
