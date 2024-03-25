@@ -15,11 +15,37 @@ export default function SectionContextProvider({children}) {
           throw error;
         }
       };
+      const getSuperSections = async () => {
+        try {
+          const token = localStorage.getItem("userToken");
+          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/supervisor/getSections`, {
+            headers: { token: `Bearer ${token}` }
+          });
+          return data;
+        } catch (error) {
+          console.error("Error fetching users:", error);
+          throw error;
+        }
+      };
+      const getSectionNum = async (sectionId) => {
+        try {
+          const token = localStorage.getItem("userToken");
+          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/supervisor/getSectionNum/${sectionId}`, {
+            headers: { token: `Bearer ${token}` }
+          });
+          return data;
+        } catch (error) {
+          console.error("Error fetching users:", error);
+          throw error;
+        }
+      };
       useEffect(()=>{
-        getSections()
+        getSuperSections();
+        getSections();
+        getSectionNum();
       },[])
   return (
-    <SectionContext.Provider value={{ getSections }}>
+    <SectionContext.Provider value={{ getSections , getSuperSections,getSectionNum}}>
       {children}
     </SectionContext.Provider>
   )
