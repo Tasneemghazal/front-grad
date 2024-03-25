@@ -6,7 +6,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useFormik } from 'formik';
 
-export default function Confirm({ rowId, sectionId }) {
+export default function Confirm({ rowId, sectionId,closeModal }) {
     const [students, setStudents] = useState([""]);
 
     useEffect(() => {
@@ -32,7 +32,7 @@ export default function Confirm({ rowId, sectionId }) {
     const onSubmit = async () => {
         try {
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/confirm`, { requestId: rowId, sectionId, students });
-            console.log(data);
+            closeModal();
         } catch (error) {
             console.error('Error confirming request:', error);
         }
