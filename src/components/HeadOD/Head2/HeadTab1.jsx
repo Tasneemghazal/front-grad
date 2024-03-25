@@ -1,20 +1,21 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Box, Grid, Typography } from '@mui/material';
-import CardComp2 from '../../shared/CardComp2.jsx';
-import SpringModal from '../../shared/SpringModal.jsx';
-import { SectionContext } from '../../context/SectionContextProvider.jsx'
-import { UserContext } from '../../context/UserContextProvider.jsx';
-import SupervisorName from '../../student/Booking/SupervisorName.jsx';
-import GetStudentName from '../../shared/GetStudentName.jsx';
+import React, { useState, useEffect, useContext } from "react";
+import { Avatar, Box, Grid, Typography } from "@mui/material";
+import CardComp2 from "../../shared/CardComp2.jsx";
+import SpringModal from "../../shared/SpringModal.jsx";
+import { SectionContext } from "../../context/SectionContextProvider.jsx";
+import { UserContext } from "../../context/UserContextProvider.jsx";
+import SupervisorName from "../../student/Booking/SupervisorName.jsx";
+import GetStudentName from "../../shared/GetStudentName.jsx";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 export default function HeadTab1() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const token = localStorage.getItem("userToken");
+  const [currentPage, setCurrentPage] = useState(1);
   const [section, setSection] = useState([]);
   const { getSections } = useContext(SectionContext);
   const { getUserById } = useContext(UserContext);
-  const [supervisorName, setSupervisorName] = useState("");
-  const [rowData, setRowData] = useState([]); 
+  const [rowData, setRowData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +31,7 @@ export default function HeadTab1() {
   }, [getSections]);
 
   const openModal = (students) => {
-    setRowData(students)
+    setRowData(students);
     setIsModalOpen(true);
   };
 
@@ -41,6 +42,15 @@ export default function HeadTab1() {
   const onClickDelete = () => {
     // Add delete logic here
   };
+
+  const handleChangePage = (event, newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const itemsPerPage = 3;
+  const lastIndex = currentPage * itemsPerPage;
+  const firstIndex = lastIndex - itemsPerPage;
+  const paginatedSections = section.slice(firstIndex, lastIndex);
 
   return (
     <Box>
@@ -59,30 +69,46 @@ export default function HeadTab1() {
         </Typography>
       </Box>
       <Grid container spacing={2}>
-        {section.map((sec) =>
+        {paginatedSections.map((sec) => (
           <Grid item xs={12} sm={6} md={4} key={sec._id}>
             <CardComp2
-              title={`${sec.num}`}
-              // Call getUser asynchronously and set user data once resolved
+              title={`Section Number: ${sec.num}`}
               description={
                 <>
                   <SupervisorName userId={sec.userId} />
                 </>
               }
-              onClickLearnMore={() => openModal(sec.students)} // Pass student IDs to openModal
+              onClickLearnMore={() => openModal(sec.students)}
               onClickDelete={onClickDelete}
             />
           </Grid>
-        )}
+        ))}
       </Grid>
-      <SpringModal 
-        closeModal={closeModal} 
-        isModalOpen={isModalOpen}  
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 ,}}>
+        <Pagination
+          count={Math.ceil(section.length / itemsPerPage)}
+          page={currentPage}
+          onChange={handleChangePage}
+          showFirstButton
+          showLastButton
+        />
+      </Box>
+      <SpringModal
+        closeModal={closeModal}
+        isModalOpen={isModalOpen}
         modalContent={
           <>
-            {rowData.map(studentId => (
-              <GetStudentName key={studentId} userId={studentId} />
-            ))}
+            <Avatar
+              src="/image/student.png"
+              alt="section student"
+              sx={{ width: "15%", height: "15%", margin: "auto", border: "1px solid black" }}
+            />
+
+            <Box sx={{ textAlign: "center", pt: 2 }}>
+              {rowData.map((studentId) => (
+                <GetStudentName key={studentId} userId={studentId} />
+              ))}
+            </Box>
           </>
         }
       />
