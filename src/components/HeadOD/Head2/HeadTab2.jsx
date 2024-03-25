@@ -44,7 +44,7 @@ export default function HeadTab2() {
       const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/head/addSection`, values, {
         headers: { token: `Bearer ${token}` },
       });
-      if(data.message === "success") {
+      if(data.message === "Success") {
         showSnackbar({ message: "Section added successfully", severity: "success" });
       }
       return data;
