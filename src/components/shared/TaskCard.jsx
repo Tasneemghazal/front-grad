@@ -1,6 +1,6 @@
 import { Avatar, Box, Grid, Paper, Typography } from "@mui/material";
 import React  from "react";
-export default function TaskCard() {
+export default function TaskCard({txt,endDate}) {
  
   return (
     <Box>
@@ -32,8 +32,8 @@ export default function TaskCard() {
               alignItems: "center",
             }}
           >
-            <Typography>AI Task</Typography>
-            <Typography>19-2-2024</Typography>
+            <Typography>{txt}</Typography>
+            <Typography>{endDate.split('T')[0]}</Typography>
           </Grid>
         </Grid>
       </Paper>
