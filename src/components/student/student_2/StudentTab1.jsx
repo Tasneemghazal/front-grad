@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import { userContext } from "../../context/StudentContextProvider.jsx";
 import { useState } from "react";
 import { UserContext } from "../../context/UserContextProvider.jsx";
+import Title from "../../shared/title.jsx";
 
 
 
@@ -18,30 +19,18 @@ export default function StudentTab1() {
        console.log(data)
        
   }
-  useEffect(()=>{
-    const fetchData=async()=>{
+  useEffect(() => {
+    const fetchData = async () => {
       const studentSection = await getStudentSection();
       setId(studentSection.section.userId);
-    }
+      superData(studentSection.section.userId);
+    };
     fetchData();
-    superData(Id);
-  },[])
+  }, []);
   return (
     <Box>
-      <Box sx={{ width: { xs: "60%", md: "40%" }, my: 5 }}>
-        <Typography
-          variant="h4"
-          sx={{
-            display: "flex",
-            justifyContent: "start",
-            fontWeight: "bold",
-            borderBottom: "2px solid rgba(43, 1, 62, 0.4)",
-            fontSize: { xs: 15, md: 40 },
-          }}
-        >
-          Your Supervisor
-        </Typography>
-      </Box>
+  
+    <Title title={"Your Supervisor"}/>
       
       <Grid container justifyContent="center" spacing={2}>
         
