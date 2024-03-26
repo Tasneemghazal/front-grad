@@ -1,5 +1,5 @@
 // SupervisorTab2.jsx
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import BasicDateCalendar from "../../shared/BasicDateCalender.jsx";
 import TaskCard from "../../shared/TaskCard.jsx";
@@ -8,10 +8,12 @@ import { Link } from "react-router-dom";
 import SpringModal from "../../shared/SpringModal.jsx";
 import EditDeleteTask from "./EditDeleteTask.jsx";
 import Title from "../../shared/title.jsx";
+import { TaskContext } from "../../context/TaskContext.jsx";
 
 export default function SupervisorTab2() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const {getSuperTask}=useContext(TaskContext);
+  const [ superTask,setSuperTask] = useState([]);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -25,7 +27,13 @@ export default function SupervisorTab2() {
     console.log("Delete action triggered");
     closeModal();
   };
-
+  useEffect(()=>{
+    const fetchData=async()=>{
+      const {tasks} = await getSuperTask();
+      setSuperTask(tasks);
+    }
+    fetchData();
+  },[])
   return (
     <Box>
         <Title title={"Add task"}/>
@@ -33,15 +41,12 @@ export default function SupervisorTab2() {
         <Grid item md={7}>
           <Grid container spacing={2}>
             <SpringModal closeModal={closeModal} isModalOpen={isModalOpen} modalContent={<EditDeleteTask closeModal={closeModal} onClickDelete={onClickDelete} />} />
+            {superTask.map(task=> (
             <Grid item md={6} onClick={openModal}>
-              <TaskCard />
+              <TaskCard txt={task.txt} endDate={task.endDate}/>
             </Grid>
-            <Grid item md={6} onClick={openModal}>
-              <TaskCard />
-            </Grid>
-            <Grid item md={6} onClick={openModal}>
-              <TaskCard />
-            </Grid>
+            ))}
+            
           </Grid>
           <Box sx={{ pt: 2 }}>
             <Link to='addTask'>
