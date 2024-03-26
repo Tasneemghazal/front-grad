@@ -6,6 +6,7 @@ import SupervisorName from "./SupervisorName.jsx";
 import SectionForm from "./SectionForm.jsx";
 import { SectionContext } from "../../context/SectionContextProvider.jsx";
 import EventIcon from "@mui/icons-material/Event";
+import Title from "../../shared/title.jsx";
 const SectionRegistration = () => {
   const token = localStorage.getItem("userToken");
   const [section, setSection] = useState([]);
@@ -35,20 +36,7 @@ const SectionRegistration = () => {
   return (
     <Container>
       <ToastContainer />
-      <Box sx={{ width: { xs: "60%", md: "40%" }, my: 5 }}>
-        <Typography
-          variant="h4"
-          sx={{
-            display: "flex",
-            justifyContent: "start",
-            fontWeight: "bold",
-            borderBottom: "2px solid rgba(43, 1, 62, 0.4)",
-            fontSize: { xs: 15, md: 40 },
-          }}
-        >
-          Book Your Supervisor
-        </Typography>
-      </Box>
+   <Title title={"Book Your Supervisor"} />
       <Grid container justifyContent="center" spacing={2}>
         {section.map((sec) => (
           sec.visible && (

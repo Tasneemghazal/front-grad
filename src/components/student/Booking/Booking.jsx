@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import { css } from "@emotion/react";
 import { Avatar, Typography } from "@mui/material";
+import Title from "../../shared/title.jsx";
 
 const Booking = () => {
   const navigate = useNavigate();
@@ -18,20 +19,7 @@ const Booking = () => {
   return (
     <Container>
       <Box className="booking-container" sx={{ py: 4 }} >
-        <Box sx={{ width: { xs: "60%", md: "40%" } }}>
-          <Typography
-            variant="h4"
-            sx={{
-              display: "flex",
-              justifyContent: "start",
-              fontWeight: "bold",
-              borderBottom: "2px solid rgba(43, 1, 62, 0.4)",
-              fontSize: { xs: 15, md: 40 },
-            }}
-          >
-            Announcement
-          </Typography>
-        </Box>
+      <Title title={" Announcement"} />
 
         <Box
           className="marquee"

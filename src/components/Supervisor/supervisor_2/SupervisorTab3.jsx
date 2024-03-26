@@ -5,6 +5,8 @@ import axios from 'axios';
 import SpringModal from '../../shared/SpringModal.jsx';
 import { SectionContext } from '../../context/SectionContextProvider.jsx';
 import DeleteContent from '../../shared/DeleteContent.jsx';
+import { Box, Typography } from '@mui/material';
+import Title from '../../shared/title.jsx';
 
 export default function SupervisorTab3() {
     const { getRequests } = useContext(RequestContext);
@@ -61,6 +63,7 @@ export default function SupervisorTab3() {
 
     return (
         <>
+           <Title title={"Your requests"}/>
             <CustomTable data={tableData} columns={tableColumns} request={false} onDelete={handleDelete} getSectionNum={getSectionNumber}/>
             <SpringModal
                 isModalOpen={isModalOpen}

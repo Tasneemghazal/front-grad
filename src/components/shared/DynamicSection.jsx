@@ -5,8 +5,9 @@ import SpringModal from "./SpringModal.jsx";
 import SupervisorName from "../student/Booking/SupervisorName.jsx";
 import GetStudentName from "./GetStudentName.jsx";
 import Pagination from '@mui/material/Pagination';
+import Title from "./title.jsx";
 
-export default function DynamicSection({ getSections }) {
+export default function DynamicSection({ getSections,flag=true }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [section, setSection] = useState([]);
@@ -50,20 +51,7 @@ export default function DynamicSection({ getSections }) {
 
   return (
     <Box>
-      <Box sx={{ width: { xs: "60%", md: "40%" }, my: 5 }}>
-        <Typography
-          variant="h4"
-          sx={{
-            display: "flex",
-            justifyContent: "start",
-            fontWeight: "bold",
-            borderBottom: "2px solid rgba(43, 1, 62, 0.4)",
-            fontSize: { xs: 15, md: 40 },
-          }}
-        >
-          Your Sections
-        </Typography>
-      </Box>
+<Title title={"Your sections"}/>
       <Grid container spacing={2}>
         {paginatedSections.map((sec) => (
           <Grid item xs={12} sm={6} md={4} key={sec._id}>
@@ -71,7 +59,7 @@ export default function DynamicSection({ getSections }) {
               title={`Section Number: ${sec.num}`}
               description={
                 <>
-                  <SupervisorName userId={sec.userId} />
+                 {flag && <SupervisorName userId={sec.userId} />}
                 </>
               }
               onClickLearnMore={() => openModal(sec.students)}
@@ -101,6 +89,7 @@ export default function DynamicSection({ getSections }) {
             />
 
             <Box sx={{ textAlign: "center", pt: 2 }}>
+            <Typography>Students: </Typography>
               {rowData.map((studentId) => (
                 <GetStudentName key={studentId} userId={studentId} />
               ))}

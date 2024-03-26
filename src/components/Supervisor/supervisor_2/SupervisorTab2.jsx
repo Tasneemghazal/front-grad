@@ -7,6 +7,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { Link } from "react-router-dom";
 import SpringModal from "../../shared/SpringModal.jsx";
 import EditDeleteTask from "./EditDeleteTask.jsx";
+import Title from "../../shared/title.jsx";
 
 export default function SupervisorTab2() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,27 +21,14 @@ export default function SupervisorTab2() {
   };
 
   const onClickDelete = () => {
-    // Add delete logic here
+
     console.log("Delete action triggered");
-    closeModal(); // Close modal after deletion
+    closeModal();
   };
 
   return (
     <Box>
-      <Box sx={{ width: { xs: "60%", md: "40%" }, my: 5 }}>
-        <Typography
-          variant="h4"
-          sx={{
-            display: "flex",
-            justifyContent: "start",
-            fontWeight: "bold",
-            borderBottom: "2px solid rgba(43, 1, 62, 0.4)",
-            fontSize: { xs: 15, md: 40 },
-          }}
-        >
-          Add Task
-        </Typography>
-      </Box>
+        <Title title={"Add task"}/>
       <Grid container>
         <Grid item md={7}>
           <Grid container spacing={2}>

@@ -6,6 +6,7 @@ import { UserContext } from "../../context/UserContextProvider.jsx";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useSnackbar } from "../../context/SnackbarProvider.jsx";
+import Title from "../../shared/title.jsx";
 
 export default function HeadTab2() {
   const { getUsers,extractDepIdFromToken  } = useContext(UserContext);
@@ -67,23 +68,10 @@ export default function HeadTab2() {
 
   return (
     <Container>
-      <Box sx={{ width: { xs: "60%", md: "40%" }, my: 5 }}>
-        <Typography
-          variant="h4"
-          sx={{
-            display: "flex",
-            justifyContent: "start",
-            fontWeight: "bold",
-            borderBottom: "2px solid rgba(43, 1, 62, 0.4)",
-            fontSize: { xs: 15, md: 40 },
-          }}
-        >
-          Add a New Section
-        </Typography>
-      </Box>
+ <Title title={"Add a New Section"}/>
       <Box>
         <Grid container spacing={2}>
-          <Grid item md={isSmallScreen ? 12 : 7}>
+          <Grid item md={isSmallScreen ? 12 : 7} sx={{mt:{md:10}}}>
             <form onSubmit={formik.handleSubmit}>
               <InputCom
                 placeholder="Section Number"
