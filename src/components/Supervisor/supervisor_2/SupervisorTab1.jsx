@@ -10,7 +10,7 @@ export default function SupervisorTab1() {
 
   return (
     <>
-    <DynamicSection getSections={getSuperSections}/>
+    <DynamicSection getSections={getSuperSections} flag={false}/>
     </>
   );
 }
