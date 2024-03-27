@@ -178,7 +178,7 @@ export const router = createBrowserRouter([
         element: <AddTask title={"Add a new task"} />,
       },
       {
-        path: "edittask",
+        path: "editTask/:id",
         element: <EditTask />,
       },
       {
