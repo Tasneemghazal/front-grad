@@ -15,7 +15,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ViewTask({ open, onClose }) {
+export default function ViewTask({ open, onClose ,tasks}) {
   return (
     <Container>
       <Dialog
@@ -38,7 +38,7 @@ export default function ViewTask({ open, onClose }) {
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Assignment 1
+              {tasks.txt}
             </Typography>
             <Button autoFocus color="inherit" onClick={onClose}>
               save
@@ -61,7 +61,7 @@ export default function ViewTask({ open, onClose }) {
               <Typography sx={{ color: "black" }}>
                 <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quaerat officia laboriosam assumenda, facere enim, aspernatur nulla quasi voluptatibus, dolorum dolore dolores nobis aut consequatur fugiat. Dignissimos, optio? Vero, pariatur.</span>
               </Typography>
-              <Box>Assignment file</Box>
+              <Box>{tasks.file}</Box>
               <UploadFile/>
               
               <Box>Time</Box>
