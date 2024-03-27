@@ -26,12 +26,25 @@ export default function TaskContextProvider({children}) {
           throw error;
         }
       };
+      const removeTask = async (taskId) => {
+        try {
+          const token = localStorage.getItem("userToken");
+          const { data } = await axios.delete(
+            `${import.meta.env.VITE_API_URL}/supervisor/deleteTask/${taskId}`,
+            { headers: { token: `Bearer ${token}` } }
+          );
+          console.log(data);
+          return data;
+        } catch (err) {
+          console.log(err);
+        }
+      };
     
       useEffect(()=>{
         getSuperTask();
       },[])
   return (
-    <TaskContext.Provider value={{getSuperTask,getTaskById}}>
+    <TaskContext.Provider value={{getSuperTask,getTaskById,removeTask}}>
       {children}
     </TaskContext.Provider>
   )
