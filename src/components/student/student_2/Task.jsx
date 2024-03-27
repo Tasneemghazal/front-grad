@@ -1,32 +1,37 @@
-import { Box, Grid } from '@mui/material'
-import React, { useState } from 'react'
-import TaskCard from '../../shared/TaskCard.jsx'
-import ViewTask from './ViewTask.jsx';
+import { Box, Grid } from "@mui/material";
+import React, { useState } from "react";
+import TaskCard from "../../shared/TaskCard.jsx";
+import ViewTask from "./ViewTask.jsx";
 
-export default function Task() {
-    const [dialogOpen, setDialogOpen] = useState(false);
+export default function Task({ tasks }) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
 
-    const handleOpenDialog = () => {
-      setDialogOpen(true);
-    };
-  
-    const handleCloseDialog = () => {
-      setDialogOpen(false);
-    };
+  const handleOpenDialog = (taskId) => {
+    setSelectedTaskId(taskId);
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setSelectedTaskId(null);
+    setDialogOpen(false);
+  };
+
   return (
     <Box>
-    <Grid container spacing={2}>
-        <Grid item xs={6} onClick={handleOpenDialog}>
-            <TaskCard />
-        </Grid>
-        <Grid item xs={6} onClick={handleOpenDialog}>
-            <TaskCard/>
-        </Grid>
-        <Grid item xs={6} onClick={handleOpenDialog}>
-            <TaskCard/>
-        </Grid>
-    </Grid>
-    <ViewTask open={dialogOpen} onClose={handleCloseDialog} />
+      <Grid container spacing={2}>
+        {tasks.map((task) => (
+          <Grid item xs={6} key={task._id}>
+            <TaskCard
+              txt={task.txt}
+              endDate={task.endDate}
+              onClick={() => handleOpenDialog(task._id)}
+            />
+          </Grid>
+        ))}
+      </Grid>
+      <ViewTask open={dialogOpen} onClose={handleCloseDialog} tasks={tasks} taskId={selectedTaskId} />
     </Box>
-  )
+  );
 }
+
