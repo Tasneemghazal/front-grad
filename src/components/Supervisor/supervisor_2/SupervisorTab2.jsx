@@ -12,10 +12,13 @@ import { TaskContext } from "../../context/TaskContext.jsx";
 
 export default function SupervisorTab2() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {getSuperTask}=useContext(TaskContext);
-  const [ superTask,setSuperTask] = useState([]);
-  const openModal = () => {
+  const [selectedTaskId, setSelectedTaskId] = useState(null); // State to store selected task ID
+  const { getSuperTask } = useContext(TaskContext);
+  const [superTask, setSuperTask] = useState([]);
+
+  const openModal = (taskId) => { // Modified openModal function to accept task ID
     setIsModalOpen(true);
+    setSelectedTaskId(taskId);
   };
 
   const closeModal = () => {
@@ -23,30 +26,34 @@ export default function SupervisorTab2() {
   };
 
   const onClickDelete = () => {
-
     console.log("Delete action triggered");
     closeModal();
   };
-  useEffect(()=>{
-    const fetchData=async()=>{
-      const {tasks} = await getSuperTask();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { tasks } = await getSuperTask();
       setSuperTask(tasks);
     }
     fetchData();
-  },[])
+  }, []);
+
   return (
     <Box>
-        <Title title={"Add task"}/>
+      <Title title={"Add task"} />
       <Grid container>
         <Grid item md={7}>
           <Grid container spacing={2}>
-            <SpringModal closeModal={closeModal} isModalOpen={isModalOpen} modalContent={<EditDeleteTask closeModal={closeModal} onClickDelete={onClickDelete} />} />
-            {superTask.map(task=> (
-            <Grid item md={6} onClick={openModal}>
-              <TaskCard txt={task.txt} endDate={task.endDate}/>
-            </Grid>
+            <SpringModal
+              closeModal={closeModal}
+              isModalOpen={isModalOpen}
+              modalContent={<EditDeleteTask closeModal={closeModal} onClickDelete={onClickDelete} taskId={selectedTaskId} />} // Pass taskId to EditDeleteTask component
+            />
+            {superTask.map(task => (
+              <Grid item md={6} key={task.id} onClick={() => openModal(task._id)}> {/* Pass task.id to openModal function */}
+                <TaskCard txt={task.txt} endDate={task.endDate} />
+              </Grid>
             ))}
-            
           </Grid>
           <Box sx={{ pt: 2 }}>
             <Link to='addTask'>
@@ -58,7 +65,7 @@ export default function SupervisorTab2() {
                 }}
               >
                 Add Task
-                <AddCircleIcon sx={{ fontSize: 30, ml:1 }}/>
+                <AddCircleIcon sx={{ fontSize: 30, ml: 1 }} />
               </Button>
             </Link>
           </Box>
