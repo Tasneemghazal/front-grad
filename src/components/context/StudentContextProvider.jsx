@@ -78,6 +78,18 @@ export default function StudentContextProvider({ children }) {
       throw error;
     }
   };
+  const getStudentTask= async () => {
+    try {
+      const token = localStorage.getItem("userToken");
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/student/getMyTask`, {
+        headers: { token: `Bearer ${token}` }
+      });
+      return data;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw error;
+    }
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -87,7 +99,7 @@ export default function StudentContextProvider({ children }) {
   }, []);
 
   return (
-    <userContext.Provider value={{ userToken, getUsers, userData, removeUser,extractNameFromToken,getStudentById, getStudentSection }}>
+    <userContext.Provider value={{ userToken, getUsers, userData, removeUser,extractNameFromToken,getStudentById, getStudentSection,getStudentTask }}>
       {children}
     </userContext.Provider>
   );
