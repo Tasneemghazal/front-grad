@@ -19,7 +19,7 @@ import SelectCom from "../../shared/SelectCom.jsx";
 import { useSnackbar } from "../../context/SnackbarProvider.jsx";
 import { useParams } from "react-router-dom";
 import { TaskContext } from "../../context/TaskContext.jsx";
-import { parse } from 'date-fns';
+import { format } from 'date-fns';
 export default function EditTask() {
   const{id}=useParams();
   const { getSuperSections } = useContext(SectionContext);
@@ -27,23 +27,25 @@ export default function EditTask() {
   const token = localStorage.getItem("userToken");
   const [sections, setSections] = useState([]);
   const [selectedThesis, setSelectedThesis] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const theme = useTheme();
   const { showSnackbar } = useSnackbar();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   async function fetchTaskData(taskId) {
-    const res = await getTaskById(taskId);
-    console.log(res);
-    const parsedStartDate = parse(res.tasks.startDate, 'MM/dd/yyyy hh:mm aa', new Date());
-    const parsedEndDate = parse(res.tasks.endDate, 'MM/dd/yyyy hh:mm aa', new Date());
-    setStartDate(parsedStartDate);
-    setEndDate(parsedEndDate);
-    formik.setValues({
-      txt: res.tasks.txt,
-      sections: res.tasks.sections,
-      task: res.tasks.file
-    });
+    try {
+      const res = await getTaskById(taskId);
+      setStartDate(res.tasks.startDate);
+      setEndDate(res.tasks.endDate);
+  
+      formik.setValues({
+        txt: res.tasks.txt,
+        sections: res.tasks.sections,
+        task: res.tasks.file,
+      });
+    } catch (error) {
+      console.error('Error fetching task data:', error);
+    }
   }
 
   useEffect(() => {
@@ -106,6 +108,7 @@ export default function EditTask() {
   ];
   const renderInputs = inputs.map((input, index) => (
     <InputCom
+      key={index}
       type={input.type}
       name={input.name}
       id={input.id}
@@ -154,7 +157,7 @@ export default function EditTask() {
             />
             <UploadFile
               onFileChange={setSelectedThesis}
-              buttonText="Upload Thesis File"
+              buttonText="Upload Task File"
             />
             <Button
               variant="contained"
