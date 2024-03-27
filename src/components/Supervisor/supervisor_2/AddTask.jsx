@@ -120,8 +120,8 @@ export default function AddTask({ title }) {
         <Grid item xs={12} sm={isSmallScreen ? 12 : 7}>
           <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
             {renderInputs}
-            <BasicDateTimePicker label="From" onChange={setStartDate} />
-            <BasicDateTimePicker label="To" onChange={setEndDate} />
+            <BasicDateTimePicker label="From" onChange={setStartDate} flag={false}/>
+            <BasicDateTimePicker label="To" onChange={setEndDate} flag={false}/>
             <SelectCom
               labelId="sections-label"
               id="sections"
