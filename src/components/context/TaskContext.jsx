@@ -14,12 +14,24 @@ export default function TaskContextProvider({children}) {
           throw error;
         }
       };
+      const getTaskById = async (id) => {
+        try {
+          const token = localStorage.getItem("userToken");
+          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/supervisor/getTask/${id}`, {
+            headers: { token: `Bearer ${token}` }
+          });
+          return data;
+        } catch (error) {
+          console.error("Error fetching task:", error);
+          throw error;
+        }
+      };
     
       useEffect(()=>{
         getSuperTask();
       },[])
   return (
-    <TaskContext.Provider value={{getSuperTask}}>
+    <TaskContext.Provider value={{getSuperTask,getTaskById}}>
       {children}
     </TaskContext.Provider>
   )
