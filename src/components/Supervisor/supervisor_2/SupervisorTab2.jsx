@@ -13,7 +13,7 @@ import { TaskContext } from "../../context/TaskContext.jsx";
 export default function SupervisorTab2() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState(null); // State to store selected task ID
-  const { getSuperTask } = useContext(TaskContext);
+  const { getSuperTask ,removeTask} = useContext(TaskContext);
   const [superTask, setSuperTask] = useState([]);
 
   const openModal = (taskId) => { // Modified openModal function to accept task ID
@@ -25,8 +25,9 @@ export default function SupervisorTab2() {
     setIsModalOpen(false);
   };
 
-  const onClickDelete = () => {
-    console.log("Delete action triggered");
+  const onClickDelete = async (taskId) => {
+    const task = await removeTask(taskId);
+    console.log(task);
     closeModal();
   };
 
@@ -47,7 +48,7 @@ export default function SupervisorTab2() {
             <SpringModal
               closeModal={closeModal}
               isModalOpen={isModalOpen}
-              modalContent={<EditDeleteTask closeModal={closeModal} onClickDelete={onClickDelete} taskId={selectedTaskId} />} // Pass taskId to EditDeleteTask component
+              modalContent={<EditDeleteTask closeModal={closeModal} onClickDelete={()=>onClickDelete(selectedTaskId)} taskId={selectedTaskId} />} // Pass taskId to EditDeleteTask component
             />
             {superTask.map(task => (
               <Grid item md={6} key={task.id} onClick={() => openModal(task._id)}> {/* Pass task.id to openModal function */}
