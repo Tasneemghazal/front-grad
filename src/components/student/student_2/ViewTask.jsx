@@ -7,15 +7,26 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
-import { Box, Container, Grid, Paper } from "@mui/material";
-import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Box, Container, Grid } from "@mui/material";
 import UploadFile from '../../shared/UploadFile.jsx';
+import { useContext,useEffect } from "react";
+import { TaskContext } from "../../context/TaskContextProvider.jsx";
+import { useState } from "react";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ViewTask({ open, onClose ,tasks}) {
+export default function ViewTask({ open, onClose ,taskId}) {
+  const {getTaskById} = useContext(TaskContext);
+  const [homeWork, setHomeWork] = useState();
+  const fetchData =async(id)=>{
+    const task = await getTaskById(id);
+    setHomeWork(task.tasks)
+  }
+  useEffect(()=>{
+    fetchData(taskId);
+  },[])
   return (
     <Container>
       <Dialog
@@ -23,7 +34,7 @@ export default function ViewTask({ open, onClose ,tasks}) {
         open={open}
         onClose={onClose}
         TransitionComponent={Transition}
-        classes={{ paper: 'dialog-paper' }} // Add custom class to the dialog paper
+        classes={{ paper: 'dialog-paper' }}
       >
         <AppBar
           sx={{ position: "relative", backgroundColor: "rgba(43, 1, 62, 0.4)" }}
@@ -38,7 +49,7 @@ export default function ViewTask({ open, onClose ,tasks}) {
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              {tasks.txt}
+              {homeWork&&homeWork.txt}
             </Typography>
             <Button autoFocus color="inherit" onClick={onClose}>
               save
@@ -57,14 +68,14 @@ export default function ViewTask({ open, onClose ,tasks}) {
             }}
           >
             <Box sx={{p:3 ,border:"1px solid rgba(43, 1, 62, 0.4)",textAlign:"center",borderRadius:"20px",m:3}}>
-              <Typography sx={{fontWeight:"bold",py:1}} variant="h4">Assignment 3</Typography>
+              <Typography sx={{fontWeight:"bold",py:1}} variant="h4">{homeWork&&homeWork.txt}</Typography>
               <Typography sx={{ color: "black" }}>
                 <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi quaerat officia laboriosam assumenda, facere enim, aspernatur nulla quasi voluptatibus, dolorum dolore dolores nobis aut consequatur fugiat. Dignissimos, optio? Vero, pariatur.</span>
               </Typography>
-              <Box>{tasks.file}</Box>
+              {/* <Box>{tasks.file}</Box> */}
               <UploadFile/>
               
-              <Box>Time</Box>
+              <Box>{homeWork&&homeWork.endDate}</Box>
               <Box>Mark</Box>
             </Box>
           </Box>
