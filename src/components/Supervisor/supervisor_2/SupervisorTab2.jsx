@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import SpringModal from "../../shared/SpringModal.jsx";
 import EditDeleteTask from "./EditDeleteTask.jsx";
 import Title from "../../shared/title.jsx";
-import { TaskContext } from "../../context/TaskContext.jsx";
+import { TaskContext } from "../../context/TaskContextProvider.jsx";
 
 export default function SupervisorTab2() {
   const [isModalOpen, setIsModalOpen] = useState(false);

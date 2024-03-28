@@ -18,7 +18,7 @@ import { SectionContext } from "../../context/SectionContextProvider.jsx";
 import SelectCom from "../../shared/SelectCom.jsx";
 import { useSnackbar } from "../../context/SnackbarProvider.jsx";
 import { useParams } from "react-router-dom";
-import { TaskContext } from "../../context/TaskContext.jsx";
+import { TaskContext } from "../../context/TaskContextProvider.jsx";
 import { format } from 'date-fns';
 export default function EditTask() {
   const{id}=useParams();
