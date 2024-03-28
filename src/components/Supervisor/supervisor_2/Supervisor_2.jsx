@@ -7,6 +7,7 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import SupervisorTab1 from './SupervisorTab1.jsx';
 import SupervisorTab2 from './SupervisorTab2.jsx';
 import SupervisorTab3 from './SupervisorTab3.jsx';
+import SupervisorTab4 from './SupervisorTab4.jsx';
 export default function Supervisor_2() {
   return (
     <Container>
@@ -15,6 +16,7 @@ export default function Supervisor_2() {
             { label: <ViewListIcon/>, content: <SupervisorTab1/> },
             { label: <BorderColorIcon/>, content: <SupervisorTab2/> },
             { label: <AppRegistrationIcon/>, content: <SupervisorTab3/> },
+            { label: <AppRegistrationIcon/>, content: <SupervisorTab4/> },
           ]}
         />
     </Container>
