@@ -33,6 +33,7 @@ import Department from "../components/dashboard/departmet/Department.jsx";
 import EditUser from "../components/shared/EditUser.jsx";
 import EditStudents from "../components/dashboard/student/EditStudents.jsx";
 import SectionRegistration from "../components/student/Booking/SectionRegistration.jsx";
+import SubmitTask from "../components/student/student_2/SubmitTask.jsx";
 const handleGoBack = () => {
   window.history.back();
 };
@@ -143,6 +144,10 @@ export const router = createBrowserRouter([
       {
         path: "home",
         element: <TotalStudent />,
+      },
+      {
+        path:"submitTask/:sectionId/:taskId",
+        element:<SubmitTask title={"Submit Your Task"}/>
       },
       {
         path: "profile",
