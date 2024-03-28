@@ -8,12 +8,11 @@ import {userContext} from "../../context/StudentContextProvider.jsx";
 
 export default function StudentTab3() {
   const {getStudentTask} = useContext(userContext);
-  const [ tasks, setTasks] = useState([]);
+  const [ myTasks, setMyTasks] = useState([]);
   useEffect(()=>{
     const fetchData = async()=>{
-      const myTask = await getStudentTask();
-      setTasks(myTask.tasks);
-      console.log(tasks)
+      const {tasks} = await getStudentTask();
+      setMyTasks(tasks);
     }
     fetchData();
   },[])
@@ -22,7 +21,7 @@ export default function StudentTab3() {
     <Title title={"Your Tasks"} />
     <Grid container>
       <Grid item xs={12} md={7} sx={{pb:2,pt:{xs:0,sm:1,md:7}}}>
-      <Task tasks={tasks}/>
+      <Task tasks={myTasks}/>
       </Grid>
       <Grid item xs={12} md={5}>
       <BasicDateCalendar style={{ border: "1px solid rgba(43, 1, 62, 0.4)" }} />
