@@ -8,27 +8,34 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { Box, Container, Grid } from "@mui/material";
-import UploadFile from "../../shared/UploadFile.jsx";
 import { useContext, useEffect } from "react";
 import { TaskContext } from "../../context/TaskContextProvider.jsx";
 import { useState } from "react";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
+import { userContext } from "../../context/StudentContextProvider.jsx";
+import { Link } from "react-router-dom";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function ViewTask({ open, onClose, taskId }) {
   const { getTaskById } = useContext(TaskContext);
+  const {getStudentSection} = useContext(userContext);
+  const [sectionId,setSectionId] = useState();
   const [homeWork, setHomeWork] = useState();
-
+  
+  const getSection = async()=>{
+      const mySection = await getStudentSection();
+      setSectionId(mySection.section._id);
+  }
   useEffect(() => {
     const fetchData = async () => {
       const task = await getTaskById(taskId);
       setHomeWork(task.tasks);
-      console.log(task.tasks);
     };
     fetchData();
-  }, [getTaskById, taskId]);
+    getSection();
+  }, [getTaskById, taskId,getSection]);
   return (
     <Container>
       <Dialog
@@ -118,6 +125,22 @@ export default function ViewTask({ open, onClose, taskId }) {
                 <Box>
                   End at: {homeWork && homeWork.endDate.split("T")[0]}/
                   {homeWork && homeWork.endDate.split("T")[1].slice(0, -1)}
+                </Box>
+
+                <Box sx={{mt:2}}>
+                  <Link to={`submitTask/${sectionId}/${taskId}`}>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "rgba(43, 1, 62, 0.5)",
+                      "&:hover": {
+                        backgroundColor: "rgba(43, 1, 62, 0.8)",
+                      },
+                    }}
+                  >
+                    Add your Submission
+                  </Button>
+                  </Link>
                 </Box>
               </Box>
             </Box>
