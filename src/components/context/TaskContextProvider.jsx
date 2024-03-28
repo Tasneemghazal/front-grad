@@ -14,6 +14,18 @@ export default function TaskContextProvider({children}) {
           throw error;
         }
       };
+      const getSuperSubmission = async () => {
+        try {
+          const token = localStorage.getItem("userToken");
+          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/supervisor/getTaskSubmission`, {
+            headers: { token: `Bearer ${token}` }
+          });
+          return data;
+        } catch (error) {
+          console.error("Error fetching task:", error);
+          throw error;
+        }
+      };
       const getTaskById = async (id) => {
         try {
           const token = localStorage.getItem("userToken");
@@ -44,7 +56,7 @@ export default function TaskContextProvider({children}) {
         getSuperTask();
       },[])
   return (
-    <TaskContext.Provider value={{getSuperTask,getTaskById,removeTask}}>
+    <TaskContext.Provider value={{getSuperTask,getTaskById,removeTask,getSuperSubmission}}>
       {children}
     </TaskContext.Provider>
   )
