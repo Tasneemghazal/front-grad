@@ -4,6 +4,7 @@ import TaskCard from "../../shared/TaskCard.jsx";
 import ViewTask from "./ViewTask.jsx";
 
 export default function Task({ tasks }) {
+  console.log(tasks)
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState(null);
 
@@ -21,17 +22,15 @@ export default function Task({ tasks }) {
     <Box>
       <Grid container spacing={2}>
         {tasks.map((task) => (
-          <Grid item xs={6} key={task._id}>
+          <Grid item xs={6} key={task._id} onClick={() => handleOpenDialog(task._id)}>
             <TaskCard
               txt={task.txt}
               endDate={task.endDate}
-              onClick={() => handleOpenDialog(task._id)}
             />
           </Grid>
         ))}
       </Grid>
-      <ViewTask open={dialogOpen} onClose={handleCloseDialog} tasks={tasks} taskId={selectedTaskId} />
+      <ViewTask open={dialogOpen} onClose={handleCloseDialog} taskId={selectedTaskId} />
     </Box>
   );
 }
-
