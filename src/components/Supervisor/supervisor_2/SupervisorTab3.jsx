@@ -7,6 +7,7 @@ import { SectionContext } from '../../context/SectionContextProvider.jsx';
 import DeleteContent from '../../shared/DeleteContent.jsx';
 import { Box, Typography } from '@mui/material';
 import Title from '../../shared/title.jsx';
+import { useSnackbar } from '../../context/SnackbarProvider.jsx';
 
 export default function SupervisorTab3() {
     const { getRequests } = useContext(RequestContext);
@@ -15,7 +16,7 @@ export default function SupervisorTab3() {
     const [rejRequest, setRejRequest] = useState({ requestId: null, sectionId: null }); 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { getSectionNum } = useContext(SectionContext);
-
+    const { showSnackbar } = useSnackbar();
     const reject = async (requestId, sectionId) => {
         setRejRequest({ requestId, sectionId });
         setIsModalOpen(true);
@@ -24,8 +25,11 @@ export default function SupervisorTab3() {
     const handleRejectConfirmation = async () => {
         const { requestId } = rejRequest;
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/reject`, rejRequest);
+            const {data}=await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/reject`, rejRequest);
             setTableData(tableData.filter(row => row.state !== 'rejected')); 
+            if (data.message === "success") {
+                showSnackbar({ message: "Request rejected successfully", severity: "success" });
+              }
         } catch (error) {
             console.log(error);
         }
