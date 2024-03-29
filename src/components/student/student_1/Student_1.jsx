@@ -8,7 +8,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import{ useContext, useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import "./student_1.css";
 import Divider from "@mui/material/Divider";
@@ -193,23 +193,22 @@ export default function Student_1() {
                   maxWidth: "100%",
                 }}
               >
-            <Box
-  sx={{
-    backgroundColor: "rgba(43, 1, 62, 0.3)",
-    borderRadius: "30px",
-    position: "absolute",
-    top: { xs: "50%", md: 0 },
-    left: 0,
-    width: "100%",
-    height: "80%",
-    objectFit: "cover",
-    transform: { xs: "translateY(-50%)", md: "none" },
-    backgroundImage: `url('image/studentcover.jpg')`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center', 
-  }}
-/>
-
+                <Box
+                  sx={{
+                    backgroundColor: "rgba(43, 1, 62, 0.3)",
+                    borderRadius: "30px",
+                    position: "absolute",
+                    top: { xs: "50%", md: 0 },
+                    left: 0,
+                    width: "100%",
+                    height: "80%",
+                    objectFit: "cover",
+                    transform: { xs: "translateY(-50%)", md: "none" },
+                    backgroundImage: `url('image/studentcover.jpg')`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                />
               </Box>
 
               <Box
