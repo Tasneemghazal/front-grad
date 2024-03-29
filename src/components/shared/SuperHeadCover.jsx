@@ -18,7 +18,7 @@ import {
   import { Link } from "react-router-dom";
 import { userContext } from "../context/StudentContextProvider.jsx";
   
-  export default function SuperHeadCover({ background,image }) {
+  export default function SuperHeadCover({ background }) {
     const {extractNameFromToken} = useContext(userContext);
   const [supervisorName,setSuperName] = useState();
   useEffect(() => {
@@ -121,25 +121,7 @@ import { userContext } from "../context/StudentContextProvider.jsx";
                   }}
                 />
   
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: "90%",
-                    left: "35%",
-                   
-                    display: { xs: "block" },
-                    width: "30%", 
-                  }}
-                >
-                  <img
-                    src={`image/${image}`}
-                    alt="Supervisor Community"
-                    style={{
-                      width: "100%", 
-                      boxShadow: "2px 1px 8px 5px rgba(0, 0, 0, 0.4)",
-                    }}
-                  />
-                </Box>
+            
               </Box>
             </Grid>
           </Grid>
