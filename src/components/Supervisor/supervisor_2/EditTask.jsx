@@ -138,7 +138,7 @@ export default function EditTask() {
         </Typography>
       </Box>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={isSmallScreen ? 12 : 7}>
+        <Grid item xs={12} sm={isSmallScreen ? 12 : 7} sx={{mt:{md:4}}}>
           <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
             {renderInputs}
             <BasicDateTimePicker label="From" onChange={setStartDate} value={startDate} />
@@ -185,12 +185,13 @@ export default function EditTask() {
                 justifyContent: "center",
                 alignItems: "center",
                 pt: 3,
+               
               }}
             >
               <img
-                src="/image/addTask.png"
+                src="/image/editTask.png"
                 alt="Add Task"
-                style={{ maxWidth: "100%", height: "auto" }}
+                style={{ width: "100%", height: "auto", borderRadius: "50%", border:"2px solid black"}}
               />
             </Box>
           </Grid>
