@@ -5,9 +5,11 @@ import InputCom from '../../shared/InputCom.jsx';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { useFormik } from 'formik';
+import { useSnackbar } from '../../context/SnackbarProvider.jsx';
 
 export default function Confirm({ rowId, sectionId,closeModal }) {
     const [students, setStudents] = useState([""]);
+    const { showSnackbar } = useSnackbar();
 
     useEffect(() => {
         console.log(rowId);
@@ -33,6 +35,9 @@ export default function Confirm({ rowId, sectionId,closeModal }) {
         try {
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/confirm`, { requestId: rowId, sectionId, students });
             closeModal();
+            if (data.message === "success") {
+                showSnackbar({ message: "Request confirmed successfully", severity: "success" });
+              }
         } catch (error) {
             console.error('Error confirming request:', error);
         }
