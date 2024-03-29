@@ -93,7 +93,7 @@ export default function SubmitTask({ title }) {
         </Typography>
       </Box>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={isSmallScreen ? 12 : 7}>
+        <Grid item xs={12} sm={isSmallScreen ? 12 : 7} sx={{mt:{sm:5,md:15}}}>
           <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
             {renderInputs}
             <UploadFile
