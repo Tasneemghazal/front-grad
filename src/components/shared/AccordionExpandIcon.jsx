@@ -8,10 +8,12 @@ import { SectionContext } from "../context/SectionContextProvider.jsx";
 import { Box, Button, Link } from "@mui/material";
 import InputCom from "./InputCom.jsx";
 import { useFormik } from "formik";
+import { useSnackbar } from "../context/SnackbarProvider.jsx";
 import axios from "axios";
 
 export default function AccordionExpandIcon({ submissions }) {
   const { getSectionNum } = useContext(SectionContext);
+  const { showSnackbar } = useSnackbar();
   const [sections, setSections] = useState([]);
   const initialValues = {
     feedback: "",
@@ -33,7 +35,7 @@ export default function AccordionExpandIcon({ submissions }) {
         console.log(data);
         if (data.message === "success") {
           showSnackbar({
-            message: "task submitted successfully",
+            message: "Feedback submitted successfully",
             severity: "success",
           });
         }
@@ -92,23 +94,24 @@ export default function AccordionExpandIcon({ submissions }) {
   }, [submissions, getSectionNum]);
 
   return (
-    <div>
+    <div style={{textAlign:"center",border:"1px solid black"}}>
       {submissions.map((submission, index) => (
         <Accordion key={index}>
           <AccordionSummary
-            expandIcon={<ArrowDownwardIcon />}
+            expandIcon={<ArrowDownwardIcon style={{color:"rgba(43, 1, 62, 0.7)"}}/>}
             aria-controls={`panel${index + 1}-content`}
             id={`panel${index + 1}-header`}
+           
           >
-            <Typography>Section: {sections[index]}</Typography>
+            <Typography sx={{fontWeight:"bold"}}>Section: {sections[index]}</Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography>Task : {submission.taskId.txt}</Typography>
             <Box>
-              {submission.file && <Link href={submission.file}>File</Link>}
+            The text that was delivered: {submission.file && <Link href={submission.file}>File</Link>}
             </Box>
             <Box>
-              {submission.txt && <Typography>{submission.txt}</Typography>}
+            The text that was delivered: {submission.txt && <Typography>{submission.txt}</Typography>}
             </Box>
             <Box>
               <form
