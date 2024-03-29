@@ -4,10 +4,12 @@ import axios from "axios";
 import InputCom from "../../shared/InputCom.jsx";
 import { useFormik } from "formik";
 import { userContext } from "../../context/StudentContextProvider.jsx";
+import { useSnackbar } from "../../context/SnackbarProvider.jsx";
 
 const SectionForm = ({ section, token, onUpdateSection }) => {
   const { extractNameFromToken } = useContext(userContext);
   const [studentId, setStudentId] = useState("");
+  const { showSnackbar } = useSnackbar();
   const initialValues = { text: "" };
 
   useEffect(() => {
@@ -34,7 +36,9 @@ const SectionForm = ({ section, token, onUpdateSection }) => {
       const response = await axios.post(
         "http://localhost:3000/api/v1/grad/student/bookSection",
         data,
+        
         { headers: { token: `Bearer ${token}` } }
+       
       );
       console.log(response)
 
@@ -42,6 +46,7 @@ const SectionForm = ({ section, token, onUpdateSection }) => {
         // Update the visibility of the booked section to false
         onUpdateSection({ ...section, visible: false });
         console.log("Booking successful");
+        showSnackbar({ message: "Section booking successfully", severity: "success" });
       } else {
         console.log("Booking failed");
       }
@@ -73,6 +78,7 @@ const SectionForm = ({ section, token, onUpdateSection }) => {
             border: "1px solid rgba(43, 1, 62, 0.4)",
             color: "white",
             backgroundColor: "rgba(43, 1, 62, 0.7)",
+            width: "100%",
             '&:hover': {
               backgroundColor: "rgba(43, 1, 62, 0.9)",
             },
