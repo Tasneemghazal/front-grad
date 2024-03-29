@@ -14,20 +14,22 @@ import { useState } from "react";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import { userContext } from "../../context/StudentContextProvider.jsx";
 import { Link } from "react-router-dom";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function ViewTask({ open, onClose, taskId }) {
   const { getTaskById } = useContext(TaskContext);
-  const {getStudentSection} = useContext(userContext);
-  const [sectionId,setSectionId] = useState();
+  const { getStudentSection } = useContext(userContext);
+  const [sectionId, setSectionId] = useState();
   const [homeWork, setHomeWork] = useState();
-  
-  const getSection = async()=>{
-      const mySection = await getStudentSection();
-      setSectionId(mySection.section._id);
-  }
+
+  const getSection = async () => {
+    const mySection = await getStudentSection();
+    setSectionId(mySection.section._id);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const task = await getTaskById(taskId);
@@ -35,7 +37,8 @@ export default function ViewTask({ open, onClose, taskId }) {
     };
     fetchData();
     getSection();
-  }, [getTaskById, taskId,getSection]);
+  }, [getTaskById, taskId, getSection]);
+
   return (
     <Container>
       <Dialog
@@ -66,91 +69,93 @@ export default function ViewTask({ open, onClose, taskId }) {
           </Toolbar>
         </AppBar>
 
-        <Grid container>
-          <Grid item md={7} width={"100%"}>
+        <Box
+  sx={{
+    display: "flex",
+    justifyContent: "center",
+    width: "60%", 
+    margin: "auto", 
+    flexDirection: "column",
+    height: "100%",
+    backgroundImage:
+      "linear-gradient(rgba(255,255,255, 0.8),rgba(255,255,255, 0.8)),url('/image/viewTask.png')",
+    backgroundPosition: "center",
+   
+  }}
+>
+
+  
+          <Box
+            sx={{
+             
+              p: 3,
+              border: "2px solid rgba(43, 1, 62, 0.4)",
+              textAlign: "center",
+              borderRadius: "20px",
+              m: 3,
+              backgroundColor: "rgba(255, 255, 255)",
+            }}
+          >
+            <Typography sx={{ fontWeight: "bold", py: 1 }} variant="h4">
+              Let's do it !
+            </Typography>
+            <Typography sx={{ color: "black" }}>
+              <span>{homeWork && homeWork.txt}</span>
+            </Typography>
             <Box
               sx={{
                 display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
                 justifyContent: "center",
-                flexDirection: "column",
-                height: "100%",
+                textAlign: "center",
+                backgroundColor: "rgba(43, 1, 62, 0.4)",
+                p: 1,
+                m: 2,
+                borderRadius: "15px",
+              }}
+              onClick={() => {
+                if (homeWork && homeWork.file) {
+                  window.open(homeWork.file, "_blank");
+                }
               }}
             >
-              <Box
-                sx={{
-                  p: 3,
-                  border: "1px solid rgba(43, 1, 62, 0.4)",
-                  textAlign: "center",
-                  borderRadius: "20px",
-                  m: 3,
-                }}
+              <DownloadForOfflineIcon sx={{ mr: 1 }} />
+              <Typography
+                variant="body1"
+                component="a"
+                href={homeWork && homeWork.file}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ textDecoration: "none", color: "inherit" }}
               >
-                <Typography sx={{ fontWeight: "bold", py: 1 }} variant="h4">
-                  Let's do it
-                </Typography>
-                <Typography sx={{ color: "black" }}>
-                  <span>{homeWork && homeWork.txt}</span>
-                </Typography>
-                <Box
+                Download File
+              </Typography>
+            </Box>
+
+           
+
+            <Box sx={{ mt: 2 }}>
+              <Link to={`submitTask/${sectionId}/${taskId}`}>
+                <Button
+                  variant="contained"
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    justifyContent: "center",
-                    textAlign: "center",
-                    backgroundColor: "rgba(43, 1, 62, 0.4)",
-                    p: 1,
-                    m: 2,
-                    borderRadius: "15px",
-                  }}
-                  onClick={() => {
-                    if (homeWork && homeWork.file) {
-                      window.open(homeWork.file, "_blank");
-                    }
+                    backgroundColor: "rgba(43, 1, 62, 0.5)",
+                    "&:hover": {
+                      backgroundColor: "rgba(43, 1, 62, 0.8)",
+                    },
                   }}
                 >
-                  <DownloadForOfflineIcon sx={{ mr: 1 }} />
-                  <Typography
-                    variant="body1"
-                    component="a"
-                    href={homeWork && homeWork.file}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    Download File
-                  </Typography>
-                </Box>
-
-                <Box>
-                  End at: {homeWork && homeWork.endDate.split("T")[0]}/
-                  {homeWork && homeWork.endDate.split("T")[1].slice(0, -1)}
-                </Box>
-
-                <Box sx={{mt:2}}>
-                  <Link to={`submitTask/${sectionId}/${taskId}`}>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      backgroundColor: "rgba(43, 1, 62, 0.5)",
-                      "&:hover": {
-                        backgroundColor: "rgba(43, 1, 62, 0.8)",
-                      },
-                    }}
-                  >
-                    Add your Submission
-                  </Button>
-                  </Link>
-                </Box>
-              </Box>
+                  Add your Submission
+                </Button>
+              </Link>
             </Box>
-          </Grid>
-          <Grid item md={5}>
-            <Box sx={{ width: "100%" }}>
-              <img src="/image/viewTask.png" alt="" style={{ width: "100%" }} />
+          </Box>
+          <Box sx={{textAlign:"center",fontWeight:"bold"}}>
+              End at: {homeWork && homeWork.endDate.split("T")[0]}/
+              {homeWork && homeWork.endDate.split("T")[1].slice(0, -1)}
             </Box>
-          </Grid>
-        </Grid>
+        </Box>
       </Dialog>
     </Container>
   );
