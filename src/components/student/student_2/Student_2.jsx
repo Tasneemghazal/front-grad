@@ -17,9 +17,10 @@ export default function Student_2() {
       { label: <HailIcon/>, content: <StudentTab1/> },
       { label: <PeopleIcon/>, content: <StudentTab2/> },
       { label: <BorderColorIcon/>, content: <StudentTab3/> },
-      { label: <SmartToyIcon/>, content: <ChatBotHelper/> }
+      { label: <SmartToyIcon/>, content:"free to use AI system"} // normal chat 
     ]}
   />
+  <ChatBotHelper/> 
    </Container>
   
   
