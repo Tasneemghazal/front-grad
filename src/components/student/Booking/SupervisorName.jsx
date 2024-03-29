@@ -20,7 +20,7 @@ const SupervisorName = ({ userId }) => {
   }, [getUserById, userId]);
 
   return (
-    <Typography sx={{ fontStyle: "italic" }}>
+    <Typography >
       Supervisor: {supervisorName}
     </Typography>
   );
