@@ -152,6 +152,9 @@ export default function ViewTask({ open, onClose, taskId }) {
             </Box>
           </Box>
           <Box sx={{textAlign:"center",fontWeight:"bold"}}>
+              Feedback: {homeWork && homeWork.feedback}
+            </Box>
+          <Box sx={{textAlign:"center",fontWeight:"bold"}}>
               End at: {homeWork && homeWork.endDate.split("T")[0]}/
               {homeWork && homeWork.endDate.split("T")[1].slice(0, -1)}
             </Box>
