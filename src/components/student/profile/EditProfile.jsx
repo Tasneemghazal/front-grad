@@ -13,12 +13,14 @@ import { userContext } from "../../context/StudentContextProvider.jsx";
 import InputCom from "../../shared/InputCom.jsx";
 import { useFormik } from "formik";
 import axios from "axios";
+import { useSnackbar } from "../../context/SnackbarProvider.jsx";
 export default function EditProfile({role}) {
   const { extractNameFromToken } = useContext(userContext);
   const token = localStorage.getItem("userToken");
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const { showSnackbar } = useSnackbar();
   const onSubmit = async (users) => {
     try {
       const { data } = await axios.patch(
@@ -26,6 +28,9 @@ export default function EditProfile({role}) {
         users, {
           headers: { token: `Bearer ${token}` }}
       );
+     if(data.message==="Profile updated successfully"){
+      showSnackbar({ message: 'Profile updated successfully', severity: 'success' });
+     }
       console.log(data);
     } catch (error) {
       console.log("Error occurred:", error);
@@ -55,13 +60,7 @@ export default function EditProfile({role}) {
     validateOnChange: false,
   });
   const inputs = [
-    {
-      id: "phoneNumber",
-      type: "text",
-      name: "phoneNumber",
-      title: "User phoneNumber",
-      value: formik.values.phoneNumber,
-    },
+ 
     {
       id: "password",
       type: "password",
@@ -211,6 +210,13 @@ export default function EditProfile({role}) {
                       name={"email"}
                       value={userEmail}
                       disabled={true}
+                    />
+                     <InputCom
+                      placeholder={"Phone Number"}
+                      type={"text"}
+                      name={"phoneNumber"}
+                      value={phoneNumber}
+                      
                     />
                     {renderInputs}
                     <Button
