@@ -108,7 +108,7 @@ export default function AccordionExpandIcon({ submissions }) {
           <AccordionDetails>
             <Typography>Task : {submission.taskId.txt}</Typography>
             <Box>
-            The text that was delivered: {submission.file && <Link href={submission.file}>File</Link>}
+            The file that was delivered: {submission.file && <Link href={submission.file}>File</Link>}
             </Box>
             <Box>
             The text that was delivered: {submission.txt && <Typography>{submission.txt}</Typography>}
