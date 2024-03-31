@@ -17,20 +17,31 @@ import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import MarkEmailUnreadOutlinedIcon from "@mui/icons-material/MarkEmailUnreadOutlined";
 import { Link } from "react-router-dom";
 import { userContext } from "../../context/StudentContextProvider.jsx";
+import Loader from "../../loader/Loader.jsx";
 export default function Student_1() {
   const { extractNameFromToken } = useContext(userContext);
   const [studentName, setStudentName] = useState();
+  let[loading,setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const name = extractNameFromToken();
         setStudentName(name.name);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching users:", error);
+        setLoading(false);
       }
     };
     fetchData();
   }, []);
+  if(loading){
+    return (
+      <>
+      <Loader/>
+      </>
+    )
+  }
   return (
     <Box sx={{ marginX: 2 }}>
       <Box className="custom-shape-divider-top-1708175870">

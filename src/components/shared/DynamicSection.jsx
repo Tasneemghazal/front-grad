@@ -53,7 +53,7 @@ export default function DynamicSection({ getSections,flag=true }) {
     <Box>
 <Title title={"Your sections"}/>
       <Grid container spacing={2}>
-        {paginatedSections.map((sec) => (
+        {paginatedSections&&paginatedSections.map((sec) => (
           <Grid item xs={12} sm={6} md={4} key={sec._id}>
             <CardComp2
               title={`Section Number: ${sec.num}`}
@@ -90,7 +90,7 @@ export default function DynamicSection({ getSections,flag=true }) {
 
             <Box sx={{ textAlign: "center", pt: 2 }}>
             <Typography>Students: </Typography>
-              {rowData.map((studentId) => (
+              {rowData&&rowData.map((studentId) => (
                 <GetStudentName key={studentId} userId={studentId} />
               ))}
             </Box>

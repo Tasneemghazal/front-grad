@@ -42,12 +42,15 @@ export default function Sign_in() {
         }
         else if(data.role === "student") {
           navigate("/student");
+          showSnackbar({ message: "Login successful", severity: "success" }); 
         }
         else if(data.role === "headOfDepartment") {
           navigate("/headOfDepartment");
+          showSnackbar({ message: "Login successful", severity: "success" }); 
         }
         else if(data.role === "supervisor") {
           navigate("/supervisor");
+          showSnackbar({ message: "Login successful", severity: "success" }); 
         }
       }
     } catch (error) {

@@ -50,7 +50,7 @@ export default function SupervisorTab2() {
               isModalOpen={isModalOpen}
               modalContent={<EditDeleteTask closeModal={closeModal} onClickDelete={()=>onClickDelete(selectedTaskId)} taskId={selectedTaskId} />} // Pass taskId to EditDeleteTask component
             />
-            {superTask.map(task => (
+            {superTask&&superTask.map(task => (
               <Grid item md={6} key={task.id} onClick={() => openModal(task._id)}> {/* Pass task.id to openModal function */}
                 <TaskCard txt={task.txt} endDate={task.endDate} />
               </Grid>

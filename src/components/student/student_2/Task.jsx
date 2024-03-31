@@ -21,7 +21,7 @@ export default function Task({ tasks }) {
   return (
     <Box>
       <Grid container spacing={2}>
-        {tasks.map((task) => (
+        {tasks&&tasks.map((task) => (
           <Grid item xs={6} key={task._id} onClick={() => handleOpenDialog(task._id)}>
             <TaskCard
               txt={task.txt}

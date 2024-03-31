@@ -17,22 +17,32 @@ import {
   import HdrWeakIcon from "@mui/icons-material/HdrWeak";
   import { Link } from "react-router-dom";
 import { userContext } from "../context/StudentContextProvider.jsx";
+import Loader from "../loader/Loader.jsx";
   
   export default function SuperHeadCover({ background }) {
-    const {extractNameFromToken} = useContext(userContext);
+  const {extractNameFromToken} = useContext(userContext);
   const [supervisorName,setSuperName] = useState();
+  let[loading,setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
         const name = extractNameFromToken();
         setSuperName(name.name);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching users:", error);
+        setLoading(false);
       }
     };
     fetchData();
   }, []);
+  if(loading){
+    return (
+      <>
+      <Loader/>
+      </>
+    )
+  }
     return (
       <Box
         sx={{

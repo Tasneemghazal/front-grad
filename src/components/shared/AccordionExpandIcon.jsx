@@ -95,7 +95,7 @@ export default function AccordionExpandIcon({ submissions }) {
 
   return (
     <div style={{textAlign:"center",border:"1px solid black"}}>
-      {submissions.map((submission, index) => (
+      {submissions&&submissions.map((submission, index) => (
         <Accordion key={index}>
           <AccordionSummary
             expandIcon={<ArrowDownwardIcon style={{color:"rgba(43, 1, 62, 0.7)"}}/>}

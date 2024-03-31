@@ -113,7 +113,7 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <RedTableHead>
             <TableRow>
-              {columns.map((column, index) => (
+              {columns&&columns.map((column, index) => (
                 <TableCell key={index} align="center" onClick={() => handleSort(column)}>
                   {getColumnName(column)} {/* Display custom column name */}
                   {sortConfig.key === column && (
@@ -125,9 +125,9 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
             </TableRow>
           </RedTableHead>
           <TableBody>
-            {filteredData.map((row, rowIndex) => (
+            {filteredData&&filteredData.map((row, rowIndex) => (
               <TableRow key={rowIndex}>
-                {columns.map((column, colIndex) => (
+                {columns&&columns.map((column, colIndex) => (
                   <TableCell key={colIndex} align="center">
                     {column === 'sectionId' ? sectionNumbers[row[column]] : row[column]}
                   </TableCell>
