@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -21,11 +21,15 @@ import { UserContext } from "../context/UserContextProvider.jsx";
 const drawerWidth = 240;
 
 function Navbar({ navItems, window }) {
-  let { userToken, setUserToken, userData, setUserData } = useContext(
-    UserContext
-  );
+  let { userToken, setUserToken, userData, setUserData } =
+    useContext(UserContext);
   let navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("userToken");
+    setUserToken(token);
+  }, [setUserToken]);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -41,15 +45,10 @@ function Navbar({ navItems, window }) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  // Check if "Logout" item exists in navItems
-
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar
-        component="nav"
-        sx={{ backgroundColor: "#fff", color: "#000" }}
-      >
+      <AppBar component="nav" sx={{ backgroundColor: "#fff", color: "#000" }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -72,51 +71,76 @@ function Navbar({ navItems, window }) {
               Palestine Technical University
             </Typography>
           </Box>
-          
-           
-            {userToken == null ?  
+
+          {userToken == null ? (
             <Box sx={{ display: { xs: "none", md: "block" } }}>
             {navItems.map((item) => (
-              <Button
-                key={item}
-                sx={{ color: "#000" }}
-                component={Link}
-                to={
-                  item.toLowerCase() === "profile" ||
-                  item.toLowerCase() === "home"
-                    ? `${item.toLowerCase().replace(/\s/g, "-")}`
-                    : `/${item.toLowerCase().replace(/\s/g, "-")}`
-                }
-              >
-                {item}
-              </Button>
-            ))}</Box>:
-            <Box sx={{ display: { xs: "none", md: "block" } }}>
-            {navItems.map((item) => (
-              <Button
-                key={item}
-                sx={{ color: "#000" }}
-                component={Link}
-                to={
-                  item.toLowerCase() === "profile" ||
-                  item.toLowerCase() === "home"
-                    ? `${item.toLowerCase().replace(/\s/g, "-")}`
-                    : `/${item.toLowerCase().replace(/\s/g, "-")}`
-                }
-              >
-                {item}
-              </Button>
+              <>
+              {item === "Sign in" ? (
+                <Button
+                  variant="contained"
+                  key={item}
+                  sx={{
+                    backgroundColor: " rgba(43, 1, 62, 0.7)",
+                    color: "#fff",
+                    borderRadius: 5,
+                    "&:hover": {
+                      backgroundColor: " rgba(43, 1, 62, 0.8)",
+                    },
+                  }}
+                  component={Link}
+                  to={`/${item.toLowerCase().replace(/\s/g, "-")}`}
+                >
+                  {item}
+                </Button>
+              ) : (
+                <Button
+                  key={item}
+                  sx={{ color: "#000" }}
+                  component={Link}
+                  to={item.toLowerCase() === "profile" ||item.toLowerCase() === "home"? `${item.toLowerCase().replace(/\s/g, "-")}` : `/${item.toLowerCase().replace(/\s/g, "-")}`}
+                >
+                  {item}
+                </Button>
+              )}
+            </>
             ))}
-            <Button
+          </Box>
+          
+          ) : (
+            <Box sx={{ display: { xs: "none", md: "block" } }}>
+              {navItems.map((item) => (
+                <Button
+                  key={item}
+                  sx={{ color: "#000" }}
+                  component={Link}
+                  to={
+                    item.toLowerCase() === "profile" ||
+                    item.toLowerCase() === "home"
+                      ? `${item.toLowerCase().replace(/\s/g, "-")}`
+                      : `/${item.toLowerCase().replace(/\s/g, "-")}`
+                  }
+                >
+                  {item}
+                </Button>
+              ))}
+              <Button
                 key="Logout"
-                sx={{ color: "#000" }}
+                sx={{
+                  backgroundColor: " rgba(43, 1, 62, 0.7)",
+                  color: "#fff",
+                  borderRadius: 5,
+                  "&:hover": {
+                    backgroundColor: " rgba(43, 1, 62, 0.8)",
+                  },
+                }}
                 onClick={logOut}
                 component={Link}
               >
                 Logout
               </Button>
-            </Box>}
-          
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
       <nav>
@@ -169,6 +193,13 @@ function Navbar({ navItems, window }) {
                   </ListItemButton>
                 </ListItem>
               ))}
+              {userToken !== null && (
+                <ListItem disablePadding>
+                  <ListItemButton sx={{ textAlign: "center" }} onClick={logOut}>
+                    <ListItemText primary="Logout" />
+                  </ListItemButton>
+                </ListItem>
+              )}
             </List>
           </Box>
         </Drawer>
