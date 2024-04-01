@@ -75,7 +75,7 @@ export default function UserContextProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ userToken, getUsers, userData, removeUser, extractDepIdFromToken,getUserById }}>
+    <UserContext.Provider value={{ userToken, getUsers, userData, setUserData,setUserToken,removeUser, extractDepIdFromToken,getUserById }}>
       {children}
     </UserContext.Provider>
   );
