@@ -14,57 +14,42 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContextProvider.jsx";
 
 const drawerWidth = 240;
 
-function Navbar(props) {
-  const { window } = props;
-  const { navItems } = props;
+function Navbar({ navItems, window }) {
+  let { userToken, setUserToken, userData, setUserData } = useContext(
+    UserContext
+  );
+  let navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
 
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Box
-        sx={{
-          flexGrow: 1,
-          display: { xs: "block" },
-          pt: 3,
-          textAlign: "center",
-        }}
-      >
-        <img src={"image/ptuk.jpg"} width="35" height="35" />
-
-        <Typography component="div">Palestine Technical University</Typography>
-      </Box>
-      <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton
-              sx={{ textAlign: "center" }}
-              component={Link}
-              to={item.toLowerCase() === "profile" ||item.toLowerCase() === "home"? `${item.toLowerCase().replace(/\s/g, "-")}` : `/${item.toLowerCase().replace(/\s/g, "-")}`}
-            >
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
+  const logOut = () => {
+    localStorage.removeItem("userToken");
+    setUserToken(null);
+    setUserData(null);
+    navigate("/");
+  };
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
+  // Check if "Logout" item exists in navItems
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar component="nav" sx={{ backgroundColor: "#fff", color: "#000" }}>
+      <AppBar
+        component="nav"
+        sx={{ backgroundColor: "#fff", color: "#000" }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -87,39 +72,51 @@ function Navbar(props) {
               Palestine Technical University
             </Typography>
           </Box>
-          <Box sx={{ display: { xs: "none", md: "block" } }}>
+          
+           
+            {userToken == null ?  
+            <Box sx={{ display: { xs: "none", md: "block" } }}>
             {navItems.map((item) => (
-              <>
-                {item === "Sign in" ? (
-                  <Button
-                    variant="contained"
-                    key={item}
-                    sx={{
-                      backgroundColor: " rgba(43, 1, 62, 0.7)",
-                      color: "#fff",
-                      borderRadius: 5,
-                      "&:hover": {
-                        backgroundColor: " rgba(43, 1, 62, 0.8)",
-                      },
-                    }}
-                    component={Link}
-                    to={`/${item.toLowerCase().replace(/\s/g, "-")}`}
-                  >
-                    {item}
-                  </Button>
-                ) : (
-                  <Button
-                    key={item}
-                    sx={{ color: "#000" }}
-                    component={Link}
-                    to={item.toLowerCase() === "profile" ||item.toLowerCase() === "home"? `${item.toLowerCase().replace(/\s/g, "-")}` : `/${item.toLowerCase().replace(/\s/g, "-")}`}
-                  >
-                    {item}
-                  </Button>
-                )}
-              </>
+              <Button
+                key={item}
+                sx={{ color: "#000" }}
+                component={Link}
+                to={
+                  item.toLowerCase() === "profile" ||
+                  item.toLowerCase() === "home"
+                    ? `${item.toLowerCase().replace(/\s/g, "-")}`
+                    : `/${item.toLowerCase().replace(/\s/g, "-")}`
+                }
+              >
+                {item}
+              </Button>
+            ))}</Box>:
+            <Box sx={{ display: { xs: "none", md: "block" } }}>
+            {navItems.map((item) => (
+              <Button
+                key={item}
+                sx={{ color: "#000" }}
+                component={Link}
+                to={
+                  item.toLowerCase() === "profile" ||
+                  item.toLowerCase() === "home"
+                    ? `${item.toLowerCase().replace(/\s/g, "-")}`
+                    : `/${item.toLowerCase().replace(/\s/g, "-")}`
+                }
+              >
+                {item}
+              </Button>
             ))}
-          </Box>
+            <Button
+                key="Logout"
+                sx={{ color: "#000" }}
+                onClick={logOut}
+                component={Link}
+              >
+                Logout
+              </Button>
+            </Box>}
+          
         </Toolbar>
       </AppBar>
       <nav>
@@ -139,7 +136,41 @@ function Navbar(props) {
             },
           }}
         >
-          {drawer}
+          <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "block" },
+                pt: 3,
+                textAlign: "center",
+              }}
+            >
+              <img src={"image/ptuk.jpg"} width="35" height="35" />
+
+              <Typography component="div">
+                Palestine Technical University
+              </Typography>
+            </Box>
+            <Divider />
+            <List>
+              {navItems.map((item) => (
+                <ListItem key={item} disablePadding>
+                  <ListItemButton
+                    sx={{ textAlign: "center" }}
+                    component={Link}
+                    to={
+                      item.toLowerCase() === "profile" ||
+                      item.toLowerCase() === "home"
+                        ? `${item.toLowerCase().replace(/\s/g, "-")}`
+                        : `/${item.toLowerCase().replace(/\s/g, "-")}`
+                    }
+                  >
+                    <ListItemText primary={item} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
         </Drawer>
       </nav>
       <Box component="main" sx={{ p: 3 }}>
@@ -150,7 +181,6 @@ function Navbar(props) {
 }
 
 Navbar.propTypes = {
-  window: PropTypes.func,
   navItems: PropTypes.array.isRequired,
 };
 
