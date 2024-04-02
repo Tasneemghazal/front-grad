@@ -5,7 +5,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { SectionContext } from "../context/SectionContextProvider.jsx";
-import { Box, Button, Link } from "@mui/material";
+import { Avatar, Box, Button, Link } from "@mui/material";
 import InputCom from "./InputCom.jsx";
 import { useFormik } from "formik";
 import { useSnackbar } from "../context/SnackbarProvider.jsx";
@@ -107,8 +107,18 @@ export default function AccordionExpandIcon({ submissions }) {
           </AccordionSummary>
           <AccordionDetails>
             <Typography>Task : {submission.taskId.txt}</Typography>
-            <Box>
-            The file that was delivered: {submission.file && <Link href={submission.file}>File</Link>}
+            <Box sx={{textAlign:"center"}}>
+            The file that was delivered:<Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+  {submission.file && (
+    <Link href={submission.file}>
+      <Avatar
+        alt="pdf logo"
+        src="/image/file.png"
+        sx={{ border: "1px solid #000" }}
+      />
+    </Link>
+  )}
+</Box>
             </Box>
             <Box>
             The text that was delivered: {submission.txt && <Typography>{submission.txt}</Typography>}
