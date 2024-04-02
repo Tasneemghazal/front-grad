@@ -34,6 +34,7 @@ import EditUser from "../components/shared/EditUser.jsx";
 import EditStudents from "../components/dashboard/student/EditStudents.jsx";
 import SectionRegistration from "../components/student/Booking/SectionRegistration.jsx";
 import SubmitTask from "../components/student/student_2/SubmitTask.jsx";
+import ChatApp from "../components/ChatApp/ChatApp.jsx";
 const handleGoBack = () => {
   window.history.back();
 };
@@ -167,6 +168,10 @@ export const router = createBrowserRouter([
         path: "section-booking", 
         element: <SectionRegistration />, 
       },
+      {
+        path:"chat",
+        element:<ChatApp/>
+      }
     ],  
   },
   {
