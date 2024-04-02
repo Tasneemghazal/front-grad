@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
-import { Box, Container, Grid } from "@mui/material";
+import { Avatar, Box, Container, Grid } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { TaskContext } from "../../context/TaskContextProvider.jsx";
 import { useState } from "react";
@@ -77,9 +77,7 @@ export default function ViewTask({ open, onClose, taskId }) {
     margin: "auto", 
     flexDirection: "column",
     height: "100%",
-    backgroundImage:
-      "linear-gradient(rgba(255,255,255, 0.8),rgba(255,255,255, 0.8)),url('/image/viewTask.png')",
-    backgroundPosition: "center",
+   
    
   }}
 >
@@ -109,10 +107,10 @@ export default function ViewTask({ open, onClose, taskId }) {
                 cursor: "pointer",
                 justifyContent: "center",
                 textAlign: "center",
-                backgroundColor: "rgba(43, 1, 62, 0.4)",
                 p: 1,
                 m: 2,
                 borderRadius: "15px",
+                
               }}
               onClick={() => {
                 if (homeWork && homeWork.file) {
@@ -120,7 +118,8 @@ export default function ViewTask({ open, onClose, taskId }) {
                 }
               }}
             >
-              <DownloadForOfflineIcon sx={{ mr: 1 }} />
+              
+              <Avatar alt="pdf logo" src="/image/file.png" sx={{mr:2,border:"1px solid #000"}}/>
               <Typography
                 variant="body1"
                 component="a"
@@ -129,8 +128,9 @@ export default function ViewTask({ open, onClose, taskId }) {
                 rel="noopener noreferrer"
                 sx={{ textDecoration: "none", color: "inherit" }}
               >
-                Download File
+                See the File
               </Typography>
+       
             </Box>
 
            
