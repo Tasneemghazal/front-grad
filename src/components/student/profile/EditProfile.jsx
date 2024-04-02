@@ -145,7 +145,7 @@ export default function EditProfile({role}) {
               <Box sx={{ position: "relative", pt: { xs: 0, md: 8 } }}>
                 <Avatar
                   alt={`${userName}'s Profile`}
-                  src="/image/toto.jpeg"
+                  src="/image/Dr.Thear.jpeg"
                   sx={{
                     width: "130px",
                     height: "130px",
