@@ -14,8 +14,9 @@ import DoneIcon from '@mui/icons-material/Done';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { Link } from 'react-router-dom';
-import SpringModal from './SpringModal'; // Import your SpringModal component
+import SpringModal from './SpringModal'; 
 import Confirm from '../Supervisor/supervisor_2/Confirm.jsx';
+import ConfirmDelete from './ConfirmDelete.jsx';
 
 const RedTableHead = styled(TableHead)({
   backgroundColor: 'rgba(45, 3, 62, 0.4)',
@@ -24,9 +25,11 @@ const RedTableHead = styled(TableHead)({
 export default function CustomTable({ columns, data, onDelete, flag = true, request = true, getSectionNum }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal open/close
-  const [rowDataForConfirm, setRowDataForConfirm] = useState(null); // State to manage row data for Confirm component
-  const [sectionNumbers, setSectionNumbers] = useState({}); // State to store section numbers
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rowDataForConfirm, setRowDataForConfirm] = useState(null); 
+  const [sectionNumbers, setSectionNumbers] = useState({}); 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); 
+  const [rowDataForDelete, setRowDataForDelete] = useState(null);
 
   useEffect(() => {
     const fetchSectionNumbers = async () => {
@@ -34,9 +37,7 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
       for (const row of data) {
         try {
           const res = await getSectionNum(row.sectionId);
-          
-            sectionNums[row.sectionId] = res;
-         
+          sectionNums[row.sectionId] = res;
         } catch (error) {
           console.error('Error fetching section number:', error);
         }
@@ -83,6 +84,20 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
     setIsModalOpen(false);
   };
 
+  const handleDeleteConfirmation = (rowId) => {
+    setRowDataForDelete(rowId);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleDelete = () => {
+    onDelete(rowDataForDelete);
+    setIsDeleteModalOpen(false);
+  };
+
   const filteredData = sortedData().filter((row) =>
     Object.values(row).some(
       (value) =>
@@ -113,54 +128,64 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <RedTableHead>
             <TableRow>
-              {columns&&columns.map((column, index) => (
-                <TableCell key={index} align="center" onClick={() => handleSort(column)}>
-                  {getColumnName(column)} {/* Display custom column name */}
-                  {sortConfig.key === column && (
-                    sortConfig.direction === 'ascending' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />
-                  )}
-                </TableCell>
-              ))}
+              {columns &&
+                columns.map((column, index) => (
+                  <TableCell key={index} align="center" onClick={() => handleSort(column)}>
+                    {getColumnName(column)} {/* Display custom column name */}
+                    {sortConfig.key === column && (sortConfig.direction === 'ascending' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />)}
+                  </TableCell>
+                ))}
               <TableCell align="center">Actions</TableCell>
             </TableRow>
           </RedTableHead>
           <TableBody>
-            {filteredData&&filteredData.map((row, rowIndex) => (
-              <TableRow key={rowIndex}>
-                {columns&&columns.map((column, colIndex) => (
-                  <TableCell key={colIndex} align="center">
-                    {column === 'sectionId' ? sectionNumbers[row[column]] : row[column]}
-                  </TableCell>
-                ))}
-                <TableCell align="center">
-                  {flag && (
-                    request ? (
-                      <Link to={`${row._id}`}>
-                        <IconButton aria-label="edit">
-                          <EditIcon sx={{ color: '#0b731b' }} />
+            {filteredData &&
+              filteredData.map((row, rowIndex) => (
+                <TableRow key={rowIndex}>
+                  {columns &&
+                    columns.map((column, colIndex) => (
+                      <TableCell key={colIndex} align="center">
+                        {column === 'sectionId' ? sectionNumbers[row[column]] : row[column]}
+                      </TableCell>
+                    ))}
+                  <TableCell align="center">
+                    {flag && (
+                      request ? (
+                        <Link to={`${row._id}`}>
+                          <IconButton aria-label="edit">
+                            <EditIcon sx={{ color: '#0b731b' }} />
+                          </IconButton>
+                        </Link>
+                      ) : (
+                        <IconButton aria-label="edit" onClick={() => handleConfirmClick(row._id, row.sectionId)}>
+                          <DoneIcon sx={{ color: '#0b731b' }} />
                         </IconButton>
-                      </Link>
-                    ) : (
-                      <IconButton aria-label="edit" onClick={() => handleConfirmClick(row._id, row.sectionId)}>
-                        <DoneIcon sx={{ color: '#0b731b' }} />
+                      )
+                    )}
+                    {request ? (
+                      <IconButton onClick={() => handleDeleteConfirmation(row._id)} aria-label="delete">
+                        <DeleteIcon sx={{ color: '#880909' }} />
                       </IconButton>
-                    )
-                  )}
-                  {request ? (
-                    <IconButton onClick={() => onDelete(row._id)} aria-label="delete">
-                      <DeleteIcon sx={{ color: '#880909' }} />
-                    </IconButton>
-                  ) : (
-                    <IconButton onClick={() => onDelete(row._id, row.sectionId)} aria-label="delete">
-                      <CloseIcon sx={{ color: '#880909' }} />
-                    </IconButton>
-                  )}
-                </TableCell>
-              </TableRow>
-            ))}
+                    ) : (
+                      <IconButton onClick={() => onDelete(row._id, row.sectionId)} aria-label="delete">
+                        <CloseIcon sx={{ color: '#880909' }} />
+                      </IconButton>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <SpringModal
+    closeModal={handleCloseDeleteModal}
+    isModalOpen={isDeleteModalOpen}
+    modalContent={
+      <ConfirmDelete
+        handleDeleteConfirm={handleDelete}
+        closeModal={handleCloseDeleteModal}
+      />}/>
+      
       <SpringModal closeModal={handleCloseModal} isModalOpen={isModalOpen} modalContent={<Confirm {...rowDataForConfirm} closeModal={handleCloseModal}/>} />
     </div>
   );
