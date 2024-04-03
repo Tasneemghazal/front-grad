@@ -5,7 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, Box, Button } from '@mui/material';
 
-export default function CardComp2({ title, description, onClickLearnMore, onClickDelete }) {
+export default function CardComp2({ title, description, onClickLearnMore, onClickDelete, flag=true }) {
   // Array of image URLs
   const imageUrls = [
     'image/section1.jpg',
@@ -55,7 +55,7 @@ export default function CardComp2({ title, description, onClickLearnMore, onClic
             <Button onClick={onClickLearnMore} variant="outlined" color="secondary">
               Learn More
             </Button>
-            {onClickDelete && (
+            {flag && (
               <Button onClick={onClickDelete} variant="outlined" color="error">
                 Delete
               </Button>
