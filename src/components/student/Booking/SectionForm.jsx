@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid, IconButton } from "@mui/material";
 import axios from "axios";
 import InputCom from "../../shared/InputCom.jsx";
 import { useFormik } from "formik";
 import { userContext } from "../../context/StudentContextProvider.jsx";
 import { useSnackbar } from "../../context/SnackbarProvider.jsx";
-
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 const SectionForm = ({ section, token, onUpdateSection }) => {
   const { extractNameFromToken } = useContext(userContext);
+  const [students, setStudents] = useState([""]);
   const [studentId, setStudentId] = useState("");
   const { showSnackbar } = useSnackbar();
-  const initialValues = { text: "" };
 
   useEffect(() => {
     const fetchStudentId = async () => {
@@ -24,11 +25,27 @@ const SectionForm = ({ section, token, onUpdateSection }) => {
 
     fetchStudentId();
   }, [extractNameFromToken]);
+  
+  const handleAddStudent = () => {
+    setStudents([...students, ""]);
+};
 
-  const onSubmit = async (values) => {
+const handleRemoveStudent = () => {
+    if (students.length > 1) {
+        setStudents(students.slice(0, -1));
+    }
+};
+
+const handleStudentNumChange = (index, newNum) => {
+    const newGroup = [...students];
+    newGroup[index] = newNum;
+    setStudents(newGroup);
+};
+
+  const onSubmit = async () => {
     try {
       const data = {
-        text: values.text,
+        students,
         studentId: studentId,
         sectionId: section._id,
       };
@@ -56,38 +73,55 @@ const SectionForm = ({ section, token, onUpdateSection }) => {
   };
 
   const formik = useFormik({
-    initialValues,
+    initialValues: { students },
     onSubmit,
-    validateOnBlur: true,
     validateOnChange: false,
-  });
+});
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <InputCom
-        type="text"
-        placeholder="Enter your info"
-        name="text"
-        onChange={formik.handleChange}
-        value={formik.values.text}
-      />
-      <Box sx={{ textAlign: "center" }}>
+    <Grid container spacing={2}>
+        {students.map((studentNum, index) => (
+            <Grid item xs={12} sm={6} key={index}>
+                <InputCom
+                    placeholder={`Student ${index + 1} Number`}
+                    type="text"
+                    value={studentNum}
+                    onChange={(e) => handleStudentNumChange(index, e.target.value)}
+                />
+            </Grid>
+        ))}
+        <Grid item xs={12} sm={6}>
+            <Grid container spacing={1}>
+                <Grid item xs={6} sm={6}>
+                    <IconButton onClick={handleAddStudent} size="large" sx={{ width: "40%", color: "rgba(43, 1, 62, 0.5)", "&:hover": { color: "rgba(43, 1, 62, 0.8)" } }}>
+                        <AddCircleIcon sx={{ fontSize: 30 }} />
+                    </IconButton>
+                </Grid>
+                <Grid item xs={6} sm={6}>
+                    <IconButton onClick={handleRemoveStudent} size="large" sx={{ width: "40%", color: "rgba(43, 1, 62, 0.5)", "&:hover": { color: "rgba(43, 1, 62, 0.8)" } }}>
+                        <RemoveCircleIcon sx={{ fontSize: 30 }} />
+                    </IconButton>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+    <Box>
         <Button
-          type="submit"
-          sx={{
-            border: "1px solid rgba(43, 1, 62, 0.4)",
-            color: "white",
-            backgroundColor: "rgba(43, 1, 62, 0.7)",
-            width: "100%",
-            '&:hover': {
-              backgroundColor: "rgba(43, 1, 62, 0.9)",
-            },
-          }}
+            type="submit"
+            sx={{
+                border: "1px solid rgba(43, 1, 62, 0.4)",
+                color: "white",
+                backgroundColor: "rgba(43, 1, 62, 0.7)",
+                '&:hover': {
+                    backgroundColor: "rgba(43, 1, 62, 0.9)",
+                },
+            }}
         >
-          Book
+            Book
         </Button>
-      </Box>
-    </form>
+    </Box>
+</form>
   );
 };
 

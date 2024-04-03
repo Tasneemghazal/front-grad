@@ -5,7 +5,6 @@ import axios from 'axios';
 import SpringModal from '../../shared/SpringModal.jsx';
 import { SectionContext } from '../../context/SectionContextProvider.jsx';
 import DeleteContent from '../../shared/DeleteContent.jsx';
-import { Box, Typography } from '@mui/material';
 import Title from '../../shared/title.jsx';
 import { useSnackbar } from '../../context/SnackbarProvider.jsx';
 
@@ -41,7 +40,7 @@ export default function SupervisorTab3() {
             try {
                 const { requests } = await getRequests();
                 if (requests.length > 0) {
-                    const columns = ["sectionId", "studentId", "text"];
+                    const columns = ["sectionId", "studentId", "students"];
                     setTableColumns(columns);
                     setTableData(requests.filter(request => request.state === 'Pending'));
                 }
