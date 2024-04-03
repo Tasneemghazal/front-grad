@@ -39,13 +39,28 @@ export default function SectionContextProvider({children}) {
           throw error;
         }
       };
+      const removeSection = async (secId) => {
+        try {
+          const token = localStorage.getItem("userToken");
+          const { data } = await axios.delete(
+            `${import.meta.env.VITE_API_URL}/head/deleteSection/${secId}`,
+            { headers: { token: `Bearer ${token}` } }
+          );
+          console.log(data);
+         
+          return data;
+        } catch (error) {
+          console.error("Error removing user:", error);
+          throw error;
+        }
+      };
       useEffect(()=>{
         getSuperSections();
         getSections();
         getSectionNum();
       },[])
   return (
-    <SectionContext.Provider value={{ getSections , getSuperSections,getSectionNum}}>
+    <SectionContext.Provider value={{ getSections , getSuperSections,getSectionNum,removeSection}}>
       {children}
     </SectionContext.Provider>
   )
