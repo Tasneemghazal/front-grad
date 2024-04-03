@@ -35,6 +35,7 @@ import EditStudents from "../components/dashboard/student/EditStudents.jsx";
 import SectionRegistration from "../components/student/Booking/SectionRegistration.jsx";
 import SubmitTask from "../components/student/student_2/SubmitTask.jsx";
 import ChatApp from "../components/ChatApp/ChatApp.jsx";
+import ProtectedRoutes from "../components/shared/ProtectedRoutes.jsx";
 const handleGoBack = () => {
   window.history.back();
 };
@@ -71,7 +72,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashLayout />,
+    element: 
+    <ProtectedRoutes>
+        <DashLayout />
+    </ProtectedRoutes>
+  
+    ,
     children: [
       {
         index: true,
@@ -139,7 +145,11 @@ export const router = createBrowserRouter([
   },
   {
     path: "/student",
-    element: <StudentLayout />,
+    element: 
+    <ProtectedRoutes>
+      <StudentLayout />
+    </ProtectedRoutes>
+    ,
     children: [
       { index: true, element: <TotalStudent /> },
       {
@@ -176,7 +186,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "/supervisor",
-    element: <SupervisorLayout />,
+    element: 
+    <ProtectedRoutes>
+      <SupervisorLayout />
+    </ProtectedRoutes>
+    
+    ,
     children: [
       { index: true, element: <TotalSupervisor /> },
       {
@@ -209,7 +224,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "/headOfDepartment",
-    element: <HeadLayout />,
+    element: 
+    <ProtectedRoutes>
+       <HeadLayout />
+    </ProtectedRoutes>
+   
+    ,
     children: [
       {
         index: true,
