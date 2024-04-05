@@ -54,9 +54,9 @@ export default function ViewTask({ open, onClose, taskId }) {
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/student/getSubmission?sectionId=${sectionId}&taskId=${taskId}`,{
           headers: { token: `Bearer ${token}` }
         });
-        
+        console.log(data.message);
         setSubMesg(data.message);
-       
+        console.log(subMesg);
       } catch (error) {
         console.error("Error fetching submission:", error);
       }
