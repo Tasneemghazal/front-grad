@@ -23,6 +23,7 @@ export default function ViewTask({ open, onClose, taskId }) {
   const [sectionId, setSectionId] = useState();
   const [homeWork, setHomeWork] = useState({});
   const [subMesg, setSubMesg] = useState();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,21 +48,20 @@ export default function ViewTask({ open, onClose, taskId }) {
   }, [getTaskById, taskId, getStudentSection]);
 
   useEffect(() => {
-    const checkSubmission = async (sectionId,taskId) => {
+    const checkSubmission = async (sectionId, taskId) => {
       try {
         const token = localStorage.getItem("userToken");
         const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/student/getSubmission?sectionId=${sectionId}&taskId=${taskId}`,{
-          
           headers: { token: `Bearer ${token}` }
         });
-        console.log(data.message);
-        setSubMesg(data.message)
-        console.log(subMesg)
+        
+        setSubMesg(data.message);
+       
       } catch (error) {
         console.error("Error fetching submission:", error);
       }
     };
-    checkSubmission(sectionId,taskId);
+    checkSubmission(sectionId, taskId);
   }, [taskId, sectionId]);
 
   return (
