@@ -30,7 +30,7 @@ export default function Create() {
     img: "",
     phoneNumber: "",
     officeHours: "",
-    role: "",
+    role: [],
     depId: "",
   };
 
@@ -45,16 +45,27 @@ export default function Create() {
     formData.append("password", values.password);
     formData.append("img", selectedImage);
     formData.append("depId", values.depId);
-    formData.append("role", values.role);
     formData.append("phoneNumber", values.phoneNumber);
     formData.append("officeHours", values.officeHours);
+    Role.forEach((role, index) => {
+      if (values.role.includes(role)) {
+        formData.append(`role[${index}]`, role);
+      }
+    });
 
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/auth/registerUser`, formData, {
-        headers: { token: `Bearer ${token}` },
-      });
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/auth/registerUser`,
+        formData,
+        {
+          headers: { token: `Bearer ${token}` },
+        }
+      );
       if (data.message === "success") {
-        showSnackbar({ message: "User added successfully", severity: "success" });
+        showSnackbar({
+          message: "User added successfully",
+          severity: "success",
+        });
       }
     } catch (error) {
       console.error("Submission error:", error);
@@ -101,7 +112,12 @@ export default function Create() {
       <Box sx={{ width: "50%", textAlign: "center" }}>
         <Typography
           variant="h3"
-          sx={{ textAlign: "center", fontSize: "30px", my: 5, fontWeight: "bold" }}
+          sx={{
+            textAlign: "center",
+            fontSize: "30px",
+            my: 5,
+            fontWeight: "bold",
+          }}
         >
           Create User
         </Typography>
@@ -115,21 +131,28 @@ export default function Create() {
                 value={formik.values.depId}
                 onChange={handleDepartmentChange}
                 label="Department"
-                options={departments.map(dep => ({ value: dep._id, label: dep.name }))}
+                options={departments.map((dep) => ({
+                  value: dep._id,
+                  label: dep.name,
+                }))}
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <SelectCom
                 labelId="role-label"
                 id="role"
-                value={formik.values.role}
+                value={formik.values.role || []} // Ensure value is always an array
                 onChange={handleRoleChange}
                 label="Role"
-                options={Role.map(role => ({ value: role, label: role }))}
+                options={Role.map((role) => ({ value: role, label: role }))}
+                multiple // Add this attribute for multiple selection
               />
             </Grid>
           </Grid>
-          <UploadFile onFileChange={handleImageChange} buttonText="Add an image"/>
+          <UploadFile
+            onFileChange={handleImageChange}
+            buttonText="Add an image"
+          />
           <Button
             variant="contained"
             sx={{
