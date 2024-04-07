@@ -34,6 +34,7 @@ import EditUser from "../components/shared/EditUser.jsx";
 import EditStudents from "../components/dashboard/student/EditStudents.jsx";
 import SectionRegistration from "../components/student/Booking/SectionRegistration.jsx";
 import SubmitTask from "../components/student/student_2/SubmitTask.jsx";
+import EditStudentTask from "../components/student/student_2/EditStudentTask.jsx";
 import ChatApp from "../components/ChatApp/ChatApp.jsx";
 import ProtectedRoutes from "../components/shared/ProtectedRoutes.jsx";
 const handleGoBack = () => {
@@ -159,6 +160,10 @@ export const router = createBrowserRouter([
       {
         path:"submitTask/:sectionId/:taskId",
         element:<SubmitTask title={"Submit Your Task"}/>
+      },
+      {
+        path:"editTask/:sectionId/:taskId",
+        element:<EditStudentTask title={"Edit Your Submission"}/>
       },
       {
         path: "profile",
