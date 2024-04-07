@@ -2,6 +2,7 @@ import React,{ createContext, useContext, useEffect, useState }  from 'react'
 import axios from "axios";
 export const TaskContext = createContext();
 export default function TaskContextProvider({children}) {
+     const [taskTxt,setTaskTxt]=useState();
       const getSuperTask = async () => {
         try {
           const token = localStorage.getItem("userToken");
@@ -51,12 +52,36 @@ export default function TaskContextProvider({children}) {
           console.log(err);
         }
       };
-    
+      const checkSubmission = async (sectionId, taskId) => {
+        try {
+          const token = localStorage.getItem("userToken");
+          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/student/getSubmission?sectionId=${sectionId}&taskId=${taskId}`,{
+            headers: { token: `Bearer ${token}` }
+          });
+          return data.message;
+        } catch (error) {
+          console.error("Error fetching submission:", error);
+        }
+      };
+      const getSubmission = async (sectionId, taskId) => {
+        try {
+          const token = localStorage.getItem("userToken");
+          const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/student/getSubmission?sectionId=${sectionId}&taskId=${taskId}`,{
+            headers: { token: `Bearer ${token}` }
+          });
+          setTaskTxt(data.submission.txt);
+          return data;
+        } catch (error) {
+          console.error("Error fetching submission:", error);
+        }
+      };
       useEffect(()=>{
         getSuperTask();
+        checkSubmission();
+        getSubmission();
       },[])
   return (
-    <TaskContext.Provider value={{getSuperTask,getTaskById,removeTask,getSuperSubmission}}>
+    <TaskContext.Provider value={{getSuperTask,getTaskById,removeTask,getSuperSubmission,checkSubmission,getSubmission,taskTxt}}>
       {children}
     </TaskContext.Provider>
   )

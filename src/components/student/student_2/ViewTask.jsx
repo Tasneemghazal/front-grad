@@ -18,7 +18,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function ViewTask({ open, onClose, taskId }) {
-  const { getTaskById } = useContext(TaskContext);
+  const { getTaskById,checkSubmission } = useContext(TaskContext);
   const { getStudentSection } = useContext(userContext);
   const [sectionId, setSectionId] = useState();
   const [homeWork, setHomeWork] = useState({});
@@ -48,20 +48,12 @@ export default function ViewTask({ open, onClose, taskId }) {
   }, [getTaskById, taskId, getStudentSection]);
 
   useEffect(() => {
-    const checkSubmission = async (sectionId, taskId) => {
-      try {
-        const token = localStorage.getItem("userToken");
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/student/getSubmission?sectionId=${sectionId}&taskId=${taskId}`,{
-          headers: { token: `Bearer ${token}` }
-        });
-        console.log(data.message);
-        setSubMesg(data.message);
-        console.log(subMesg);
-      } catch (error) {
-        console.error("Error fetching submission:", error);
-      }
-    };
-    checkSubmission(sectionId, taskId);
+    const fetchSubmission = async () => {
+      const sub = await checkSubmission(sectionId,taskId);
+      console.log(sub)
+      setSubMesg(sub);
+    }
+    fetchSubmission(sectionId, taskId)
   }, [taskId, sectionId]);
 
   return (
@@ -138,6 +130,19 @@ export default function ViewTask({ open, onClose, taskId }) {
                   Add your Submission
                 </Button>
               </Link>
+             {subMesg &&  <Link to={`editTask/${sectionId}/${taskId}`}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "rgba(43, 1, 62, 0.5)",
+                    "&:hover": {
+                      backgroundColor: "rgba(43, 1, 62, 0.8)"
+                    }
+                  }}
+                >
+                  Edit
+                </Button>
+              </Link>}
             </Box>
           </Box>
           <Box sx={{ textAlign: "center", fontWeight: "bold" }}>
