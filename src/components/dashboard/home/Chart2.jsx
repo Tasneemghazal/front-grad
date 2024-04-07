@@ -30,9 +30,9 @@ export default function Chart2() {
         const res = await getUsers();
         if (res.users.length > 0) {
           
-          const filteredHOD = res.users.filter(user => user.role === "headOfDepartment");
+          const filteredHOD = res.users.filter(user => user.role.includes("headOfDepartment"));
           setHeadCount(filteredHOD.length);
-          const filteredSuper = res.users.filter(user => user.role === "supervisor");
+          const filteredSuper = res.users.filter(user => user.role.includes("supervisor"));
           setSuperCount(filteredSuper.length);
         }
       } catch (error) {

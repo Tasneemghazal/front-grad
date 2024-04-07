@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import CustomTable from '../../shared/CustomTable';
-import { UserContext } from '../../context/UserContextProvider.jsx'; // Import UserContext
+import { UserContext } from '../../context/UserContextProvider.jsx';
 import { useSnackbar } from '../../context/SnackbarProvider.jsx';
 
 export default function supervisor() {
@@ -36,7 +36,7 @@ export default function supervisor() {
           const columns = ['_id', 'name', 'email'];
           setTableColumns(columns);
           
-          const filteredUsers = res.users.filter(user => user.role === "supervisor");
+          const filteredUsers = res.users.filter(user => user.role.includes("supervisor"));
           setTableData(filteredUsers);
         }
       } catch (error) {

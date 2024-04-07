@@ -35,7 +35,7 @@ export default function HeadOfDepartment() {
           const userKeys = Object.keys(res.users[0]);
           const columns = ['_id', 'name', 'email'];
           setTableColumns(columns);
-          const filteredUsers = res.users.filter(user => user.role === "headOfDepartment");
+          const filteredUsers = res.users.filter(user => user.role.includes("headOfDepartment"));
           setTableData(filteredUsers);
         }
       } catch (error) {

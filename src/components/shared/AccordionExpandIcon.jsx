@@ -84,6 +84,7 @@ export default function AccordionExpandIcon({ submissions }) {
         submissions.map((submission) => getSectionNum(submission.section))
       );
       setSections(sectionsData);
+      console.log(sectionsData)
       formik.setFieldValue(
         "taskIds",
         submissions.map((submission) => submission.taskId)

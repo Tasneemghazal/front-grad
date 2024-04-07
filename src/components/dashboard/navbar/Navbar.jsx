@@ -21,7 +21,7 @@ export default function Navbar({ showDrawer }) {
         const res = await getUsers();
         
        
-        const adminUser = res.users.find(user => user.role === "admin");
+        const adminUser = res.users.find(user => user.role.includes("admin"));
         
         
         if (adminUser) {

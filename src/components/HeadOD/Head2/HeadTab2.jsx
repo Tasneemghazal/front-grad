@@ -28,7 +28,7 @@ export default function HeadTab2() {
         
         const res = await getUsers();
         if (res && res.users && res.users.length > 0) {
-          const filteredUsers = res.users.filter(user => user.role === "supervisor" && user.depId === depId);
+          const filteredUsers = res.users.filter(user => user.role.includes("supervisor") && user.depId === depId);
           setSupervisors(filteredUsers);
           console.log(supervisors);
         }
