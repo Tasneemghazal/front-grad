@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import InputCom from "../shared/InputCom";
-import { Box, Button, Container, Grid, Paper, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Container, Grid, Paper, Typography, useMediaQuery, Modal } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useSnackbar } from "../context/SnackbarProvider.jsx";
-
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -26,6 +25,8 @@ export default function Sign_in() {
     email: "",
     password: "",
   };
+  const [openModal, setOpenModal] = useState(false);
+  const [userRoles, setUserRoles] = useState([]);
 
   const { showSnackbar } = useSnackbar(); 
 
@@ -36,27 +37,42 @@ export default function Sign_in() {
       if (data.message === "valid account") {
         localStorage.setItem("userToken", data.token);
         setUserToken(data.token);
-        if (data.role === "admin") {
-          navigate("/dashboard");
-          showSnackbar({ message: "Login successful", severity: "success" }); 
+        const roles = Array.isArray(data.role) ? data.role : [data.role];
+
+        // If user has multiple roles, open modal for role selection
+        if (roles.length > 1) {
+          setUserRoles(roles);
+          setOpenModal(true);
+        } else {
+          handleNavigation(roles[0]);
         }
-        else if(data.role === "student") {
-          navigate("/student");
-          showSnackbar({ message: "Login successful", severity: "success" }); 
-        }
-        else if(data.role === "headOfDepartment") {
-          navigate("/headOfDepartment");
-          showSnackbar({ message: "Login successful", severity: "success" }); 
-        }
-        else if(data.role === "supervisor") {
-          navigate("/supervisor");
-          showSnackbar({ message: "Login successful", severity: "success" }); 
-        }
+
+        showSnackbar({ message: "Login successful", severity: "success" }); 
       }
     } catch (error) {
       console.log("Error occurred:", error)
     }
   }
+
+  const handleNavigation = (role) => {
+    switch (role) {
+      case "admin":
+        navigate("/dashboard");
+        break;
+      case "headOfDepartment":
+        navigate("/headOfDepartment");
+        break;
+      case "supervisor":
+        navigate("/supervisor");
+        break;
+      case "student":
+        navigate("/student");
+        break;
+      default:
+        // Handle other roles or unexpected cases
+        break;
+    }
+  };
 
   const formik = useFormik({
     initialValues,
@@ -144,6 +160,39 @@ export default function Sign_in() {
           )}
         </Grid>
       </Container>
+
+      {/* Modal for role selection */}
+      <Modal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            border: '2px solid #000',
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Choose Role
+          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
+            {userRoles.map((role, index) => (
+              <Button key={index} onClick={() => {handleNavigation(role); setOpenModal(false);}}>
+                {role}
+              </Button>
+            ))}
+          </Box>
+        </Box>
+      </Modal>
     </Box>
   );
 }
