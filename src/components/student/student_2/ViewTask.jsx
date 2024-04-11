@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from 'axios'; // Import axios for making HTTP requests
 import { Link } from "react-router-dom";
 import { TaskContext } from "../../context/TaskContextProvider.jsx";
 import { userContext } from "../../context/StudentContextProvider.jsx";
@@ -117,7 +116,20 @@ export default function ViewTask({ open, onClose, taskId }) {
               </Typography>
             </Box>
             <Box sx={{ mt: 2 }}>
-              <Link to={`submitTask/${sectionId}/${taskId}`}>
+              
+             {subMesg ?  <Link to={`editTask/${sectionId}/${taskId}`}>
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "rgba(43, 1, 62, 0.5)",
+                    "&:hover": {
+                      backgroundColor: "rgba(43, 1, 62, 0.8)"
+                    }
+                  }}
+                >
+                  Edit your Submission
+                </Button>
+              </Link>:<Link to={`submitTask/${sectionId}/${taskId}`}>
                 <Button
                   variant="contained"
                   sx={{
@@ -128,19 +140,6 @@ export default function ViewTask({ open, onClose, taskId }) {
                   }}
                 >
                   Add your Submission
-                </Button>
-              </Link>
-             {subMesg &&  <Link to={`editTask/${sectionId}/${taskId}`}>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "rgba(43, 1, 62, 0.5)",
-                    "&:hover": {
-                      backgroundColor: "rgba(43, 1, 62, 0.8)"
-                    }
-                  }}
-                >
-                  Edit
                 </Button>
               </Link>}
             </Box>
