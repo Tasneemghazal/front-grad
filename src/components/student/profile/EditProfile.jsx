@@ -14,17 +14,19 @@ import InputCom from "../../shared/InputCom.jsx";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useSnackbar } from "../../context/SnackbarProvider.jsx";
+
 export default function EditProfile({role}) {
   const { extractNameFromToken } = useContext(userContext);
   const token = localStorage.getItem("userToken");
   const [userName, setUserName] = useState("");
+  const [userImg, setUserImg] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const { showSnackbar } = useSnackbar();
   const onSubmit = async (users) => {
     try {
       const { data } = await axios.patch(
-        `http://localhost:3000/api/v1/grad/${role}/editProfile`,
+        `${import.meta.env.VITE_API_URL}/${role}/editProfile`,
         users, {
           headers: { token: `Bearer ${token}` }}
       );
@@ -36,6 +38,30 @@ export default function EditProfile({role}) {
       console.log("Error occurred:", error);
     }
   };
+
+  // Function to handle profile image upload
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("img", file);
+
+    try {
+      const {data} = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/${role}/editProfileImg`, // Change the URL to your backend endpoint for image upload
+        formData, {
+          headers: { token: `Bearer ${token}` }}
+        
+      );
+
+      // Update the userImg state with the new image URL
+      setUserImg(data.img);
+      showSnackbar({ message: 'Profile image updated successfully', severity: 'success' });
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      showSnackbar({ message: 'Failed to update profile image', severity: 'error' });
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,12 +69,17 @@ export default function EditProfile({role}) {
         setUserName(name.name);
         setUserEmail(name.email);
         setPhoneNumber(name.phoneNumber);
+        setUserImg(name.img);
+        formik.setValues({
+          phoneNumber: name.phoneNumber
+        });
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
     fetchData();
   }, []);
+
   const initialValues = {
     phoneNumber: phoneNumber,
     password: "",
@@ -60,7 +91,13 @@ export default function EditProfile({role}) {
     validateOnChange: false,
   });
   const inputs = [
- 
+    {
+      id: "phoneNumber",
+      type: "text",
+      name: "phoneNumber",
+      title: "Phone Number",
+      value: formik.values.phoneNumber,
+    },
     {
       id: "password",
       type: "password",
@@ -68,6 +105,7 @@ export default function EditProfile({role}) {
       title: "User Password",
       value: formik.values.password,
     },
+   
   ];
 
   const renderInputs = inputs.map((input, index) => (
@@ -86,8 +124,8 @@ export default function EditProfile({role}) {
   ));
 
   const handleUploadClick = () => {
-    // Define functionality to handle profile image upload
-    console.log("Upload clicked");
+    // Trigger file input click event
+    document.getElementById("imageInput").click();
   };
 
   return (
@@ -145,7 +183,7 @@ export default function EditProfile({role}) {
               <Box sx={{ position: "relative", pt: { xs: 0, md: 8 } }}>
                 <Avatar
                   alt={`${userName}'s Profile`}
-                  src="/image/Dr.Thear.jpeg"
+                  src={`${userImg}`}
                   sx={{
                     width: "130px",
                     height: "130px",
@@ -170,6 +208,14 @@ export default function EditProfile({role}) {
                   }}
                 >
                   <AddPhotoAlternateIcon />
+                  {/* Hidden file input for image upload */}
+                  <input
+                    type="file"
+                    id="imageInput"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={handleImageUpload}
+                  />
                 </Box>
               </Box>
               <Typography sx={{ mt: 5 }}>Change your profile image!</Typography>
@@ -211,13 +257,7 @@ export default function EditProfile({role}) {
                       value={userEmail}
                       disabled={true}
                     />
-                     <InputCom
-                      placeholder={"Phone Number"}
-                      type={"text"}
-                      name={"phoneNumber"}
-                      value={phoneNumber}
-                      
-                    />
+                     
                     {renderInputs}
                     <Button
                       sx={{
