@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import InputCom from "../shared/InputCom";
 import { Box, Button, Container, Grid, Paper, Typography, useMediaQuery} from "@mui/material";
 import { styled } from "@mui/material/styles";

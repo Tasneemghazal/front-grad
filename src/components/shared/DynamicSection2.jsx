@@ -1,17 +1,14 @@
 import  { useState, useEffect } from "react";
 import { Avatar, Box, Grid, Typography } from "@mui/material";
-import CardComp2 from "./CardComp2.jsx";
+import CardComp3 from "../HeadOD/Head2/CardComp3.jsx";
 import SpringModal from "./SpringModal.jsx";
 import SupervisorName from "../student/Booking/SupervisorName.jsx";
 import GetStudentName from "./GetStudentName.jsx";
 import Pagination from '@mui/material/Pagination';
 import Title from "./title.jsx";
-import DeleteContent from "./DeleteContent.jsx";
 
-export default function DynamicSection({ getSections, flag = true, removeSection }) {
+export default function DynamicSection2({ getSections, flag = true }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [deleteSectionId, setDeleteSectionId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [section, setSection] = useState([]);
   const [rowData, setRowData] = useState([]);
@@ -36,22 +33,8 @@ export default function DynamicSection({ getSections, flag = true, removeSection
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setDeleteModalOpen(false);
-    setDeleteSectionId(null);
   };
 
-  const onClickDelete = (secId) => {
-    setDeleteSectionId(secId);
-    setDeleteModalOpen(true);
-  };
-
-  const confirmDelete = async () => {
-    if (deleteSectionId) {
-      await removeSection(deleteSectionId);
-      setSection(section.filter(sec => sec._id !== deleteSectionId));
-      closeModal();
-    }
-  };
 
   const handleChangePage = (event, newPage) => {
     setCurrentPage(newPage);
@@ -63,12 +46,12 @@ export default function DynamicSection({ getSections, flag = true, removeSection
   const paginatedSections = section.slice(firstIndex, lastIndex);
 
   return (
-    <Box>
+    <Box sx={{padding:"0px 70px"}}>
       <Title title={"Your sections"} />
       <Grid container spacing={2}>
         {paginatedSections.map((sec) => (
           <Grid item xs={12} sm={6} md={4} key={sec._id}>
-            <CardComp2
+            <CardComp3
               title={`Section Number: ${sec.num}`}
               description={
                 <>
@@ -76,7 +59,6 @@ export default function DynamicSection({ getSections, flag = true, removeSection
                 </>
               }
               onClickLearnMore={() => openModal(sec.students)}
-              onClickDelete={() => onClickDelete(sec._id)}
               flag={flag}
             />
           </Grid>
@@ -111,14 +93,7 @@ export default function DynamicSection({ getSections, flag = true, removeSection
           </>
         }
       />
-      {/* Confirmation modal */}
-      <SpringModal
-        closeModal={closeModal}
-        isModalOpen={deleteModalOpen}
-        modalContent={
-          <DeleteContent handleRejectConfirmation={confirmDelete} setIsModalOpen={setDeleteModalOpen}/>
-        }
-      />
+    
     </Box>
   );
 }

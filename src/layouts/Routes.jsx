@@ -4,6 +4,7 @@ import TotalMain from "../components/mainPage/totalMain/TotalMain.jsx";
 import TechnicalSupport from "../components/mainPage/technicalSupport/TechnicalSupport.jsx";
 import PageNotFound from "../components/pageNotFound/PageNotFound.jsx";
 import Sign_in from "../components/sign in/Sign_in.jsx";
+import HODSection from '../components/HeadOD/Head2/HODSection.jsx'
 import DashLayout from "./DashLayout.jsx";
 import Home from "../components/dashboard/home/Home.jsx";
 import Create from "../components/dashboard/create/Create.jsx";
@@ -37,6 +38,7 @@ import SubmitTask from "../components/student/student_2/SubmitTask.jsx";
 import EditStudentTask from "../components/student/student_2/EditStudentTask.jsx";
 import ChatApp from "../components/ChatApp/ChatApp.jsx";
 import ProtectedRoutes from "../components/shared/ProtectedRoutes.jsx";
+import ChatAppSupervisor from "../components/ChatApp/ChatAppSupervisor.jsx";
 const handleGoBack = () => {
   window.history.back();
 };
@@ -225,6 +227,14 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path:"sections",
+        element:<HODSection/>,
+      },
+      {
+            path: "sections/chat",
+            element: <ChatAppSupervisor/>
+          }
     ],
   },
   {
@@ -251,9 +261,17 @@ export const router = createBrowserRouter([
           {
             path: "editProfile",
             element: <EditProfile role={"head"} />,
-          },
+          }
         ],
       },
+      {
+        path:"sections",
+        element:<HODSection/>,
+      },
+      {
+            path: "sections/chat",
+            element: <ChatAppSupervisor/>
+          }
     ],
   },
   {
