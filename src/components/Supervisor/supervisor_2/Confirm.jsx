@@ -8,6 +8,7 @@ import { RequestContext } from '../../context/RequestContextProvider.jsx';
 
 export default function Confirm({ rowId, sectionId,closeModal}) {
     const [student, setStudent] = useState([""]);
+    const token = localStorage.getItem("userToken");
     const { showSnackbar } = useSnackbar();
     const{getRequestById,students } = useContext(RequestContext);
     
@@ -28,7 +29,7 @@ export default function Confirm({ rowId, sectionId,closeModal}) {
                 sectionId,
               };
               console.log(req)
-            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/confirm`, req);
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/confirm`, req,{ headers: { token: `Bearer ${token}` } });
             closeModal();
             if (data.message === "success") {
                 showSnackbar({ message: "Request confirmed successfully", severity: "success" });
