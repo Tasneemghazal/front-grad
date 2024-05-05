@@ -14,6 +14,7 @@ import { useContext, useEffect, useState } from "react";
 export default function Navbar({ showDrawer }) {
   const { getUsers } = useContext(UserContext);
   const [adminName, setAdminName] = useState("");
+  const [adminImge, setAdminImge] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,10 +23,11 @@ export default function Navbar({ showDrawer }) {
         
        
         const adminUser = res.users.find(user => user.role.includes("admin"));
-        
+      
         
         if (adminUser) {
           setAdminName(adminUser.name);
+          setAdminImge(adminUser.image)
         }
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -74,7 +76,8 @@ export default function Navbar({ showDrawer }) {
             <IconButton>
               <DotBadge icon={NotificationsActiveIcon} />
             </IconButton>
-            <Avatar src="image/steve.png" sx={{ mx: 1 }} />
+            <Avatar src={adminImge || "image/steve.png"} sx={{ mx: 1 }} />
+
             <Typography>Hi, {adminName || 'Action'}</Typography>
           </Box>
         </Toolbar>
