@@ -32,7 +32,7 @@ export default function ViewProject() {
         const projectRes = await getProjects();
         const departmentRes = await getDepartments(); 
         if (projectRes.projects.length > 0) {
-          const columns = ['_id', 'name', 'group', 'supervisorName', 'depId'];
+          const columns = ['name', 'group', 'supervisorName', 'depId'];
           setTableColumns(columns);
           const updatedProjects = projectRes.projects.map(project => {
             const department = departmentRes.deps.find(dep => dep._id === project.depId); 
