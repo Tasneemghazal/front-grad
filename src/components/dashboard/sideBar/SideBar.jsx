@@ -17,7 +17,6 @@ import { Create } from "@mui/icons-material";
 import HailIcon from "@mui/icons-material/Hail";
 import PersonIcon from "@mui/icons-material/Person";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
-import MailIcon from "@mui/icons-material/Mail";
 import ArticleIcon from "@mui/icons-material/Article";
 import DomainAddIcon from '@mui/icons-material/DomainAdd';
 import { Link } from "react-router-dom";
@@ -147,16 +146,7 @@ export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
             </ListItemButton>
           </ListItem>
         </Link>
-        <Link to="mail" style={{ color: "white", textDecoration: "none" }}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <MailIcon style={{ color: "#fff" }} />
-              </ListItemIcon>
-              <ListItemText primary="Mail" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
+       
       </List>
     </Drawer>
   );
