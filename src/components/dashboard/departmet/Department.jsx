@@ -21,7 +21,7 @@ export default function Department() {
       if (res.message === "success") {
         showSnackbar({
           message: "Department deleted successfully",
-          severity: "error",
+          severity: "success",
         });
         setTableData(tableData.filter((dep) => dep._id !== depId));
       }
@@ -37,7 +37,7 @@ export default function Department() {
       const res = await getDepartments();
       if (res.deps.length > 0) {
         const departmentKeys = Object.keys(res.deps[0]);
-        const columns = ["_id", "name", "createdAt"];
+        const columns = [ "name", "createdAt"];
         setTableColumns(columns);
         setTableData(res.deps);
       }
@@ -133,6 +133,7 @@ export default function Department() {
             columns={tableColumns}
             data={tableData}
             onDelete={removeDepartment}
+            flag={false}
           />
         </Box>
       </Box>
