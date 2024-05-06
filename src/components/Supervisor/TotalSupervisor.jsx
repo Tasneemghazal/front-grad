@@ -5,23 +5,23 @@ import Supervisor_2 from './supervisor_2/Supervisor_2.jsx'
 import Loader from '../loader/Loader.jsx';
 
 export default function TotalSupervisor() {
-  let[loading, setLoading] = useState(true);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); 
+  // let[loading, setLoading] = useState(true);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000); 
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
-  if (loading) {
-    return (
-      <>
-      <Loader/>
-      </>
-    )
-  }
-  return (
+  // if (loading) {
+  //   return (
+  //     <>
+  //     <Loader/>
+  //     </>
+  //   )
+  // }
+   return (
     <>
     <Supervisor_1/>
     <Supervisor_2/>
