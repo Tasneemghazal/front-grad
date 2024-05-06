@@ -36,13 +36,13 @@ import Loader from "../loader/Loader.jsx";
     };
     fetchData();
   }, []);
-  if(loading){
-    return (
-      <>
-      <Loader/>
-      </>
-    )
-  }
+  // if(loading){
+  //   return (
+  //     <>
+  //     <Loader/>
+  //     </>
+  //   )
+  // }
     return (
       <Box
         sx={{
