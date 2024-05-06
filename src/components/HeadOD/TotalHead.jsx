@@ -5,23 +5,23 @@ import Footer from './Footer.jsx'
 import Loader from '../loader/Loader.jsx';
 
 export default function TotalHead() {
-  let [loading, setLoading] = useState(true);
+  // let [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); 
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000); 
 
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
-  if (loading) {
-    return (
-      <>
-      <Loader/>
-      </>
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <>
+  //     <Loader/>
+  //     </>
+  //   )
+  // }
   return (
     <>
     <Head1/>
