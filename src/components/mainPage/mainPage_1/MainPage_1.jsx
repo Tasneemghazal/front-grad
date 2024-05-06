@@ -107,11 +107,11 @@ export default function MainPage_1() {
                   }}
                 >
                   <img
-                    src="image/cover1.png"
+                    src="image/c.png"
                     alt=""
                     style={{
                       position: "absolute",
-                      top: -20,
+                      top: -100,
                       left: 0,
                       width: "100%", 
                       objectFit: "cover",
