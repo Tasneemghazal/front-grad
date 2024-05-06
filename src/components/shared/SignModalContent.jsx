@@ -7,8 +7,8 @@ export default function SignModalContent({
   setOpenModal,
 }) {
   return (
-    <Box>
-      <Typography id="modal-modal-title" variant="h6" component="h2">
+    <Box >
+      <Typography id="modal-modal-title" variant="h5" component="h2" sx={{textAlign:"center"}}>
         Choose Role
       </Typography>
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
