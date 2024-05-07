@@ -37,6 +37,7 @@ import SubmitTask from "../components/student/student_2/SubmitTask.jsx";
 import EditStudentTask from "../components/student/student_2/EditStudentTask.jsx";
 import ChatApp from "../components/ChatApp/ChatApp.jsx";
 import ProtectedRoutes from "../components/shared/ProtectedRoutes.jsx";
+import UpdatePassword from "../components/forgotPassword/UpdatePassword.jsx";
 const handleGoBack = () => {
   window.history.back();
 };
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
       {
         path: "forgotPassword",
         element: <ForgotPassword />,
+      },
+      {
+        path: "updatePassword",
+        element: <UpdatePassword />,
       },
       {
         path: "technical-support",
