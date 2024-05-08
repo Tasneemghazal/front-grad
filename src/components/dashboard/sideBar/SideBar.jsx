@@ -146,17 +146,7 @@ export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
               <ListItemText primary="Projects" />
             </ListItemButton>
           </ListItem>
-        </Link>
-        <Link to="mail" style={{ color: "white", textDecoration: "none" }}>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <MailIcon style={{ color: "#fff" }} />
-              </ListItemIcon>
-              <ListItemText primary="Mail" />
-            </ListItemButton>
-          </ListItem>
-        </Link>
+        </Link>  
       </List>
     </Drawer>
   );

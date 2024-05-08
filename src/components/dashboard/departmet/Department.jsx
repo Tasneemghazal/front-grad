@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import  { useContext, useEffect, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import InputCom from "../../shared/InputCom.jsx";
 import { useFormik } from "formik";
@@ -21,7 +21,7 @@ export default function Department() {
       if (res.message === "success") {
         showSnackbar({
           message: "Department deleted successfully",
-          severity: "error",
+          severity: "success",
         });
         setTableData(tableData.filter((dep) => dep._id !== depId));
       }

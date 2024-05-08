@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
+import  { useContext, useEffect, useState } from 'react';
 import CustomTable from '../../shared/CustomTable';
 import { UserContext } from '../../context/UserContextProvider.jsx'; 
 import { useSnackbar } from '../../context/SnackbarProvider.jsx';
@@ -33,7 +33,7 @@ export default function HeadOfDepartment() {
         const res = await getUsers();
         if (res.users.length > 0) {
           const userKeys = Object.keys(res.users[0]);
-          const columns = ['_id', 'name', 'email'];
+          const columns = [ 'name', 'email','phoneNumber'];
           setTableColumns(columns);
           const filteredUsers = res.users.filter(user => user.role.includes("headOfDepartment"));
           setTableData(filteredUsers);

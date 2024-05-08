@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Grid, Button, Box, List, ListItem, ListItemText } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { Dialog, DialogContent, DialogActions, DialogTitle } from "@mui/material";
-import axios from 'axios'; // Import axios
+import axios from 'axios';
 
 const ChatMessages = () => {
   const [message, setMessage] = useState("");
@@ -29,7 +29,7 @@ const ChatMessages = () => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setMessage("");
       try {
-        await axios.post('/api/sendmessage', { message }); 
+        await axios.post('/api/v1/grad/chat/sendMessage', { message }); 
       } catch (error) {
         console.error('Error sending message:', error);
       }
@@ -39,7 +39,7 @@ const ChatMessages = () => {
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await axios.get('/api/getmessages'); 
+        const response = await axios.get('/api/v1/grad/chat/getMessages'); 
         setMessages(response.data.messages);
       } catch (error) {
         console.error('Error fetching messages:', error);

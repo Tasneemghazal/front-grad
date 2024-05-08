@@ -1,23 +1,32 @@
-// ChatMessagesSupervisor.js
-import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import  { useState, useEffect, useRef } from "react";
 import { Grid, Button, Box, List, ListItem, ListItemText } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { Dialog, DialogContent, DialogActions, DialogTitle } from "@mui/material";
+import io from "socket.io-client";
+import axios from "axios";
 
-const ChatMessagesSupervisor = () => {
+const ChatMessagesSupervisor = ({ sectionId }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
+  const socket = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  useEffect(() => {
+    socket.current = io("http://localhost:3000");
 
-  useEffect(scrollToBottom, [messages]);
+    socket.current.emit("joinSection", sectionId);
+
+    socket.current.on("message", (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      socket.current.disconnect();
+    };
+  }, [sectionId]);
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
@@ -30,25 +39,12 @@ const ChatMessagesSupervisor = () => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setMessage("");
       try {
-        await axios.post('/api/sendmessage', { message }); 
+        await axios.post(`http://127.0.0.1:3000/api/v1/grad/chat/sendMessage?sectionId=${sectionId}`, { message });
       } catch (error) {
         console.error('Error sending message:', error);
       }
     }
   };
-
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const response = await axios.get('/api/getmessages'); 
-        setMessages(response.data.messages);
-      } catch (error) {
-        console.error('Error fetching messages:', error);
-      }
-    };
-
-    fetchMessages();
-  }, []);
 
   const handleAttachmentUpload = (event) => {
     const file = event.target.files[0];
@@ -79,6 +75,10 @@ const ChatMessagesSupervisor = () => {
       event.preventDefault();
       handleSendMessage();
     }
+  };
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
