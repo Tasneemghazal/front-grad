@@ -21,7 +21,11 @@ export default function UpdatePassword() {
   const navigate=useNavigate();
 
   const initialValues = {
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
     email: "",
     password: "",
   };
@@ -50,7 +54,11 @@ export default function UpdatePassword() {
   });
 
   const inputs = [
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
     {
       id: "email",
       type: "email",
@@ -122,9 +130,15 @@ export default function UpdatePassword() {
               </Box>
             </Grid>
           )}
+<<<<<<< HEAD
           
         </Grid>
         
+=======
+
+        </Grid>
+
+>>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
       </Container>
     </Box>
   );
@@ -138,7 +152,11 @@ export default function UpdatePassword() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
       }}
     >
       <Container maxWidth="lg">
@@ -163,7 +181,11 @@ export default function UpdatePassword() {
                 <InputCom placeholder={"Email"} type={"email"} />
                 <InputCom placeholder={"Password"} type={"password"}/>
                 <InputCom placeholder={"Code"} type={"password"}/>
+<<<<<<< HEAD
                
+=======
+
+>>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
                 <ColorButton fullWidth>Confirm</ColorButton>
               </FormGroup>
             </Paper>
@@ -179,4 +201,8 @@ export default function UpdatePassword() {
       </Container>
     </Box>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39

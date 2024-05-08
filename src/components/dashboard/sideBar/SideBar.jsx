@@ -145,8 +145,12 @@ export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
               <ListItemText primary="Projects" />
             </ListItemButton>
           </ListItem>
+<<<<<<< HEAD
         </Link>
        
+=======
+        </Link>  
+>>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
       </List>
     </Drawer>
   );

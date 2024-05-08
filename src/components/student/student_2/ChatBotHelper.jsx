@@ -24,7 +24,7 @@ const ChatBotHelper = () => {
     <div
     style={{
       position: "fixed",
-      bottom: "5px",
+      bottom: "5zpx",
       right: "10px",
       zIndex: "9999",
     }}
