@@ -2,7 +2,6 @@ import  { useState, useEffect, useRef } from "react";
 import { Grid, Button, Box, List, ListItem, ListItemText } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { Dialog, DialogContent, DialogActions, DialogTitle } from "@mui/material";
-import io from "socket.io-client";
 import axios from "axios";
 
 const ChatMessagesSupervisor = ({ sectionId }) => {
