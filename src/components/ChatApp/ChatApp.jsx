@@ -86,19 +86,20 @@ import Avatar from '@mui/material/Avatar';
 import Fab from '@mui/material/Fab';
 import SendIcon from '@mui/icons-material/Send';
 import Divider from '@mui/material/Divider';
+import { Box } from '@mui/material';
 
 const ChatSection = styled(Grid)({
   width: '100%',
   height: '90vh', // Adjusted to fill the entire viewport height
   display: 'flex',
   flexDirection: 'row',
-  position:'absolute',
-  top:'65px' // Align items horizontally
+  position: 'absolute',
+  top: '65px', // Align items horizontally
 });
 
 const Sidebar = styled(Grid)({
   width: '20%', // Sidebar width
-  backgroundColor: "rgba(57, 27, 71, ,0.66)"
+  backgroundColor: "rgb(54 19 70 / 60%)"
 });
 
 const Conversation = styled(Grid)({
@@ -119,7 +120,7 @@ const MessageItem = styled(ListItem)({
 
 const MessageText = styled(ListItemText)({
   maxWidth: '70%',
-  backgroundColor: '#0084ff',
+  backgroundColor: 'rgb(53 5 74 / 73%)',
   color: '#ffffff',
   borderRadius: '10px',
   padding: '10px',
@@ -135,20 +136,55 @@ const InputArea = styled(Grid)({
   backgroundColor: '#ffffff',
 });
 
+const SendButton = styled(Fab)({
+  backgroundColor: 'rgb(53 5 74 / 73%)',
+  '&:hover': {
+    backgroundColor: 'rgb(53 5 74 / 50%)',
+  },
+});
+
+const avatarImages = [
+  "/image/class.png",
+  "/image/class2.png",
+  "/image/class3.png",
+  "/image/class4.png",
+  "/image/class5.png",
+  "/image/class6.png",
+  "/image/class7.png",
+  "/image/class8.png",
+  "/image/class9.png",
+];
+
+const getRandomAvatar = () => {
+  return avatarImages[Math.floor(Math.random() * avatarImages.length)];
+};
+
 const ChatApp = () => {
   return (
     <ChatSection container>
       <Sidebar item>
-        <List>
-          {/* Sidebar users */}
-          <ListItem button>
-            <ListItemIcon>
-              <Avatar alt="User" src="https://material-ui.com/static/images/avatar/1.jpg" />
-            </ListItemIcon>
-            <ListItemText primary="John Wick" />
-          </ListItem>
-          {/* Add more users here */}
-        </List>
+     
+              <Box sx={{ padding: 4, textAlign: "center" }}>
+                <Avatar
+                  src={getRandomAvatar()}
+                  alt="Avatar"
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    margin: "auto",
+                    border: "1px solid #000",
+                  }}
+                />
+                <Typography variant='h5'sx={{m:2, fontWeight:"bold"}}>Section 5</Typography>
+
+                <List sx={{mt:5, fontWeight:"bold" , textAlign:"center"}}>
+                <Typography variant='h5'sx={{m:2, fontWeight:"bold"}}>Members:</Typography>
+                  <Typography >Fatima</Typography>
+                  <Typography >Tasneem</Typography>
+                  <Typography >Tasneem</Typography>
+                </List>
+              </Box>
+           
       </Sidebar>
       <Conversation item>
         <Paper style={{ height: 'calc(100% - 56px)', overflowY: 'auto' }}>
@@ -171,9 +207,9 @@ const ChatApp = () => {
             <TextField id="outlined-basic-email" label="Type Something" fullWidth />
           </Grid>
           <Grid item xs={1} align="right">
-            <Fab color="primary" aria-label="add">
+            <SendButton color="primary" aria-label="add">
               <SendIcon />
-            </Fab>
+            </SendButton>
           </Grid>
         </InputArea>
       </Conversation>
@@ -182,3 +218,4 @@ const ChatApp = () => {
 }
 
 export default ChatApp;
+
