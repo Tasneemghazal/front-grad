@@ -9,6 +9,7 @@ import StudentTab2 from './StudentTab2.jsx';
 import StudentTab3 from './StudentTab3.jsx';
 import DynamicTabs from '../../shared/DynamicTabs.jsx';
 import TelegramIcon from '@mui/icons-material/Telegram';
+import ChatBotHelper from './ChatBotHelper.jsx';
 
 export default function Student_2() {
   const navigate = useNavigate();
@@ -33,10 +34,10 @@ export default function Student_2() {
             bottom: '90px',
             left: '20px',
             zIndex: '99999999999',
-            backgroundColor: '#2B013EB3',
+            backgroundColor: '#773893',
             borderRadius: '50%', // Make it circular
-            width: '60px', // Adjust the width and height according to your need
-            height: '60px',
+            width: '50px', // Adjust the width and height according to your need
+            height: '50px',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -46,13 +47,15 @@ export default function Student_2() {
         >
           <TelegramIcon
             style={{
-              fontSize: '50px',
+              fontSize: '40px',
               color: 'white',
             }}
           />
         </div>
       </Box>
+      <ChatBotHelper/>
     </Container>
+   
   );
 }
 
