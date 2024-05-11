@@ -8,7 +8,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-export default function InputCom({ placeholder, type, name,value,onChange,title, disabled }) {
+export default function InputCom({ placeholder, type, name,value,onChange,title, disabled,multiline=false,rows=1 }) {
   return (
     <TextField
       sx={{ my: 1 }}
@@ -20,6 +20,8 @@ export default function InputCom({ placeholder, type, name,value,onChange,title,
       disabled={disabled}
       fullWidth
       label={placeholder} variant="outlined"
+      multiline={multiline}
+      rows={rows}
       InputProps={{
         endAdornment: (
           <InputAdornment position="end">

@@ -29,13 +29,8 @@ export default function Confirm({ rowId, sectionId,closeModal}) {
                 sectionId,
               };
               console.log(req)
-<<<<<<< HEAD
             const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/confirm`, req,{ headers: { token: `Bearer ${token}` } });
             closeModal();
-=======
-              const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/confirm`, req,{ headers: { token: `Bearer ${token}` } });
-              closeModal();
->>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
             if (data.message === "success") {
                 showSnackbar({ message: "Request confirmed successfully", severity: "success" });
               }

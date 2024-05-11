@@ -21,11 +21,7 @@ export default function UpdatePassword() {
   const navigate=useNavigate();
 
   const initialValues = {
-<<<<<<< HEAD
     
-=======
-
->>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
     email: "",
     password: "",
   };
@@ -54,11 +50,7 @@ export default function UpdatePassword() {
   });
 
   const inputs = [
-<<<<<<< HEAD
    
-=======
-
->>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
     {
       id: "email",
       type: "email",
@@ -130,79 +122,10 @@ export default function UpdatePassword() {
               </Box>
             </Grid>
           )}
-<<<<<<< HEAD
           
         </Grid>
         
-=======
-
-        </Grid>
-
->>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
       </Container>
     </Box>
   );
-
-
-
-  return (
-    <Box
-      sx={{
-        height: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
-      }}
-    >
-      <Container maxWidth="lg">
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <Paper
-              sx={{
-                borderRadius: 2,
-                overflow: "hidden",
-                backgroundColor: "#fff",
-                p: 3
-              }}
-            > 
-             <Box sx={{textAlign:"center"}}>
-              <img src="image/ptuk.jpg" alt="ptuk logo"  width="40px" height="40px"/>
-              <Typography variant="p" sx={{display:"block", pb:1}}>Palestine Technical University</Typography>
-             <Typography variant="h4" sx={{ fontSize:"30px",textAlign: "center", mb: 4, fontWeight: "bold" }}>
-                Forgot Password
-              </Typography>
-             </Box>
-              <FormGroup sx={{ width: "100%", mb: 3 }}>
-                <InputCom placeholder={"Email"} type={"email"} />
-                <InputCom placeholder={"Password"} type={"password"}/>
-                <InputCom placeholder={"Code"} type={"password"}/>
-<<<<<<< HEAD
-               
-=======
-
->>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
-                <ColorButton fullWidth>Confirm</ColorButton>
-              </FormGroup>
-            </Paper>
-          </Grid>
-          {matches && (
-            <Grid item xs={12} md={6}>
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <img src="image/forgotPassword.gif" alt="" style={{ maxWidth: "100%", height: "auto" }} />
-              </Box>
-            </Grid>
-          )}
-        </Grid>
-      </Container>
-    </Box>
-  );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39

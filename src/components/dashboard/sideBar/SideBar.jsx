@@ -18,7 +18,8 @@ import HailIcon from "@mui/icons-material/Hail";
 import PersonIcon from "@mui/icons-material/Person";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import ArticleIcon from "@mui/icons-material/Article";
-import DomainAddIcon from '@mui/icons-material/DomainAdd';
+import DomainAddIcon from '@mui/icons-material/DomainAdd'
+import CampaignIcon from '@mui/icons-material/Campaign';
 import { Link } from "react-router-dom";
 export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
   return (
@@ -145,12 +146,18 @@ export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
               <ListItemText primary="Projects" />
             </ListItemButton>
           </ListItem>
-<<<<<<< HEAD
+        </Link>
+        <Link to="announcements" style={{ color: "white", textDecoration: "none" }}>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <CampaignIcon style={{ color: "#fff" }} />
+              </ListItemIcon>
+              <ListItemText primary="Announcement" />
+            </ListItemButton>
+          </ListItem>
         </Link>
        
-=======
-        </Link>  
->>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
       </List>
     </Drawer>
   );

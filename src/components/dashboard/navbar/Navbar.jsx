@@ -28,10 +28,6 @@ export default function Navbar({ showDrawer }) {
         if (adminUser) {
           setAdminName(adminUser.name);
           setAdminImge(adminUser.image)
-<<<<<<< HEAD
-=======
-
->>>>>>> f1f1f5edf3f0933400417f89ed15ea801cd48c39
         }
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -79,7 +75,6 @@ export default function Navbar({ showDrawer }) {
           >
             <IconButton>
               <DotBadge icon={NotificationsActiveIcon} />
-
             </IconButton>
             <Avatar src={adminImge || "image/steve.png"} sx={{ mx: 1 }} />
 
