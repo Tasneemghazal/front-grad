@@ -59,7 +59,7 @@ const SectionRegistration = () => {
   };
 
   return (
-    <Container>
+    <Container sx={{mb:10}}>
       <ToastContainer />
       <Typography
         variant="h4"
@@ -98,21 +98,14 @@ const SectionRegistration = () => {
     </li>
     <li>
     Enter your number and
-      the numbers of your colleagues in the same group in addition to the
-      names.
+      the numbers of your colleagues in the same group .
     </li>
-    <li>
-    Enter your number and
-      the numbers of your colleagues in the same group in addition to the
-      names.
-    </li>
+    
     <li>
     You cannot withdraw the
       request except after the supervisor approves or rejects it.
     </li>
-    <li style={{ color: "#4a148c" }}>
-      (You can communicate via chat with the supervisor for any emergency).
-    </li>
+   
   </ul>
 </Typography>
 
