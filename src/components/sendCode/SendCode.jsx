@@ -33,7 +33,7 @@ export default function SendCode() {
       const {data}=await axios.post(`${import.meta.env.VITE_API_URL}/auth/sendCode`, values);
       console.log('Message sent successfully!');
 
-      if(data.message=="success"){
+      if(data.message=="ok"){
         navigate('/forgotPassword');
       }
     } catch (error) {
