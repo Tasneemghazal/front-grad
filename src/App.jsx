@@ -9,25 +9,28 @@ import SnackbarProvider from "./components/context/SnackbarProvider.jsx";
 import SectionContextProvider from "./components/context/SectionContextProvider.jsx";
 import RequestContextProvider from "./components/context/RequestContextProvider.jsx";
 import TaskContextProvider from "./components/context/TaskContextProvider.jsx";
+import ChatContextProvider from "./components/context/ChatContextProvider.jsx";
 
 export default function App() {
   return (
-    <TaskContextProvider>
-      <RequestContextProvider>
-        <SectionContextProvider>
-          <SnackbarProvider>
-            <ProjectContextProvider>
-              <UserContextProvider>
-                <StudentContextProvider>
-                  <DepartmentContextProvider>
-                    <RouterProvider router={router} />
-                  </DepartmentContextProvider>
-                </StudentContextProvider>
-              </UserContextProvider>
-            </ProjectContextProvider>
-          </SnackbarProvider>
-        </SectionContextProvider>
-      </RequestContextProvider>
-    </TaskContextProvider>
+    <ChatContextProvider>
+      <TaskContextProvider>
+        <RequestContextProvider>
+          <SectionContextProvider>
+            <SnackbarProvider>
+              <ProjectContextProvider>
+                <UserContextProvider>
+                  <StudentContextProvider>
+                    <DepartmentContextProvider>
+                      <RouterProvider router={router} />
+                    </DepartmentContextProvider>
+                  </StudentContextProvider>
+                </UserContextProvider>
+              </ProjectContextProvider>
+            </SnackbarProvider>
+          </SectionContextProvider>
+        </RequestContextProvider>
+      </TaskContextProvider>
+    </ChatContextProvider>
   );
 }
