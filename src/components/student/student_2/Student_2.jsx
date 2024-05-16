@@ -1,23 +1,18 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import HailIcon from '@mui/icons-material/Hail';
 import PeopleIcon from '@mui/icons-material/People';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { Box, Container } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import StudentTab1 from './StudentTab1.jsx';
 import StudentTab2 from './StudentTab2.jsx';
 import StudentTab3 from './StudentTab3.jsx';
 import DynamicTabs from '../../shared/DynamicTabs.jsx';
-import TelegramIcon from '@mui/icons-material/Telegram';
 import ChatBotHelper from './ChatBotHelper.jsx';
+import { ChatContext } from '../../context/ChatContextProvider.jsx';
+import ChatIcon from '../../ChatApp/ChatIcon.jsx';
 
 export default function Student_2() {
-  const navigate = useNavigate();
-
-  const handleChatbotClick = () => {
-    navigate('/student/chat');
-  };
-
   return (
     <Container>
       <DynamicTabs
@@ -27,32 +22,9 @@ export default function Student_2() {
           { label: <BorderColorIcon />, content: <StudentTab3 /> },
         ]}
       />
-      <Box>
-        <div
-          style={{
-            position: 'fixed',
-            bottom: '90px',
-            left: '20px',
-            zIndex: '99999999999',
-            backgroundColor: '#773893',
-            borderRadius: '50%', // Make it circular
-            width: '50px', // Adjust the width and height according to your need
-            height: '50px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            cursor: 'pointer',
-          }}
-          onClick={handleChatbotClick}
-        >
-          <TelegramIcon
-            style={{
-              fontSize: '40px',
-              color: 'white',
-            }}
-          />
-        </div>
-      </Box>
+      <Link to={`chat`}>
+      <ChatIcon/>
+      </Link>
       <ChatBotHelper/>
     </Container>
    
