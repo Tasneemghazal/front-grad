@@ -4,7 +4,7 @@ import { Grid } from '@mui/material';
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
 import ChatInput from './ChatInput.jsx';
-import { Conversation } from './chartStyle.jsx';
+import { Conversation } from './chatStyle.jsx';
 
 export default function ChatLayout() {
   const ChatSection = styled(Grid)({
