@@ -39,6 +39,8 @@ import ChatApp from "../components/ChatApp/ChatApp.jsx";
 import ProtectedRoutes from "../components/shared/ProtectedRoutes.jsx";
 import UpdatePassword from "../components/forgotPassword/UpdatePassword.jsx";
 import Announcement from "../components/dashboard/announcement/Announcement.jsx";
+import ChatLayout from "../components/ChatApp/ChatLayout.jsx";
+import ChatApp2 from "../components/ChatApp/ChatApp2.jsx";
 const handleGoBack = () => {
   window.history.back();
 };
@@ -191,7 +193,15 @@ export const router = createBrowserRouter([
       },
       {
         path:"chat",
-        element:<ChatApp/>
+        element:<ChatLayout/>,
+        children: [
+          {
+            index: true,
+            element: <ChatApp2 />,
+          },
+          
+        ],
+        
       }
     ],  
   },
@@ -231,6 +241,21 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path:"chat",
+        element:<ChatLayout/>,
+        children: [
+          {
+            index: true,
+            element: <ChatApp2/>,
+          },
+          {
+            path:":id" ,
+            element: <ChatApp />,
+          },
+          
+        ],
+      }
     ],
   },
   {
