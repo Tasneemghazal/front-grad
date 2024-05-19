@@ -7,15 +7,18 @@ import { SectionContext } from '../../context/SectionContextProvider.jsx';
 import DeleteContent from '../../shared/DeleteContent.jsx';
 import Title from '../../shared/title.jsx';
 import { useSnackbar } from '../../context/SnackbarProvider.jsx';
+import { userContext } from '../../context/StudentContextProvider.jsx';
 
 export default function SupervisorTab3() {
     const { getRequests } = useContext(RequestContext);
+    const { getStudentById } = useContext(userContext);
     const [tableData, setTableData] = useState([]);
     const [tableColumns, setTableColumns] = useState([]);
-    const [rejRequest, setRejRequest] = useState({ requestId: null, sectionId: null }); 
+    const [rejRequest, setRejRequest] = useState({ requestId: null, sectionId: null });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { getSectionNum } = useContext(SectionContext);
     const { showSnackbar } = useSnackbar();
+
     const reject = async (requestId, sectionId) => {
         setRejRequest({ requestId, sectionId });
         setIsModalOpen(true);
@@ -24,11 +27,11 @@ export default function SupervisorTab3() {
     const handleRejectConfirmation = async () => {
         const { requestId } = rejRequest;
         try {
-            const {data}=await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/reject`, rejRequest);
-            setTableData(tableData.filter(row => row.state !== 'rejected')); 
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/supervisor/reject`, rejRequest);
+            setTableData(tableData.filter(row => row.state !== 'rejected'));
             if (data.message === "success") {
                 showSnackbar({ message: "Request rejected successfully", severity: "success" });
-              }
+            }
         } catch (error) {
             console.log(error);
         }
@@ -42,7 +45,19 @@ export default function SupervisorTab3() {
                 if (requests.length > 0) {
                     const columns = ["sectionId", "studentId", "students"];
                     setTableColumns(columns);
-                    setTableData(requests.filter(request => request.state === 'Pending'));
+                    const enrichedRequests = await Promise.all(requests.filter(request => request.state === 'Pending').map(async request => {
+                        const studentName = await getStudentById(request.studentId);
+                        const studentsNames = await Promise.all(request.students.map(async studentId => {
+                            const student = await getStudentById(studentId);
+                            return student.user.name;
+                        }));
+                        return {
+                            ...request,
+                            studentName: studentName.user.name,
+                            studentsNames
+                        };
+                    }));
+                    setTableData(enrichedRequests);
                 }
             } catch (e) {
                 console.log(e);
@@ -50,24 +65,24 @@ export default function SupervisorTab3() {
         }
         fetchData();
     }, []);
-    const getSectionNumber= async (secId) => {
+
+    const getSectionNumber = async (secId) => {
         try {
-          const res = await getSectionNum(secId);
-          return res;
+            const res = await getSectionNum(secId);
+            return res;
         } catch (error) {
-          console.error("Error", error);
-          
+            console.error("Error", error);
         }
-      };
+    };
 
     const handleDelete = async (requestId, sectionId) => {
-        reject(requestId, sectionId); 
+        reject(requestId, sectionId);
     };
 
     return (
         <>
-           <Title title={"Your requests"}/>
-            <CustomTable data={tableData} columns={tableColumns} request={false} onDelete={handleDelete} getSectionNum={getSectionNumber}/>
+            <Title title={"Your requests"} />
+            <CustomTable data={tableData} columns={tableColumns} request={false} onDelete={handleDelete} getSectionNum={getSectionNumber} />
             <SpringModal
                 isModalOpen={isModalOpen}
                 closeModal={() => setIsModalOpen(false)}

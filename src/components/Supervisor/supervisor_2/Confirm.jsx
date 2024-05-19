@@ -15,7 +15,8 @@ export default function Confirm({ rowId, sectionId,closeModal}) {
     useEffect(() => {
         const fetchData = async () => {
             const req = await getRequestById(rowId);
-            console.log(req)
+            console.log(students)
+            setStudent(req.students)
         };
         fetchData();
     }, [rowId]);
