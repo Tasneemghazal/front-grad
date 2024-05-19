@@ -72,7 +72,9 @@ const ChatApp2 = () => {
 
     getMyChat();
     extractUserIdFromToken();
-    fetchMessages();
+    const intervalId = setInterval(fetchMessages, 1000);
+
+    return () => clearInterval(intervalId);
   }, [chatId]);
 
   return (
