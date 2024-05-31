@@ -10,6 +10,7 @@ import SelectCom from "../../shared/SelectCom.jsx";
 import axios from "axios";
 import UploadFile from "../../shared/UploadFile.jsx";
 import { useSnackbar } from "../../context/SnackbarProvider.jsx";
+import { createProjectValidation } from "../../validation/validation.js";
 
 export default function CreateProject() {
   const token = localStorage.getItem("userToken");
@@ -65,7 +66,7 @@ export default function CreateProject() {
     }
   };
 
-  const { formik, inputs } = projectInputFields(initialValues, onSubmit);
+  const { formik, inputs } = projectInputFields(initialValues, onSubmit,createProjectValidation);
 
   const renderInputs = inputs.map((input, index) => (
     <Grid item md={6} xs={12} key={index}>
@@ -79,6 +80,7 @@ export default function CreateProject() {
         onChange={input.onChange || formik.handleChange}
         onBlur={formik.handleBlur}
         touched={formik.touched}
+        errors={formik.errors}
       />
     </Grid>
   ));
@@ -123,14 +125,18 @@ export default function CreateProject() {
           <Grid container spacing={2}>
             {renderInputs}
           </Grid>
-          <SelectCom
-            labelId="department-label"
-            id="department"
-            value={formik.values.depId}
-            onChange={handleDepartmentChange}
-            label="Department"
-            options={tableData.map(dep => ({ value: dep._id, label: dep.name }))}
-          />
+         <SelectCom
+  labelId="department-label"
+  id="department"
+  name="depId" // Added name prop
+  value={formik.values.depId}
+  onChange={handleDepartmentChange}
+  label="Department"
+  options={tableData.map(dep => ({ value: dep._id, label: dep.name }))}
+  onBlur={formik.handleBlur}
+  touched={formik.touched}
+  errors={formik.errors}
+/>
           <Grid container spacing={2}>
             {group.map((studentName, index) => (
               <Grid item xs={12} sm={6} key={index}>
@@ -139,6 +145,9 @@ export default function CreateProject() {
                   type={"text"}
                   value={studentName}
                   onChange={(e) => handleStudentNameChange(index, e.target.value)}
+                  errors={formik.errors}
+                  touched={formik.touched}
+                  onBlur={formik.handleBlur}
                 />
               </Grid>
             ))}

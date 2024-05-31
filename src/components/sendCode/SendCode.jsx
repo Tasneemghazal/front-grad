@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import {  useNavigate } from 'react-router-dom'
 import axios from "axios";
 import { useFormik } from "formik";
+import { codeValidation } from "../validation/validation.js";
 
 
 const ColorButton = styled(Button)(({ theme }) => ({
@@ -43,6 +44,7 @@ export default function SendCode() {
   const formik = useFormik({
     initialValues,
     onSubmit,
+    validationSchema:codeValidation,
     validateOnBlur: true,
     validateOnChange: false,
   });
@@ -71,6 +73,7 @@ export default function SendCode() {
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
       touched={formik.touched}
+      errors={formik.errors}
     />
   ));
 

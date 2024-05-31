@@ -5,6 +5,7 @@ import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import axios from "axios";
 import { useFormik } from "formik";
+import { techValidation } from "../../validation/validation.js";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -36,6 +37,7 @@ export default function TechnicalSupport() {
   const formik = useFormik({
     initialValues,
     onSubmit,
+    validationSchema:techValidation,
     validateOnBlur: true,
     validateOnChange: false,
   });
@@ -83,6 +85,7 @@ export default function TechnicalSupport() {
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
       touched={formik.touched}
+      errors={formik.errors}
     />
   ));
 

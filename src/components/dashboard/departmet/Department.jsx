@@ -6,6 +6,7 @@ import axios from "axios";
 import CustomTable from "../../shared/CustomTable.jsx";
 import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
 import { useSnackbar } from "../../context/SnackbarProvider.jsx";
+import { depValidation } from "../../validation/validation.js";
 
 export default function Department() {
   const token = localStorage.getItem("userToken");
@@ -79,6 +80,7 @@ export default function Department() {
   const formik = useFormik({
     initialValues,
     onSubmit,
+    validationSchema:depValidation,
     validateOnBlur: true,
     validateOnChange: false,
   });
@@ -112,8 +114,11 @@ export default function Department() {
             placeholder="Add Department Name"
             name="name"
             title="Department"
+            errors={formik.errors}
+            touched={formik.touched}
             value={formik.values.name}
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
           <Button
             variant="contained"

@@ -17,6 +17,7 @@ import axios from "axios";
 import { useSnackbar } from "../context/SnackbarProvider.jsx";
 import SpringModal from "../shared/SpringModal.jsx";
 import SignModalContent from "../shared/SignModalContent.jsx";
+import { signInValidation } from "../validation/validation.js";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -90,6 +91,7 @@ export default function Sign_in() {
   const formik = useFormik({
     initialValues,
     onSubmit,
+    validationSchema:signInValidation,
     validateOnBlur: true,
     validateOnChange: false,
   });
@@ -123,6 +125,7 @@ export default function Sign_in() {
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
       touched={formik.touched}
+      errors={formik.errors}
     />
   ));
 

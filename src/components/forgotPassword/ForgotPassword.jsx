@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import {  useNavigate } from 'react-router-dom'
+import { forgetValidation } from "../validation/validation.js";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -45,6 +46,7 @@ export default function ForgotPassword() {
   const formik = useFormik({
     initialValues,
     onSubmit,
+    validationSchema:forgetValidation,
     validateOnBlur: true,
     validateOnChange: false,
   });
@@ -78,6 +80,7 @@ export default function ForgotPassword() {
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
       touched={formik.touched}
+      errors={formik.errors}
     />
   ));
 

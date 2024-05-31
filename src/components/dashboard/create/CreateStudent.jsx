@@ -7,6 +7,7 @@ import UploadFile from "../../shared/UploadFile.jsx";
 import SelectCom from "../../shared/SelectCom.jsx";
 import studentInputFields from "./studentInputFields.js";
 import { useSnackbar } from "../../context/SnackbarProvider.jsx";
+import { studentValidation } from "../../validation/validation.js";
 
 export default function CreateStudent() {
   const token = localStorage.getItem("userToken");
@@ -62,7 +63,7 @@ export default function CreateStudent() {
     }
   };
 
-  const { formik, inputs } = studentInputFields(initialValues, onSubmit);
+  const { formik, inputs } = studentInputFields(initialValues, onSubmit,studentValidation);
 
   const renderInputs = inputs.map((input, index) => (
     <Grid item md={6} xs={12} key={index}>
@@ -76,6 +77,7 @@ export default function CreateStudent() {
         onChange={input.onChange || formik.handleChange}
         onBlur={formik.handleBlur}
         touched={formik.touched}
+        errors={formik.errors}
       />
     </Grid>
   ));
@@ -104,13 +106,20 @@ export default function CreateStudent() {
           <Grid container spacing={2}>
             {renderInputs}
             <Grid item md={6} xs={12}>
-              <SelectCom
+            <SelectCom
                 labelId="department-label"
                 id="department"
+                name="depId"
                 value={formik.values.depId}
                 onChange={handleDepartmentChange}
                 label="Department"
-                options={departments.map((dep) => ({ value: dep._id, label: dep.name }))}
+                options={departments.map((dep) => ({
+                  value: dep._id,
+                  label: dep.name,
+                }))}
+                onBlur={formik.handleBlur}
+                touched={formik.touched}
+                errors={formik.errors}
               />
             </Grid>
             

@@ -3,6 +3,7 @@ import React from "react";
 import InputCom from "../../shared/InputCom.jsx";
 import { useFormik } from "formik";
 import axios from "axios";
+import { annValidation } from "../../validation/validation.js";
 export default function Announcement() {
   const token = localStorage.getItem("userToken");
   const initialValues = {
@@ -23,6 +24,7 @@ export default function Announcement() {
   const formik = useFormik({
     initialValues,
     onSubmit,
+    validationSchema:annValidation,
     validateOnBlur: true,
     validateOnChange: false,
   });
@@ -57,6 +59,7 @@ export default function Announcement() {
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
       touched={formik.touched}
+      errors={formik.errors}
     />
   ));
   return (

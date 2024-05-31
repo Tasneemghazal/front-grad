@@ -7,6 +7,7 @@ import UploadFile from "../../shared/UploadFile.jsx";
 import SelectCom from "../../shared/SelectCom.jsx";
 import userInputFields from "./userInputFields.js";
 import { useSnackbar } from "../../context/SnackbarProvider.jsx";
+import { signupValidation } from "../../validation/validation.js";
 
 export default function Create() {
   const token = localStorage.getItem("userToken");
@@ -38,7 +39,7 @@ export default function Create() {
     setSelectedImage(image);
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values, { setSubmitting }) => {
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("email", values.email);
@@ -47,10 +48,8 @@ export default function Create() {
     formData.append("depId", values.depId);
     formData.append("phoneNumber", values.phoneNumber);
     formData.append("officeHours", values.officeHours);
-    Role.forEach((role, index) => {
-      if (values.role.includes(role)) {
-        formData.append(`role[${index}]`, role);
-      }
+    values.role.forEach((role, index) => {
+      formData.append(`role[${index}]`, role);
     });
 
     try {
@@ -69,10 +68,20 @@ export default function Create() {
       }
     } catch (error) {
       console.error("Submission error:", error);
+      showSnackbar({
+        message: "Submission error. Please try again.",
+        severity: "error",
+      });
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const { formik, inputs } = userInputFields(initialValues, onSubmit);
+  const { formik, inputs } = userInputFields(
+    initialValues,
+    onSubmit,
+    signupValidation
+  );
 
   const renderInputs = inputs.map((input, index) => (
     <Grid item md={6} xs={12} key={index}>
@@ -82,10 +91,11 @@ export default function Create() {
         id={input.id}
         title={input.title}
         value={input.value}
+        errors={formik.errors}
+        touched={formik.touched}
         placeholder={input.title}
         onChange={input.onChange || formik.handleChange}
         onBlur={formik.handleBlur}
-        touched={formik.touched}
       />
     </Grid>
   ));
@@ -128,6 +138,7 @@ export default function Create() {
               <SelectCom
                 labelId="department-label"
                 id="department"
+                name="depId"
                 value={formik.values.depId}
                 onChange={handleDepartmentChange}
                 label="Department"
@@ -135,17 +146,24 @@ export default function Create() {
                   value: dep._id,
                   label: dep.name,
                 }))}
+                onBlur={formik.handleBlur}
+                touched={formik.touched}
+                errors={formik.errors}
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <SelectCom
                 labelId="role-label"
                 id="role"
+                name="role"
                 value={formik.values.role || []} // Ensure value is always an array
                 onChange={handleRoleChange}
                 label="Role"
                 options={Role.map((role) => ({ value: role, label: role }))}
                 multiple // Add this attribute for multiple selection
+                onBlur={formik.handleBlur}
+                touched={formik.touched}
+                errors={formik.errors}
               />
             </Grid>
           </Grid>
@@ -162,6 +180,7 @@ export default function Create() {
               },
             }}
             type="submit"
+            disabled={formik.isSubmitting}
           >
             Submit
           </Button>
