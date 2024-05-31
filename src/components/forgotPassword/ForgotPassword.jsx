@@ -10,11 +10,11 @@ import {  useNavigate } from 'react-router-dom'
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
-  backgroundColor: "rgba(43, 1, 62, 0.7)",
-  marginTop: 10,
+  backgroundColor: "#135D66",
   "&:hover": {
-    backgroundColor: "rgba(43, 1, 62, 0.8)",
+    backgroundColor: "#77B0AA",
   },
+  marginTop:10
 }));
 
 export default function ForgotPassword() {

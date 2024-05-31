@@ -134,7 +134,7 @@ export default function EditProfile({role}) {
         height: "200px",
         position: "relative",
         top: -115,
-        backgroundColor: "rgba(43, 1, 62, 0.2)",
+        backgroundColor: "rgba(0, 60, 67, 0.6)",
       }}
     >
       <Container
@@ -154,7 +154,7 @@ export default function EditProfile({role}) {
             sx={{
               fontSize: { xs: "30px", md: "40px" },
               ml: 2,
-              color: "rgba(43, 1, 62, 1)",
+              color: "rgba(0, 60, 67, 1)",
             }}
           />
         </Typography>

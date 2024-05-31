@@ -103,10 +103,10 @@ export default function SubmitTask({ title }) {
             <Button
               variant="contained"
               sx={{
-                backgroundColor: "rgba(43, 1, 62, 0.5)",
-                "&:hover": {
-                  backgroundColor: "rgba(43, 1, 62, 0.8)",
-                },
+                backgroundColor: "#135D66",
+                    "&:hover": {
+                      backgroundColor: "#77B0AA",
+                    },
                 width: "100%",
                 mt: 1,
               }}

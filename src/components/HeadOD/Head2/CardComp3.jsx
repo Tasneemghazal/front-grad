@@ -49,7 +49,7 @@ export default function CardComp3({ title, description, onClickLearnMore, onClic
             </Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" , pt:1}}>
-            <Button onClick={onClickLearnMore} variant="outlined" color="secondary">
+            <Button onClick={onClickLearnMore} variant="outlined" sx={{color:"text.#135D66"}}>
               Learn More
             </Button>
             {flag && (

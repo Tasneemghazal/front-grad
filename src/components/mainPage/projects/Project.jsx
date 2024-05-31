@@ -127,14 +127,14 @@ export default function Project() {
                   sx={{
                     backgroundColor:
                       activeIndex === index
-                        ? "rgba(43, 1, 62, 0.7)"
+                        ? "#003C43"
                         : "inherit",
                     color: activeIndex === index ? "#fff" : "inherit",
                     cursor: "pointer",
                     fontSize: { xs: "16px", sm: "20px", md: "23px" },
                     mb: 1,
                     "&:hover": {
-                      backgroundColor: "rgba(43, 1, 62, 0.4)",
+                      backgroundColor: "#77B0AA",
                       color: "#fff",
                       borderTopRightRadius: 30,
                       borderBottomRightRadius: 30,

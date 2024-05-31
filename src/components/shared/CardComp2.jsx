@@ -3,9 +3,10 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import { teal } from '@mui/material/colors';
 import { CardActionArea, Box, Button } from '@mui/material';
 
-export default function CardComp2({ title, description, onClickLearnMore, onClickDelete, flag=true }) {
+export default function CardComp2({ title, description, onClickLearnMore, onClickDelete, flag = true }) {
   // Array of image URLs
   const imageUrls = [
     'image/section1.jpg',
@@ -47,12 +48,16 @@ export default function CardComp2({ title, description, onClickLearnMore, onClic
             </Typography>
           </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="body2" color="text.secondary" sx={{py:2}}>
+            <Typography variant="body2" color="text.secondary" sx={{ py: 2 }}>
               {description}
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "space-between" , pt:1}}>
-            <Button onClick={onClickLearnMore} variant="outlined" color="secondary">
+          <Box sx={{ display: "flex", justifyContent: "space-between", pt: 1 }}>
+            <Button
+              onClick={onClickLearnMore}
+              variant="outlined"
+              sx={{ color: teal[500], borderColor: teal[500], '&:hover': { borderColor: teal[700] } }}
+            >
               Learn More
             </Button>
             {flag && (

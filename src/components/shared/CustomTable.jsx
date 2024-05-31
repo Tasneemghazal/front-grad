@@ -19,7 +19,8 @@ import Confirm from '../Supervisor/supervisor_2/Confirm.jsx';
 import ConfirmDelete from './ConfirmDelete.jsx';
 
 const RedTableHead = styled(TableHead)({
-    backgroundColor: 'rgba(45, 3, 62, 0.4)',
+    backgroundColor: '#135D66',
+    color:'#fff'
 });
 
 export default function CustomTable({ columns, data, onDelete, flag = true, request = true, getSectionNum }) {
@@ -130,18 +131,18 @@ export default function CustomTable({ columns, data, onDelete, flag = true, requ
                 onChange={handleChange}
                 sx={{ marginBottom: '10px' }}
             />
-            <TableContainer component={Paper} sx={{ border: '1px solid rgba(43, 1, 62, 0.5)' }}>
+            <TableContainer component={Paper} sx={{ border: '1px solid #135D66' }}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <RedTableHead>
                         <TableRow>
                             {columns &&
                                 columns.map((column, index) => (
-                                    <TableCell key={index} align="center" onClick={() => handleSort(column)}>
+                                    <TableCell key={index} align="center" onClick={() => handleSort(column)} sx={{color:"#fff"}}>
                                         {getColumnName(column)} {/* Display custom column name */}
                                         {sortConfig.key === column && (sortConfig.direction === 'ascending' ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />)}
                                     </TableCell>
                                 ))}
-                            <TableCell align="center">Actions</TableCell>
+                            <TableCell align="center" sx={{color:"#fff"}}>Actions</TableCell>
                         </TableRow>
                     </RedTableHead>
                     <TableBody>

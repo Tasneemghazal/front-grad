@@ -7,10 +7,10 @@ import { ChatContext } from '../context/ChatContextProvider.jsx';
 import { useParams } from 'react-router-dom';
 
 const SendButton = styled(Fab)({
-  backgroundColor: 'rgb(53 5 74 / 73%)',
-  '&:hover': {
-    backgroundColor: 'rgb(53 5 74 / 50%)',
-  },
+  backgroundColor: "#135D66",
+              "&:hover": {
+                backgroundColor: "#77B0AA",
+              },
 });
 
 export default function ChatInput() {

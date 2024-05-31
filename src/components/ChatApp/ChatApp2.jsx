@@ -18,7 +18,7 @@ const MessageItem = styled(ListItem)(({ isMyMessage }) => ({
 
 const MessageText = styled(ListItemText)(({ isMyMessage }) => ({
   width: '60%',
-  backgroundColor: isMyMessage ? 'lightgrey' : 'rgb(53 5 74 / 73%)',
+  backgroundColor: isMyMessage ? 'lightgrey' : 'rgb(19 93 102)',
   color: isMyMessage ? '#000000' : '#ffffff',
   borderRadius: '10px',
   padding: '10px',

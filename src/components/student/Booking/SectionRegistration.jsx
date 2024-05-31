@@ -65,7 +65,7 @@ const SectionRegistration = () => {
         variant="h4"
         sx={{
           fontWeight: "bold",
-          color: "#4a148c",
+          color: "#135D66",
           textAlign: "center",
           marginBottom: 4,
           animation: "fadeIn 2s ease-in-out infinite",

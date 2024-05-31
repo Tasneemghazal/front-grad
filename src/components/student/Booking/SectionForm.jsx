@@ -94,12 +94,12 @@ const handleStudentNumChange = (index, newNum) => {
         <Grid item xs={12} sm={6}>
             <Grid container spacing={1}>
                 <Grid item xs={6} sm={6}>
-                    <IconButton onClick={handleAddStudent} size="large" sx={{ width: "40%", color: "rgba(43, 1, 62, 0.5)", "&:hover": { color: "rgba(43, 1, 62, 0.8)" } }}>
+                    <IconButton onClick={handleAddStudent} size="large" sx={{ width: "40%", color: "#135D66", "&:hover": { color: "#77B0AA" } }}>
                         <AddCircleIcon sx={{ fontSize: 30 }} />
                     </IconButton>
                 </Grid>
                 <Grid item xs={6} sm={6}>
-                    <IconButton onClick={handleRemoveStudent} size="large" sx={{ width: "40%", color: "rgba(43, 1, 62, 0.5)", "&:hover": { color: "rgba(43, 1, 62, 0.8)" } }}>
+                    <IconButton onClick={handleRemoveStudent} size="large" sx={{ width: "40%", color: "#135D66", "&:hover": { color: "#77B0AA" } }}>
                         <RemoveCircleIcon sx={{ fontSize: 30 }} />
                     </IconButton>
                 </Grid>
@@ -110,12 +110,12 @@ const handleStudentNumChange = (index, newNum) => {
         <Button
             type="submit"
             sx={{
-                border: "1px solid rgba(43, 1, 62, 0.4)",
+                border: "1px solid ##135D66",
                 color: "white",
-                backgroundColor: "rgba(43, 1, 62, 0.7)",
-                '&:hover': {
-                    backgroundColor: "rgba(43, 1, 62, 0.9)",
-                },
+                backgroundColor: "#135D66",
+              "&:hover": {
+                backgroundColor: "#77B0AA",
+              },
             }}
         >
             Book

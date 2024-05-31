@@ -92,11 +92,8 @@ export default function HeadTab2() {
                 type="submit"
                 variant="contained"
                 sx={{
-                  backgroundColor: "rgba(43, 1, 62, 0.5)",
-                  width: "100%",
-                  "&:hover": {
-                    backgroundColor: "rgba(43, 1, 62, 0.8)",
-                  },
+                 
+                    width:"100%"
                 }}
               >
                 Submit

@@ -36,11 +36,10 @@ export default function UploadFile({ buttonText, onFileChange }) {
       tabIndex={-1}
       startIcon={<CloudUploadIcon />}
       sx={{ my: 1,
-        backgroundColor: "rgba(43, 1, 62, 0.5)",
-
-      "&:hover": {
-        backgroundColor: "rgba(43, 1, 62, 0.8)",
-      },
+        backgroundColor: "#135D66",
+                    "&:hover": {
+                      backgroundColor: "#77B0AA",
+                    },
     width: "100%",}}
     >
       {fileName ? fileName : buttonText}

@@ -81,11 +81,11 @@ function Navbar({ navItems, window }) {
                   variant="contained"
                   key={item}
                   sx={{
-                    backgroundColor: " rgba(43, 1, 62, 0.7)",
+                    backgroundColor: "#135D66",
                     color: "#fff",
                     borderRadius: 5,
                     "&:hover": {
-                      backgroundColor: " rgba(43, 1, 62, 0.8)",
+                      backgroundColor: " #77B0AA",
                     },
                   }}
                   component={Link}
@@ -127,11 +127,11 @@ function Navbar({ navItems, window }) {
               <Button
                 key="Logout"
                 sx={{
-                  backgroundColor: " rgba(43, 1, 62, 0.7)",
+                  backgroundColor: "#135D66",
                   color: "#fff",
                   borderRadius: 5,
                   "&:hover": {
-                    backgroundColor: " rgba(43, 1, 62, 0.8)",
+                    backgroundColor: "#77B0AA",
                   },
                 }}
                 onClick={logOut}

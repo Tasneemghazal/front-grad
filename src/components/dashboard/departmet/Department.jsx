@@ -118,9 +118,9 @@ export default function Department() {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: "rgba(43, 1, 62, 0.5)",
+              backgroundColor: "#135D66",
               "&:hover": {
-                backgroundColor: "rgba(43, 1, 62, 0.8)",
+                backgroundColor: "#77B0AA",
               },
             }}
             type="submit"

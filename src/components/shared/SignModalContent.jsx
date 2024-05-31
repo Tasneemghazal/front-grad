@@ -21,9 +21,9 @@ export default function SignModalContent({
             }}
             sx={{
               color:"#fff",
-              backgroundColor: "rgba(43, 1, 62, 0.7)",
+              backgroundColor: "#77B0AA",
               "&:hover": {
-                backgroundColor: "rgba(43, 1, 62, 0.8)",
+                backgroundColor: "#135D66",
               },
             }}
           >

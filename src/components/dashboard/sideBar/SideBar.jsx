@@ -30,7 +30,7 @@ export default function SideBar({ noneOrBlock, drawerType, hideDrawer }) {
         "& .MuiDrawer-paper": {
           width: "240px",
           boxSizing: "border-box",
-          backgroundColor: "rgba(43, 1, 62, 0.5)",
+          backgroundColor: "#003C43",
         },
         display: { xs: noneOrBlock, lg: "block" },
       }}

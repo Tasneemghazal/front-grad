@@ -8,19 +8,12 @@ import DynamicTabs from '../../shared/DynamicTabs.jsx';
 import { useNavigate } from 'react-router-dom';
 
 export default function Head2() {
-
-  const navigate = useNavigate();
-
-  const handleChatbotClick = () => {
-    navigate('/headOfDepartment/sections');
-  };
   return (
    <Container>
      <DynamicTabs
     items={[
       { label: <ViewListIcon/>, content:<HeadTab1/>  },
       { label: <EditCalendarIcon/>, content:<HeadTab2/>},
-      { label: <ChatIcon onClick={handleChatbotClick}/>  } 
     ]}
   />
    </Container>

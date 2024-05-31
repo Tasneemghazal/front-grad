@@ -10,7 +10,7 @@ export default function ChatIcon() {
         bottom: '90px',
         left: '20px',
         zIndex: '99999999999',
-        backgroundColor: '#773893',
+        backgroundColor: '#135D66',
         borderRadius: '50%', // Make it circular
         width: '50px', // Adjust the width and height according to your need
         height: '50px',

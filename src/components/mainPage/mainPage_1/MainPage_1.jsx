@@ -10,10 +10,10 @@ import { purple } from "@mui/material/colors";
 import styled from "styled-components";
 
 const ColorButton = styled(Button)(({ theme }) => ({
-  backgroundColor: "rgba(43, 1, 62, 0.7)",
-  "&:hover": {
-    backgroundColor: "rgba(43, 1, 62, 0.8)",
-  },
+  backgroundColor: "#135D66",
+              "&:hover": {
+                backgroundColor: "#77B0AA",
+              },
 }));
 
 export default function MainPage_1() {
@@ -173,7 +173,7 @@ export default function MainPage_1() {
                   width: "25%",
                   top: "calc(40% - -20%)",
                   left: "80%",
-                  backgroundColor: "rgba(43, 1, 62, 0.4)",
+                  backgroundColor: "rgba(19, 93, 102, 0.7)",
                   overflow: "hidden",
                   borderRadius: "50%",
                   display: { xs: "none", sm: "none", md: "block" },
@@ -199,7 +199,7 @@ export default function MainPage_1() {
                   width: "10%",
                   top: "calc(40% - 40%)",
                   left: "80%",
-                  backgroundColor: "rgba(43, 1, 62, 0.7)",
+                  backgroundColor: "#003C43",
                   overflow: "hidden",
                   borderRadius: "50%",
                 }}

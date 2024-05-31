@@ -43,7 +43,7 @@ export default function Navbar({ showDrawer }) {
         sx={{
           width: { lg: "calc(100% - 240px)" },
           ml: { xs: 0, lg: "240px" },
-          backgroundColor: "rgba(43, 1, 62, 0.5)",
+          backgroundColor: "#003C43",
         }}
         position="static"
       >

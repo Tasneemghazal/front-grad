@@ -64,7 +64,7 @@ export default function ViewTask({ open, onClose, taskId }) {
         TransitionComponent={Transition}
         classes={{ paper: "dialog-paper" }}
       >
-        <AppBar sx={{ position: "relative", backgroundColor: "rgba(43, 1, 62, 0.4)" }}>
+        <AppBar sx={{ position: "relative", backgroundColor: "rgba(0, 60, 67, 0.7)" }}>
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={onClose} aria-label="close">
               <CloseIcon />
@@ -79,7 +79,7 @@ export default function ViewTask({ open, onClose, taskId }) {
         </AppBar>
 
         <Box sx={{ display: "flex", justifyContent: "center", width: "60%", margin: "auto", flexDirection: "column", height: "100%" }}>
-          <Box sx={{ p: 3, border: "2px solid rgba(43, 1, 62, 0.4)", textAlign: "center", borderRadius: "20px", m: 3, backgroundColor: "rgba(255, 255, 255)" }}>
+          <Box sx={{ p: 3, border: "2px solid rgba(0, 60, 67, 0.7)", textAlign: "center", borderRadius: "20px", m: 3, backgroundColor: "rgba(255, 255, 255)" }}>
             <Typography sx={{ fontWeight: "bold", py: 1 }} variant="h4">
               Let's do it !
             </Typography>
@@ -121,10 +121,10 @@ export default function ViewTask({ open, onClose, taskId }) {
                 <Button
                   variant="contained"
                   sx={{
-                    backgroundColor: "rgba(43, 1, 62, 0.5)",
+                    backgroundColor: "#135D66",
                     "&:hover": {
-                      backgroundColor: "rgba(43, 1, 62, 0.8)"
-                    }
+                      backgroundColor: "#77B0AA",
+                    },
                   }}
                 >
                   Edit your Submission
@@ -133,10 +133,10 @@ export default function ViewTask({ open, onClose, taskId }) {
                 <Button
                   variant="contained"
                   sx={{
-                    backgroundColor: "rgba(43, 1, 62, 0.5)",
+                    backgroundColor: "#135D66",
                     "&:hover": {
-                      backgroundColor: "rgba(43, 1, 62, 0.8)"
-                    }
+                      backgroundColor: "#77B0AA",
+                    },
                   }}
                 >
                   Add your Submission

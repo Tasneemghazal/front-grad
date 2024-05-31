@@ -47,7 +47,7 @@ export default function Profile() {
   }, []);
   return (
     <>
-    <Box sx={{height:"200px", position:"relative",top:-50, backgroundColor:"rgba(43, 1, 62, 0.5)"}}>
+    <Box sx={{height:"200px", position:"relative",top:-50, backgroundColor:"rgba(0, 60, 67, 0.7)"}}>
       <Box sx={{
         position: "absolute",
         left: "50%",

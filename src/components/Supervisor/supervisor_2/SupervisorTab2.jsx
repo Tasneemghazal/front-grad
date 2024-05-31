@@ -61,8 +61,10 @@ export default function SupervisorTab2() {
               <Button
                 variant="contained"
                 sx={{
-                  backgroundColor: "rgba(43, 1, 62, 0.7)",
-                  "&:hover": { backgroundColor: "rgba(43, 1, 62, 0.8)" },
+                  backgroundColor: "#135D66 ",
+                  "&:hover": {
+                    backgroundColor: "#77B0AA",
+                  },
                 }}
               >
                 Add Task

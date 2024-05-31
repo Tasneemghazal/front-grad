@@ -206,7 +206,7 @@ export default function Student_1() {
               >
                 <Box
                   sx={{
-                    backgroundColor: "rgba(43, 1, 62, 0.3)",
+                    backgroundColor: "rgba(0, 60, 67, 0.7)",
                     borderRadius: "30px",
                     position: "absolute",
                     top: { xs: "50%", md: 0 },
@@ -230,7 +230,7 @@ export default function Student_1() {
                   width: "25%",
                   top: "calc(40% - -20%)",
                   left: "80%",
-                  backgroundColor: "rgba(43, 1, 62,.7)",
+                  backgroundColor: "rgba(0, 60, 67, 0.7)",
                   overflow: "hidden",
                   borderRadius: "10px",
                   display: { xs: "none", sm: "none", md: "block" },

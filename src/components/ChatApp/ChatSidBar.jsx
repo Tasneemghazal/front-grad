@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = styled(Grid)({
   width: "20%", // Sidebar width
-  backgroundColor: "rgb(54 19 70 / 60%)",
+  backgroundColor: "#135D66",
 });
 
 export default function ChatSidBar() {

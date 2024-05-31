@@ -1,6 +1,14 @@
-import  { useState } from "react";
+import { useState } from "react";
 import InputCom from "../shared/InputCom";
-import { Box, Button, Container, Grid, Paper, Typography, useMediaQuery} from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Paper,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,15 +20,15 @@ import SignModalContent from "../shared/SignModalContent.jsx";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
-  backgroundColor: "rgba(43, 1, 62, 0.7)",
-  marginTop: 10,
+  backgroundColor: "#135D66 ",
   "&:hover": {
-    backgroundColor: "rgba(43, 1, 62, 0.8)"
+    backgroundColor: "#77B0AA",
   },
+  marginTop: 10,
 }));
 
 export default function Sign_in() {
-  const matches = useMediaQuery((theme) => theme.breakpoints.up('md'));
+  const matches = useMediaQuery((theme) => theme.breakpoints.up("md"));
   let navigate = useNavigate();
   let [userToken, setUserToken] = useState();
   const initialValues = {
@@ -30,11 +38,14 @@ export default function Sign_in() {
   const [openModal, setOpenModal] = useState(false);
   const [userRoles, setUserRoles] = useState([]);
 
-  const { showSnackbar } = useSnackbar(); 
+  const { showSnackbar } = useSnackbar();
 
   const onSubmit = async (users) => {
     try {
-      const { data } = await axios.post("http://localhost:3000/api/v1/grad/auth/signIn", users);
+      const { data } = await axios.post(
+        "http://localhost:3000/api/v1/grad/auth/signIn",
+        users
+      );
       console.log(data);
       if (data.message === "valid account") {
         localStorage.setItem("userToken", data.token);
@@ -49,12 +60,12 @@ export default function Sign_in() {
           handleNavigation(roles[0]);
         }
 
-        showSnackbar({ message: "Login successful", severity: "success" }); 
+        showSnackbar({ message: "Login successful", severity: "success" });
       }
     } catch (error) {
-      console.log("Error occurred:", error)
+      console.log("Error occurred:", error);
     }
-  }
+  };
 
   const handleNavigation = (role) => {
     switch (role) {
@@ -132,31 +143,62 @@ export default function Sign_in() {
                 borderRadius: 2,
                 overflow: "hidden",
                 backgroundColor: "#fff",
-                p: 3
+                p: 3,
               }}
             >
               <Box sx={{ textAlign: "center" }}>
-                <img src="image/ptuk.jpg" alt="Palestine Technical University logo" width="40px" height="40px" />
-                <Typography variant="body2" sx={{ display: "block", pb: 1 }}>Palestine Technical University</Typography>
-                <Typography variant="h4" sx={{ fontSize: "30px", textAlign: "center", mb: 4, fontWeight: "bold" }}>
+                <img
+                  src="image/ptuk.jpg"
+                  alt="Palestine Technical University logo"
+                  width="40px"
+                  height="40px"
+                />
+                <Typography variant="body2" sx={{ display: "block", pb: 1 }}>
+                  Palestine Technical University
+                </Typography>
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontSize: "30px",
+                    textAlign: "center",
+                    mb: 4,
+                    fontWeight: "bold",
+                  }}
+                >
                   Sign In
                 </Typography>
               </Box>
-              <form onSubmit={formik.handleSubmit} sx={{ width: "100%", mb: 3 }}>
+              <form
+                onSubmit={formik.handleSubmit}
+                sx={{ width: "100%", mb: 3 }}
+              >
                 {renderInputs}
-                <Link style={{ textDecoration: "none" }} to='/sendCode'>
-                  <Typography variant="body2" sx={{ textAlign: "right", color: "primary", cursor: "pointer" }}>
+                <Link style={{ textDecoration: "none" }} to="/sendCode">
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      textAlign: "right",
+                      color: "#135D66 ",
+                      cursor: "pointer",
+                    }}
+                  >
                     Forgot Password?
                   </Typography>
                 </Link>
-                <ColorButton fullWidth type="submit">Sign in</ColorButton>
+                <ColorButton fullWidth type="submit">
+                  Sign in
+                </ColorButton>
               </form>
             </Paper>
           </Grid>
           {matches && (
             <Grid item xs={12} md={6}>
               <Box sx={{ display: "flex", justifyContent: "center" }}>
-                <img src="image/boy on graduation.gif" alt="Boy on Graduation" style={{ maxWidth: "100%", height: "auto" }} />
+                <img
+                  src="image/boy on graduation.gif"
+                  alt="Boy on Graduation"
+                  style={{ maxWidth: "100%", height: "auto" }}
+                />
               </Box>
             </Grid>
           )}
@@ -164,8 +206,17 @@ export default function Sign_in() {
       </Container>
 
       {/* Modal for role selection */}
-      <SpringModal closeModal={()=>setOpenModal(false)} isModalOpen={openModal} modalContent={<SignModalContent handleNavigation={handleNavigation} setOpenModal={setOpenModal} userRoles={userRoles}/>} />
-       
+      <SpringModal
+        closeModal={() => setOpenModal(false)}
+        isModalOpen={openModal}
+        modalContent={
+          <SignModalContent
+            handleNavigation={handleNavigation}
+            setOpenModal={setOpenModal}
+            userRoles={userRoles}
+          />
+        }
+      />
     </Box>
   );
 }

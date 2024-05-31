@@ -57,7 +57,7 @@ export default function DynamicTabs({ items }) {
               sx={{
                 borderRadius: '4px',
                 margin: {xs:"1px",sm:2,md:"6px"},
-                backgroundColor: value === index ? 'rgba(43, 1, 62, 0.7)' : 'rgba(43, 1, 62, 0.4)',
+                backgroundColor: value === index ? '#135D66' : '#77B0AA',
                 color: value === index ? 'white !important' : 'black', 
               }}
             />
