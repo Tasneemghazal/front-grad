@@ -54,7 +54,7 @@ export default function StudentTab1() {
               <Avatar
                 src="image/contact.png"
                 alt=""
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "100%" ,border:"1px solid #000"}}
                 sx={{ borderRadius: "50%", width: "100%", aspectRatio: "1 / 1" }} 
               />
             </Box>
