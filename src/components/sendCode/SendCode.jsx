@@ -9,6 +9,7 @@ import {  useNavigate } from 'react-router-dom'
 import axios from "axios";
 import { useFormik } from "formik";
 import { codeValidation } from "../validation/validation.js";
+import { useSnackbar } from "../context/SnackbarProvider.jsx";
 
 
 const ColorButton = styled(Button)(({ theme }) => ({
@@ -20,7 +21,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function SendCode() {
-
+  const { showSnackbar } = useSnackbar();
   const navigate=useNavigate();
   const initialValues = {
     email: "",
@@ -32,9 +33,10 @@ export default function SendCode() {
     try {
       const {data}=await axios.post(`${import.meta.env.VITE_API_URL}/auth/sendCode`, values);
       console.log('Message sent successfully!');
-
+      
       if(data.message=="ok"){
         navigate('/forgotPassword');
+        showSnackbar({ message: 'Code sent successfully to your email !', severity: 'success' });
       }
     } catch (error) {
       console.error('Error sending message:', error);
