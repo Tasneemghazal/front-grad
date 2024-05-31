@@ -118,6 +118,7 @@ export default function EditTask() {
       onChange={input.onChange || formik.handleChange}
       onBlur={formik.handleBlur}
       touched={formik.touched}
+      errors={formik.errors}
     />
   ));
   const handleSectionChange = (event) => {
@@ -149,9 +150,13 @@ export default function EditTask() {
               value={formik.values.sections || []} 
               onChange={handleSectionChange}
               label="sections"
+              onBlur={formik.handleBlur}
+              touched={formik.touched}
+              errors={formik.errors}
               options={sections.map((sec) => ({
                 value: sec._id,
                 label: sec.num,
+                
               }))}
               multiple // Add the multiple prop here
             />

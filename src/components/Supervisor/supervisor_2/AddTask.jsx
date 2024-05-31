@@ -97,6 +97,7 @@ export default function AddTask({ title }) {
       onChange={input.onChange || formik.handleChange}
       onBlur={formik.handleBlur}
       touched={formik.touched}
+      errors={formik.errors}
     />
   ));
   const handleSectionChange = (event) => {
@@ -111,13 +112,15 @@ export default function AddTask({ title }) {
             fontWeight: "bold",
             pb: 2,
             fontSize: { xs: "40px", md: "60px" },
+            pb:3
           }}
         >
           {title}
         </Typography>
       </Box>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={isSmallScreen ? 12 : 7}>
+     
+      <Grid container spacing={3} >
+        <Grid item xs={12} sm={isSmallScreen ? 12 : 7}  >
           <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
             {renderInputs}
             <BasicDateTimePicker label="From" onChange={setStartDate} flag={false}/>
@@ -128,6 +131,9 @@ export default function AddTask({ title }) {
               value={formik.values.sections || []} 
               onChange={handleSectionChange}
               label="sections"
+              onBlur={formik.handleBlur}
+              touched={formik.touched}
+              errors={formik.errors}
               options={sections.map((sec) => ({
                 value: sec._id,
                 label: sec.num,
@@ -136,14 +142,14 @@ export default function AddTask({ title }) {
             />
             <UploadFile
               onFileChange={setSelectedThesis}
-              buttonText="Upload Thesis File"
+              buttonText="Upload assignment File"
             />
             <Button
               variant="contained"
               sx={{
-                backgroundColor: "rgba(43, 1, 62, 0.5)",
+                backgroundColor: "#135D66",
                 "&:hover": {
-                  backgroundColor: "rgba(43, 1, 62, 0.8)",
+                  backgroundColor: "#77B0AA",
                 },
                 width: "100%",
                 mt: 1,
@@ -167,7 +173,7 @@ export default function AddTask({ title }) {
               }}
             >
               <img
-                src="/image/addTask.png"
+                src="/image/newTask.png"
                 alt="Add Task"
                 style={{ maxWidth: "100%", height: "auto" }}
               />
