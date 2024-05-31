@@ -26,7 +26,7 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <Box sx={{ backgroundColor: "black", color: "white", padding: 3}}>
+    <Box sx={{ backgroundColor: "black", color: "white", padding: 3 }}>
       <Container>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} lg={3}>
@@ -97,13 +97,15 @@ export default function Footer() {
                   <ListItem disablePadding>
                     <ListItemButton>
                       <ListItemIcon>
-                        <PlaceOutlinedIcon sx={{
-                    color: "white",
-                    "&:hover": {
-                      color: "red !important",
-                      transform: "translateY(2px)",
-                    },
-                  }}/>
+                        <PlaceOutlinedIcon
+                          sx={{
+                            color: "white",
+                            "&:hover": {
+                              color: "red !important",
+                              transform: "translateY(2px)",
+                            },
+                          }}
+                        />
                       </ListItemIcon>
                       <ListItemText primary="Jaffa Street, Tulkarm, Palestine" />
                     </ListItemButton>
@@ -111,13 +113,15 @@ export default function Footer() {
                   <ListItem disablePadding>
                     <ListItemButton>
                       <ListItemIcon>
-                        <MarkEmailUnreadOutlinedIcon sx={{
-                    color: "white",
-                    "&:hover": {
-                      color: "blue !important",
-                      transform: "translateY(2px)",
-                    },
-                  }}/>
+                        <MarkEmailUnreadOutlinedIcon
+                          sx={{
+                            color: "white",
+                            "&:hover": {
+                              color: "blue !important",
+                              transform: "translateY(2px)",
+                            },
+                          }}
+                        />
                       </ListItemIcon>
                       <ListItemText primary="info@ptuk.edu.ps" />
                     </ListItemButton>
@@ -125,13 +129,15 @@ export default function Footer() {
                   <ListItem disablePadding>
                     <ListItemButton>
                       <ListItemIcon>
-                        <PermPhoneMsgOutlinedIcon sx={{
-                    color: "white",
-                    "&:hover": {
-                      color: "#80cbc4 !important",
-                      transform: "translateY(2px)",
-                    },
-                  }}/>
+                        <PermPhoneMsgOutlinedIcon
+                          sx={{
+                            color: "white",
+                            "&:hover": {
+                              color: "#80cbc4 !important",
+                              transform: "translateY(2px)",
+                            },
+                          }}
+                        />
                       </ListItemIcon>
                       <ListItemText primary="+970 (0)9 2688199" />
                     </ListItemButton>
@@ -139,13 +145,15 @@ export default function Footer() {
                   <ListItem disablePadding>
                     <ListItemButton>
                       <ListItemIcon>
-                        <FaxOutlinedIcon sx={{
-                    color: "white",
-                    "&:hover": {
-                      color: "#b388ff !important",
-                      transform: "translateY(2px)",
-                    },
-                  }}/>
+                        <FaxOutlinedIcon
+                          sx={{
+                            color: "white",
+                            "&:hover": {
+                              color: "#b388ff !important",
+                              transform: "translateY(2px)",
+                            },
+                          }}
+                        />
                       </ListItemIcon>
                       <ListItemText primary="+970 (0)9 2677922" />
                     </ListItemButton>
@@ -169,13 +177,15 @@ export default function Footer() {
                     <ListItem disablePadding>
                       <ListItemButton>
                         <ListItemIcon>
-                          <DatasetLinkedOutlinedIcon   sx={{
-                    color: "white",
-                    "&:hover": {
-                      color: "green !important",
-                      transform: "translateY(2px)",
-                    },
-                  }}/>
+                          <DatasetLinkedOutlinedIcon
+                            sx={{
+                              color: "white",
+                              "&:hover": {
+                                color: "green !important",
+                                transform: "translateY(2px)",
+                              },
+                            }}
+                          />
                         </ListItemIcon>
                         <ListItemText primary="Main university website" />
                       </ListItemButton>
@@ -188,13 +198,15 @@ export default function Footer() {
                     <ListItem disablePadding>
                       <ListItemButton>
                         <ListItemIcon>
-                          <CoPresentOutlinedIcon  sx={{
-                    color: "white",
-                    "&:hover": {
-                      color: "orange !important",
-                      transform: "translateY(2px)",
-                    },
-                  }}/>
+                          <CoPresentOutlinedIcon
+                            sx={{
+                              color: "white",
+                              "&:hover": {
+                                color: "orange !important",
+                                transform: "translateY(2px)",
+                              },
+                            }}
+                          />
                         </ListItemIcon>
                         <ListItemText primary="PTUK LMS" />
                       </ListItemButton>
@@ -207,13 +219,15 @@ export default function Footer() {
                     <ListItem disablePadding sx={{}}>
                       <ListItemButton>
                         <ListItemIcon>
-                          <LocalLibraryOutlinedIcon sx={{
-                    color: "white",
-                    "&:hover": {
-                      color: "#00838f !important",
-                      transform: "translateY(2px)",
-                    },
-                  }}/>
+                          <LocalLibraryOutlinedIcon
+                            sx={{
+                              color: "white",
+                              "&:hover": {
+                                color: "#00838f !important",
+                                transform: "translateY(2px)",
+                              },
+                            }}
+                          />
                         </ListItemIcon>
                         <ListItemText primary="Library website" />
                       </ListItemButton>
@@ -226,13 +240,15 @@ export default function Footer() {
                     <ListItem disablePadding>
                       <ListItemButton>
                         <ListItemIcon>
-                          <HailOutlinedIcon sx={{
-                    color: "white",
-                    "&:hover": {
-                      color: "#00b0ff !important",
-                      transform: "translateY(2px)",
-                    },
-                  }}/>
+                          <HailOutlinedIcon
+                            sx={{
+                              color: "white",
+                              "&:hover": {
+                                color: "#00b0ff !important",
+                                transform: "translateY(2px)",
+                              },
+                            }}
+                          />
                         </ListItemIcon>
                         <ListItemText primary="Staff directory" />
                       </ListItemButton>
@@ -260,6 +276,13 @@ export default function Footer() {
             </Box>
           </Grid>
         </Grid>
+        <Typography
+          variant="body2"
+          align="center"
+          sx={{ marginTop: 3, color: "#dad3d3" }}
+        >
+          Copyright ©2024 All rights reserved
+        </Typography>
       </Container>
     </Box>
   );
