@@ -6,6 +6,7 @@ import { purple } from "@mui/material/colors";
 import axios from "axios";
 import { useFormik } from "formik";
 import { techValidation } from "../../validation/validation.js";
+import { useSnackbar } from "../../context/SnackbarProvider.jsx";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -16,6 +17,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function TechnicalSupport() {
+  const { showSnackbar } = useSnackbar();
   const initialValues = {
     name: "",
     email: "",
@@ -27,8 +29,11 @@ export default function TechnicalSupport() {
 
   const onSubmit = async (values) => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/admin/technicalSupport`, values);
-      console.log('Message sent successfully!');
+      const {data}=await axios.post(`${import.meta.env.VITE_API_URL}/admin/technicalSupport`, values);
+      console.log(data);
+      if (data === 'success') {
+        showSnackbar({ message: 'Message sent successfully to the admin !', severity: 'success' });
+      }
     } catch (error) {
       console.error('Error sending message:', error);
     }
