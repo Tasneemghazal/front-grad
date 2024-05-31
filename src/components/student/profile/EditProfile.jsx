@@ -14,15 +14,33 @@ import InputCom from "../../shared/InputCom.jsx";
 import { useFormik } from "formik";
 import axios from "axios";
 import { useSnackbar } from "../../context/SnackbarProvider.jsx";
+import { DepartmentContext } from "../../context/DepartmentContextProvider.jsx";
 
 export default function EditProfile({role}) {
   const { extractNameFromToken } = useContext(userContext);
   const token = localStorage.getItem("userToken");
+  const[ officeHours,setOfficeHours]=useState();
   const [userName, setUserName] = useState("");
   const [userImg, setUserImg] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const { showSnackbar } = useSnackbar();
+  const { getDepartments } = useContext(DepartmentContext); 
+  const[ depName,setDepName]=useState();
+  const[ academicYear,setAcademicYear]=useState();
+  const getDepName = async () => {
+    try {
+      const departmentRes = await getDepartments(); 
+      const depId = extractNameFromToken();
+        
+          const department = departmentRes.deps.find(dep => dep._id === depId.depId); 
+          const depName = department ? department.name : "Unknown Department";
+          setDepName(depName);
+      }
+    catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
   const onSubmit = async (users) => {
     try {
       const { data } = await axios.patch(
@@ -79,7 +97,20 @@ export default function EditProfile({role}) {
     };
     fetchData();
   }, []);
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        
+        const name = extractNameFromToken();
+        setAcademicYear(name.academicYear);
+        setOfficeHours(name.officeHours);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+    fetchData();
+    getDepName();
+  }, []);
   const initialValues = {
     phoneNumber: phoneNumber,
     password: "",
@@ -218,7 +249,12 @@ export default function EditProfile({role}) {
                   />
                 </Box>
               </Box>
-              <Typography sx={{ mt: 5 }}>Change your profile image!</Typography>
+              <Box sx={{my:{xs:2,md:4, textAlign:"center"}}}>
+      <Typography sx={{py:2}}>{depName}</Typography>
+
+      {academicYear&& <Typography sx={{py:1}}>Academic year: {academicYear}</Typography>}
+      {officeHours && <Typography sx={{py:1}}> Office hours: {officeHours}</Typography>}
+      </Box>
             </Box>
           </Grid>
 
