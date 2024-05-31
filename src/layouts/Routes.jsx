@@ -20,14 +20,12 @@ import TotalStudent from "../components/student/TotalStudent.jsx";
 import SendCode from "../components/sendCode/SendCode.jsx";
 import ForgotPassword from "../components/forgotPassword/ForgotPassword.jsx";
 import TotalSupervisor from "../components/Supervisor/TotalSupervisor.jsx";
-import Profile from "../components/student/profile/Profile.jsx";
 import SupervisorLayout from "./SupervisorLayout.jsx";
 import HeadLayout from "./HeadLayout.jsx";
 import TotalHead from './../components/HeadOD/TotalHead.jsx'
 import AddTask from "../components/Supervisor/supervisor_2/AddTask.jsx";
 import EditTask from "../components/Supervisor/supervisor_2/EditTask.jsx";
 import EditProfile from "../components/student/profile/EditProfile.jsx";
-import AllProfile from "../components/student/profile/AllProfile.jsx";
 import CreateStudent from "../components/dashboard/create/CreateStudent.jsx";
 import Department from "../components/dashboard/departmet/Department.jsx";
 import EditUser from "../components/shared/EditUser.jsx";
@@ -174,18 +172,11 @@ export const router = createBrowserRouter([
         element:<EditStudentTask title={"Edit Your Submission"}/>
       },
       {
-        path: "profile",
-        element: <AllProfile />,
-        children: [
-          {
-            index: true,
-            element: <Profile />,
-          },
-          {
-            path: "editProfile",
-            element: <EditProfile role={"student"} />,
-          },
-        ],
+        
+          path: "profile",
+          element: <EditProfile  role={'student'}/>,
+          
+        
       },
     {
         path: "section-booking", 
@@ -229,17 +220,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <AllProfile />,
-        children: [
-          {
-            index: true,
-            element: <Profile />,
-          },
-          {
-            path: "editProfile",
-            element: <EditProfile role={"supervisor"} />,
-          },
-        ],
+          element: <EditProfile  role={'supervisor'}/>,
       },
       {
         path:"chat",
@@ -273,17 +254,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "profile",
-        element: <AllProfile />,
-        children: [
-          {
-            index: true,
-            element: <Profile />,
-          },
-          {
-            path: "editProfile",
-            element: <EditProfile role={"head"} />,
-          },
-        ],
+          element: <EditProfile  role={'head'}/>,
       },
     ],
   },
