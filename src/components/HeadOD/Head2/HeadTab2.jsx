@@ -79,6 +79,9 @@ export default function HeadTab2() {
                 name="num"
                 onChange={formik.handleChange}
                 value={formik.values.num}
+                onBlur={formik.handleBlur}
+      touched={formik.touched}
+      errors={formik.errors}
               />
               <SelectCom
                 labelId="supervisor-label"
@@ -87,14 +90,18 @@ export default function HeadTab2() {
                 onChange={handleSupervisorChange}
                 label="Supervisor"
                 options={supervisors.map(supervisor => ({ value: supervisor._id, label: supervisor.name }))}
+                onBlur={formik.handleBlur}
+      touched={formik.touched}
+      errors={formik.errors}
               />
               <Button
                 type="submit"
                 variant="contained"
                 sx={{
-                 
-                    width:"100%"
-                }}
+              backgroundColor: "#135D66",
+              "&:hover": {
+                backgroundColor: "#135D66",
+              },width:"100%"}}
               >
                 Submit
               </Button>
