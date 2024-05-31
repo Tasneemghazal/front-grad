@@ -1,9 +1,10 @@
 import { useFormik } from 'formik';
 
-const projectInputFields = (initialValues, onSubmit, handleFieldChange,handleFileChange) => {
+const projectInputFields = (initialValues, onSubmit,validationSchema, handleFieldChange,handleFileChange) => {
   const formik = useFormik({
     initialValues,
     onSubmit,
+    validationSchema,
     validateOnBlur: true,
     validateOnChange: false,
   });

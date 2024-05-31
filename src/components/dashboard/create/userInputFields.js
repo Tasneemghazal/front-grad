@@ -1,9 +1,10 @@
 import { useFormik } from 'formik';
 
-const userInputFields = (initialValues, onSubmit, handleFieldChange) => {
+const userInputFields = (initialValues, onSubmit, validationSchema) => {
   const formik = useFormik({
     initialValues,
     onSubmit,
+    validationSchema,
     validateOnBlur: true,
     validateOnChange: false,
   });
@@ -15,6 +16,7 @@ const userInputFields = (initialValues, onSubmit, handleFieldChange) => {
       name: "name",
       title: "Name",
       value: formik.values.name,
+      onChange: formik.handleChange,
     },
     {
       id: "email",
@@ -22,6 +24,7 @@ const userInputFields = (initialValues, onSubmit, handleFieldChange) => {
       name: "email",
       title: "Email",
       value: formik.values.email,
+      onChange: formik.handleChange,
     },
     {
       id: "password",
@@ -29,6 +32,7 @@ const userInputFields = (initialValues, onSubmit, handleFieldChange) => {
       name: "password",
       title: "Password",
       value: formik.values.password,
+      onChange: formik.handleChange,
     },
     {
       id: "phoneNumber",
@@ -36,15 +40,16 @@ const userInputFields = (initialValues, onSubmit, handleFieldChange) => {
       name: "phoneNumber",
       title: "PhoneNumber",
       value: formik.values.phoneNumber,
+      onChange: formik.handleChange,
     },
     {
-        id: "officeHours",
-        type: "text",
-        name: "officeHours",
-        title: "officeHours",
-        value: formik.values.officeHours,
-      },
-   
+      id: "officeHours",
+      type: "text",
+      name: "officeHours",
+      title: "officeHours",
+      value: formik.values.officeHours,
+      onChange: formik.handleChange,
+    },
   ];
 
   return { formik, inputs };
