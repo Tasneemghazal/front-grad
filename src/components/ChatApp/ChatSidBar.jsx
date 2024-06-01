@@ -53,7 +53,7 @@ export default function ChatSidBar() {
             border: "1px solid #000",
           }}
         />
-        {!role.includes("supervisor") ? (
+        {role&&!role.includes("supervisor") ? (
           <>
             <Typography variant="h5" sx={{ m: 2, fontWeight: "bold" }}>
               Section {stdSection}
@@ -70,8 +70,8 @@ export default function ChatSidBar() {
         ) : (
           <List sx={{ mt: 5, fontWeight: "bold", textAlign: "center" }}>
             {chatSec.map((sec) => (
-              <Link to={sec.chatId} style={{ color: "white", textDecoration: "none" }} key={sec.chatId}>
-                <Typography sx={{ fontSize: "24px", backgroundColor: 'rgb(53 5 74 / 73%)', borderRadius: "10px", mb: "10px" }}>Section: {sec.sectionNum}</Typography>
+              <Link to={sec.chatId} style={{ color: "black", textDecoration: "none" }} key={sec.chatId}>
+                <Typography sx={{ fontSize: "24px", backgroundColor: '#E3FEF7', borderRadius: "10px", mb: "10px" }}>Section: {sec.sectionNum}</Typography>
               </Link>
             ))}
           </List>
