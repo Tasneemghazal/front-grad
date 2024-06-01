@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 const ChatBotHelper = () => {
   useEffect(() => {
     (function (w, d, s, o, f, js, fjs) {
@@ -22,13 +23,14 @@ const ChatBotHelper = () => {
 
   return (
     <div
-    style={{
-      position: "fixed",
-      bottom: "5zpx",
-      right: "10px",
-      zIndex: "9999",
-    }}
+      style={{
+        position: "fixed",
+        bottom: "20px",
+        right: "20px",
+        zIndex: "9999",
+      }}
     ></div>
   );
 };
+
 export default ChatBotHelper;
