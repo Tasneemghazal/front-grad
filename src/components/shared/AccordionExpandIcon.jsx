@@ -15,9 +15,10 @@ export default function AccordionExpandIcon({ submissions }) {
   const { getSectionNum } = useContext(SectionContext);
   const { showSnackbar } = useSnackbar();
   const [sections, setSections] = useState([]);
+  
   const initialValues = {
-    feedback: "",
-    taskIds: [], 
+    feedback: submissions.map(() => ""), // Initialize feedback as an array
+    taskIds: submissions.map(submission => submission.taskId),
   };
 
   const onSubmit = async (values) => {
@@ -25,7 +26,7 @@ export default function AccordionExpandIcon({ submissions }) {
       for (let i = 0; i < values.feedback.length; i++) {
         const feed = {
           feedback: values.feedback[i],
-          taskId: values.taskIds[i], 
+          taskId: values.taskIds[i],
         };
 
         const { data } = await axios.post(
@@ -52,103 +53,106 @@ export default function AccordionExpandIcon({ submissions }) {
     validateOnChange: false,
   });
 
-  const inputs = [
-    {
-      id: "feedback",
-      type: "text",
-      name: "feedback",
-      title: "Feedback",
-      value: formik.values.feedback,
-    },
-  ];
-  const renderInputs = inputs.map((input, index) => (
-    <InputCom
-      key={index}
-      type={input.type}
-      name={input.name}
-      id={input.id}
-      title={input.title}
-      value={input.value[index]} // Use index to access corresponding feedback value
-      placeholder={input.title}
-      onChange={(e) => {
-        formik.setFieldValue(`feedback[${index}]`, e.target.value);
-      }}
-      onBlur={formik.handleBlur}
-      touched={formik.touched}
-    />
-  ));
-
   useEffect(() => {
     const fetchSections = async () => {
       const sectionsData = await Promise.all(
         submissions.map((submission) => getSectionNum(submission.section))
       );
       setSections(sectionsData);
-      console.log(sectionsData)
+      console.log(sectionsData);
       formik.setFieldValue(
         "taskIds",
         submissions.map((submission) => submission.taskId)
       );
     };
-
     fetchSections();
   }, [submissions, getSectionNum]);
 
   return (
-    <div style={{textAlign:"center",border:"1px solid black"}}>
-      {submissions&&submissions.map((submission, index) => (
-        <Accordion key={index}>
-          <AccordionSummary
-            expandIcon={<ArrowDownwardIcon style={{color:"rgba(43, 1, 62, 0.7)"}}/>}
-            aria-controls={`panel${index + 1}-content`}
-            id={`panel${index + 1}-header`}
-           
-          >
-            <Typography sx={{fontWeight:"bold"}}>Section: {sections[index]}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>Task : {submission.taskId.txt}</Typography>
-            <Box sx={{textAlign:"center"}}>
-            The file that was delivered:<Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-  {submission.file && (
-    <Link href={submission.file}>
-      <Avatar
-        alt="pdf logo"
-        src="/image/file.png"
-        sx={{ border: "1px solid #000" }}
-      />
-    </Link>
-  )}
-</Box>
-            </Box>
-            <Box>
-            The text that was delivered: {submission.txt && <Typography>{submission.txt}</Typography>}
-            </Box>
-            <Box>
-              <form
-                onSubmit={formik.handleSubmit}
-                encType="multipart/form-data"
-              >
-                {renderInputs}
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#135D66",
-                    "&:hover": {
-                      backgroundColor: "#77B0AA",
-                    },
-                    width: "100%",
-                    mt: 1,
-                  }}
-                  type="submit"
+    <div style={{ textAlign: "center", border: "1px solid black" }}>
+      {submissions &&
+        submissions.map((submission, index) => (
+          <Accordion key={index}>
+            <AccordionSummary
+              expandIcon={
+                <ArrowDownwardIcon style={{ color: "rgba(43, 1, 62, 0.7)" }} />
+              }
+              aria-controls={`panel${index + 1}-content`}
+              id={`panel${index + 1}-header`}
+            >
+              <Typography sx={{ fontWeight: "bold" }}>
+                Section: {sections[index]}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography sx={{backgroundColor:"#77B0AA", width:"40%", m:"auto",borderRadius:"5px"}}>Task : {submission.taskId.txt}</Typography>
+              {submission.file && (
+                <Box sx={{ textAlign: "center" }}>
+                  The file that was delivered:
+                  <Box
+                    sx={{ display: "flex", justifyContent: "center", mb: 2 }}
+                  >
+                    {submission.file && (
+                      <Link href={submission.file}>
+                        <Avatar
+                          alt="pdf logo"
+                          src="/image/file.png"
+                          sx={{ border: "1px solid #000" }}
+                        />
+                      </Link>
+                    )}
+                  </Box>
+                </Box>
+              )}
+              {submission.txt && (
+                <Box>
+                  The text that was delivered:{" "}
+                  {submission.txt && <Typography>{submission.txt}</Typography>}
+                </Box>
+              )}
+              {submission.taskId.feedback && (
+                <Box>
+                  <Typography sx={{backgroundColor:"#77B0AA", width:"40%", m:"auto",borderRadius:"5px"}}>Feedback:</Typography>
+                  {submission.taskId.feedback && <Typography>{submission.taskId.feedback}</Typography>}
+                </Box>
+              )}
+              <Box>
+                <form
+                  onSubmit={formik.handleSubmit}
+                  encType="multipart/form-data"
                 >
-                  Submit
-                </Button>
-              </form>
-            </Box>
-          </AccordionDetails>
-        </Accordion>
-      ))}
+                  <InputCom
+                    type="text"
+                    name={`feedback[${index}]`}
+                    id={`feedback-${index}`}
+                    title="Feedback"
+                    value={formik.values.feedback[index]}
+                    placeholder="Feedback"
+                    onChange={(e) => {
+                      formik.setFieldValue(`feedback[${index}]`, e.target.value);
+                    }}
+                    onBlur={formik.handleBlur}
+                    touched={formik.touched.feedback && formik.touched.feedback[index]}
+                  />
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: "#135D66",
+                      "&:hover": {
+                        backgroundColor: "#77B0AA",
+                      },
+                      width: "100%",
+                      mt: 1,
+                    }}
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
+                </form>
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        ))}
     </div>
   );
 }
