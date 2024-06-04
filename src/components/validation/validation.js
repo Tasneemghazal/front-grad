@@ -12,10 +12,11 @@ export const signupValidation = Yup.object().shape({
     .min(5, 'Password must be at least 5 characters long')
     .max(20, 'Password cannot be more than 20 characters long')
     .required('Password is required'),
-  phoneNumber: Yup.string()
+  
+    phoneNumber: Yup.string()
     .matches(/^\d{10}$/, 'Phone number must be exactly 10 digits')
     .required('Phone number is required'),
-   role: Yup.string().required('Role is required'),
+  
   officeHours: Yup.string().required('Office hours are required'),
   depId: Yup.string().required('Department is required'),
 });
@@ -60,7 +61,7 @@ export const studentValidation = Yup.object().shape({
   phoneNumber: Yup.string()
     .matches(/^\d{10}$/, 'Phone number must be exactly 10 digits')
     .required('Phone number is required'),
-  academicYear: Yup.number()
+  academicYear: Yup.number().min(1," academic year cannot be zero or negative")
     .required('Academic year is required'),
   depId: Yup.string()
     .matches(/^[0-9a-fA-F]{24}$/, 'Department ID must be a valid ObjectId')
