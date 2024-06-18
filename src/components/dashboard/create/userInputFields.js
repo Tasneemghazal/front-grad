@@ -52,7 +52,7 @@ const userInputFields = (initialValues, onSubmit, validationSchema) => {
     },
   ];
 
-  return { formik, inputs };
+  return { formik, inputs ,resetForm: formik.resetForm};
 };
 
 export default userInputFields;

@@ -39,7 +39,7 @@ export default function Create() {
     setSelectedImage(image);
   };
 
-  const onSubmit = async (values, { setSubmitting }) => {
+  const onSubmit = async (values, { setSubmitting ,resetForm}) => {
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("email", values.email);
@@ -65,6 +65,8 @@ export default function Create() {
           message: "User added successfully",
           severity: "success",
         });
+        resetForm();
+        setSelectedImage(null);
       }
     } catch (error) {
       console.error("Submission error:", error);

@@ -70,7 +70,8 @@ export default function Department() {
           message: "Department added successfully",
           severity: "success",
         });
-        fetchData(); // Fetch updated data after adding department
+        fetchData();
+        formik.resetForm() // Fetch updated data after adding department
       }
     } catch (error) {
       console.error("Submission error:", error);
