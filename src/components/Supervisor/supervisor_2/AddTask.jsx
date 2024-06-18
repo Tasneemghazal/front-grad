@@ -62,10 +62,12 @@ export default function AddTask({ title }) {
       });
       console.log(data)
       if (data.message === 'success') {
-        showSnackbar({ message: 'task added successfully', severity: 'success' });
+        showSnackbar({ message: 'Task added successfully', severity: 'success' });
       }
     } catch (error) {
       console.error('Submission error:', error);
+    
+    showSnackbar({ message: "Add failed, try again!", severity: 'error' });
     }
   };
   

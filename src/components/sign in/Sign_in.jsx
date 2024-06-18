@@ -65,6 +65,7 @@ export default function Sign_in() {
       }
     } catch (error) {
       console.log("Error occurred:", error);
+      showSnackbar({ message: "Login failed", severity: "error" });
     }
   };
 

@@ -45,6 +45,7 @@ export default function SubmitTask({ title }) {
       }
     } catch (error) {
       console.error('Submission error:', error);
+      showSnackbar({ message: 'Submitted failed', severity: 'error' });
     }
   };
   
