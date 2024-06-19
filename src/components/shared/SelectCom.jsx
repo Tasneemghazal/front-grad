@@ -2,7 +2,7 @@ import React from "react";
 import { FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 
 const SelectCom = ({ labelId, id, name, value, onChange, label, options, multiple, onBlur, touched, errors }) => {
-  const showError = touched[name] && errors[name];
+  
 
   return (
     <>
@@ -25,11 +25,7 @@ const SelectCom = ({ labelId, id, name, value, onChange, label, options, multipl
           ))}
         </Select>
       </FormControl>
-      {showError && (
-        <Typography sx={{ color: "red", fontSize: "10px", alignItems: "start" }}>
-          {errors[name]}
-        </Typography>
-      )}
+      
     </>
   );
 };

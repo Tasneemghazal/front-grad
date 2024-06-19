@@ -28,7 +28,7 @@ export const depValidation = Yup.object().shape({
 
 export const createProjectValidation = Yup.object().shape({
     name: Yup.string()
-      .max(50, 'Name must be at most 50 characters')
+      .max(200, 'Name must be at most 200 characters')
       .required('Project name is required'),
       group: Yup.array()
       .of(
