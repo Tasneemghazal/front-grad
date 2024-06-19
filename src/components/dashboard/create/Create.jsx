@@ -70,8 +70,9 @@ export default function Create() {
       }
     } catch (error) {
       console.error("Submission error:", error);
+      const errorMessage = error.response?.data?.message || "Submission error. Please try again.";
       showSnackbar({
-        message: "Submission error. Please try again.",
+        message: errorMessage,
         severity: "error",
       });
     } finally {

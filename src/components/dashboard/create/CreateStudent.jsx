@@ -40,7 +40,7 @@ export default function CreateStudent() {
     setSelectedImage(image); 
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values,{resetForm,setSubmitting}) => {
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("email", values.email);
@@ -57,9 +57,15 @@ export default function CreateStudent() {
       });
       if (data.message === "Student created successfully") {
         showSnackbar({ message: "Student added successfully", severity: "success" });
+        resetForm()
       }
     } catch (error) {
       console.error("Submission error:", error);
+      const errorMessage = error.response?.data?.message || "Submission error. Please try again.";
+      showSnackbar({
+        message: errorMessage,
+        severity: "error",
+      });
     }
   };
 

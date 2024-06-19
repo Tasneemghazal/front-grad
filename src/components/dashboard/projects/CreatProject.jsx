@@ -42,7 +42,7 @@ export default function CreateProject() {
     depId: "",
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values,{resetForm}) => {
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("supervisorName", values.supervisorName);
@@ -60,9 +60,15 @@ export default function CreateProject() {
       });
       if (data.message === "success") {
         showSnackbar({ message: "Project added successfully", severity: "success" });
+        resetForm();
       }
     } catch (error) {
       console.error("Submission error:", error);
+      const errorMessage = error.response?.data?.message || "Submission error. Please try again.";
+      showSnackbar({
+        message: errorMessage,
+        severity: "error",
+      });
     }
   };
 

@@ -75,6 +75,11 @@ export default function Department() {
       }
     } catch (error) {
       console.error("Submission error:", error);
+      const errorMessage = error.response?.data?.message || "Submission error. Please try again.";
+      showSnackbar({
+        message: errorMessage,
+        severity: "error",
+      });
     }
   };
 
