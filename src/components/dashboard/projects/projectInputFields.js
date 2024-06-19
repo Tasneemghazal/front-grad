@@ -27,7 +27,7 @@ const projectInputFields = (initialValues, onSubmit,validationSchema, handleFiel
     
   ];
 
-  return { formik, inputs };
+  return { formik, inputs ,resetForm: formik.resetForm};
 };
 
 export default projectInputFields;
