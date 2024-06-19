@@ -65,10 +65,18 @@ const handleStudentNumChange = (index, newNum) => {
         console.log("Booking successful");
         showSnackbar({ message: "Section booking successfully", severity: "success" });
       } else {
-        console.log("Booking failed");
+        showSnackbar({
+          message: "Submission error. Please try again.",
+          severity: "error",
+        });
       }
     } catch (error) {
       console.log("Error occurred:", error);
+      const errorMessage = error.response?.data?.message || "Submission error. Please try again.";
+      showSnackbar({
+        message: errorMessage,
+        severity: "error",
+      });
     }
   };
 
