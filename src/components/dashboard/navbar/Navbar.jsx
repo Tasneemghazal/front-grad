@@ -6,16 +6,17 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import { Avatar } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import DotBadge from "../../shared/Badge.jsx";
 import { UserContext } from "../../context/UserContextProvider.jsx";
 import { useContext, useEffect, useState } from "react";
+import { Link,useNavigate} from "react-router-dom";
 
 export default function Navbar({ showDrawer }) {
-  const { getUsers } = useContext(UserContext);
+  const { getUsers, setUserToken,setUserData} = useContext(UserContext);
   const [adminName, setAdminName] = useState("");
   const [adminImge, setAdminImge] = useState("");
-
+  let navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,7 +28,7 @@ export default function Navbar({ showDrawer }) {
         
         if (adminUser) {
           setAdminName(adminUser.name);
-          setAdminImge(adminUser.image)
+          setAdminImge(adminUser.img)
         }
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -35,6 +36,13 @@ export default function Navbar({ showDrawer }) {
     };
     fetchData();
   }, []);
+
+  const logOut = () => {
+    localStorage.removeItem("userToken");
+    setUserToken(null);
+    setUserData(null);
+    navigate("/");
+  };
   
 
   return (
@@ -79,6 +87,23 @@ export default function Navbar({ showDrawer }) {
             <Avatar src={adminImge || "image/steve.png"} sx={{ mx: 1 }} />
 
             <Typography>Hi, {adminName || 'Action'}</Typography>
+
+            <Button
+                key="Logout"
+                sx={{
+                  backgroundColor: "#135D66",
+                  color: "#fff",
+                  borderRadius: 5,
+                  "&:hover": {
+                    backgroundColor: "#77B0AA",
+                  },
+                  ml:2
+                }}
+                onClick={logOut}
+                component={Link}
+              >
+                Logout
+              </Button>
           </Box>
         </Toolbar>
       </AppBar>
