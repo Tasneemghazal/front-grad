@@ -26,7 +26,7 @@ export default function Chart1() {
           counts.push({ department: dep.name, count: projectsResponse.projects.length });
         }
         
-        setDepartmentData(departments.map(dep => dep.name.slice(0,3)+"."));
+        setDepartmentData(departments.map(dep => dep.name.slice(0,4)+"."));
         setProjectCounts(counts);
       
       } catch (error) {
