@@ -43,7 +43,7 @@ export default function SupervisorTab3() {
             try {
                 const { requests } = await getRequests();
                 if (requests.length > 0) {
-                    const columns = ["sectionId", "studentId", "students"];
+                    const columns = ["sectionId", "studentId", "Student Names"];
                     setTableColumns(columns);
                     const enrichedRequests = await Promise.all(requests.filter(request => request.state === 'Pending').map(async request => {
                         const studentName = await getStudentById(request.studentId);
@@ -57,6 +57,7 @@ export default function SupervisorTab3() {
                             studentsNames
                         };
                     }));
+                    console.log(enrichedRequests)
                     setTableData(enrichedRequests);
                 }
             } catch (e) {

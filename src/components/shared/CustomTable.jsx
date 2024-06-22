@@ -189,7 +189,7 @@ export default function CustomTable({
                         {Array.isArray(row[column]) ? row[column].join('-') :
                           column === 'sectionId' ? sectionNumbers[row[column]] :
                           column === 'studentId' ? row.studentName :
-                          column === 'students' ? row.studentsNames.join(', ') :
+                          column === 'Student Names' ? row.studentsNames.join(', ') :
                           row[column]}
                       </TableCell>
                     ))}
