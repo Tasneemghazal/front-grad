@@ -52,7 +52,7 @@ export default function Confirm({ rowId, sectionId,closeModal}) {
                         color: "white",
                         backgroundColor: "green",
                         '&:hover': {
-                            backgroundColor: "rgba(255, 0, 0, 0.7)",
+                            backgroundColor: "rgb(60, 179, 113)",
                         },
                     }}
                 >
