@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useFormik } from "formik";
 import {  useNavigate } from 'react-router-dom'
+import { useSnackbar } from "../context/SnackbarProvider";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -26,6 +27,7 @@ export default function UpdatePassword() {
     password: "",
   };
 
+  const { showSnackbar } = useSnackbar();
 
   const matches = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
@@ -36,11 +38,14 @@ export default function UpdatePassword() {
 
       if(data.message=="success"){
         navigate('/sign-in');
+        showSnackbar({ message: 'All is well!', severity: 'success' });
       }
     } catch (error) {
       console.error('Error sending message:', error);
+      showSnackbar({ message: " failed!", severity: "error" });
     }
   };
+
 
   const formik = useFormik({
     initialValues,

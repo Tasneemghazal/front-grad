@@ -8,6 +8,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import {  useNavigate } from 'react-router-dom'
 import { forgetValidation } from "../validation/validation.js";
+import { useSnackbar } from "../context/SnackbarProvider.jsx";
 
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(purple[500]),
@@ -27,7 +28,7 @@ export default function ForgotPassword() {
     code: "",
   };
 
-
+  const { showSnackbar } = useSnackbar();
   const matches = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
   const onSubmit = async (values) => {
@@ -37,11 +38,14 @@ export default function ForgotPassword() {
 
       if(data.message=="success"){
         navigate('/updatePassword');
+        showSnackbar({ message: 'Passsword updated successfully!', severity: 'success' });
       }
     } catch (error) {
       console.error('Error sending message:', error);
+      showSnackbar({ message: "Update password failed!", severity: "error" });
     }
   };
+
 
   const formik = useFormik({
     initialValues,
