@@ -15,9 +15,16 @@ export default function Announcement() {
       const {data}=await axios.post(`${import.meta.env.VITE_API_URL}/admin/sendAnn`, values, {
         headers: { token: `Bearer ${token}` },
       });
-      console.log('Message sent successfully!');
+      showSnackbar({
+        message: "Announcement sent successfully",
+        severity: "success",
+      });
     } catch (error) {
       console.error('Error sending message:', error);
+      showSnackbar({
+        message:"submission failed",
+        severity: "error",
+      });
     }
   };
 

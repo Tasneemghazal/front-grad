@@ -48,10 +48,21 @@ export default function HeadTab2() {
       if(data.message === "Success") {
         showSnackbar({ message: "Section added successfully", severity: "success" });
       }
+      else{
+        const errorMessage = data.message || "Submission error. Please try again.";
+      showSnackbar({
+        message: errorMessage,
+        severity: "error",
+      });
+      }
       return data;
     } catch (error) {
       console.error("Submission error:", error);
-      alert("Failed to add section. Please try again.");
+      const errorMessage = error.response?.data?.message || "Submission error. Please try again.";
+      showSnackbar({
+        message: errorMessage,
+        severity: "error",
+      });
     }
   };
 

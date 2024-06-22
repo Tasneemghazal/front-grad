@@ -34,8 +34,18 @@ export default function TechnicalSupport() {
       if (data === 'success') {
         showSnackbar({ message: 'Message sent successfully to the admin !', severity: 'success' });
       }
+      else{
+        showSnackbar({
+          message:"submission failed",
+          severity: "error",
+        });
+      }
     } catch (error) {
       console.error('Error sending message:', error);
+      showSnackbar({
+        message:"submission failed",
+        severity: "error",
+      });
     }
   };
 
