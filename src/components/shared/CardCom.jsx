@@ -24,7 +24,7 @@ export default function CardComp({ image, name, supervisorName, thesis, group })
           {studentName}
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center',mt:1 }}>
-          <Link href={thesis}>
+          <Link href={thesis} target="_blank">
             <Avatar alt="pdf logo" src="/image/pdfIcon.png" />
           </Link>
         </Box>
