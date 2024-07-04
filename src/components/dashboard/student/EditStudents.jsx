@@ -21,6 +21,7 @@ export default function EditStudents() {
 
   async function fetchUserData(studentId) {
     const res = await getStudentById(studentId);
+    console.log(res)
     formik.setValues({
       name: res.user.name,
       email: res.user.email,
@@ -28,6 +29,7 @@ export default function EditStudents() {
       phoneNumber: res.user.phoneNumber,
       academicYear: res.user.academicYear,
       depId: res.user.depId,
+      universityNum:res.user.universityNum
     });
   }
 
@@ -47,6 +49,7 @@ export default function EditStudents() {
     phoneNumber: "",
     academicYear: "",
     depId: "", 
+    universityNum:"",
   };
 
  
