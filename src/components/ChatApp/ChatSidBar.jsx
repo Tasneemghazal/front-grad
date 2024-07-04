@@ -55,15 +55,15 @@ export default function ChatSidBar() {
         />
         {role&&!role.includes("supervisor") ? (
           <>
-            <Typography variant="h5" sx={{ m: 2, fontWeight: "bold" }}>
+            <Typography variant="h5" sx={{ m: 2, fontWeight: "bold" ,color:"white"}}>
               Section {stdSection}
             </Typography>
             <List sx={{ mt: 5, fontWeight: "bold", textAlign: "center" }}>
-              <Typography variant="h5" sx={{ m: 2, fontWeight: "bold" }}>
+              <Typography variant="h5" sx={{ m: 2, fontWeight: "bold",color:"white" }}>
                 Members:
               </Typography>
               {chatUsers.map((user) => (
-                <Typography key={user._id}>{user.name}</Typography>
+                <Typography key={user._id} sx={{color:"white"}}>{user.name}</Typography>
               ))}
             </List>
           </>
