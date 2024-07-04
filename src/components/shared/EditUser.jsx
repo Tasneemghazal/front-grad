@@ -16,18 +16,17 @@ export default function EditUser() {
   const { showSnackbar } = useSnackbar();
   const { getUserById } = useContext(UserContext);
   const [departments, setDepartments] = useState([]);
-  
 
   async function fetchUserData(userId) {
     const res = await getUserById(userId);
     formik.setValues({
       name: res.user.name,
       email: res.user.email,
-      password: "", // Assuming you don't want to show password initially
+      password:"", // Assuming you don't want to show the password initially
       phoneNumber: res.user.phoneNumber,
       officeHours: res.user.officeHours,
-      role: res.user.role, // Assuming role will not be set initially
-      depId: res.user.depId, // Assuming department will not be set initially
+      role: res.user.role || [], // Handle role as an array
+      depId: res.user.depId,
     });
   }
 
@@ -46,12 +45,8 @@ export default function EditUser() {
     password: "",
     phoneNumber: "",
     officeHours: "",
-    role: "",
+    role: [],
     depId: "",
-  };
-
-  const handleImageChange = (image) => {
-    setSelectedImage(image);
   };
 
   const onSubmit = async (values) => {
@@ -88,7 +83,13 @@ export default function EditUser() {
   };
 
   const handleRoleChange = (event) => {
-    formik.setFieldValue("role", event.target.value);
+    const {
+      target: { value },
+    } = event;
+    formik.setFieldValue(
+      "role",
+      typeof value === 'string' ? value.split(',') : value
+    );
   };
 
   const Role = ["headOfDepartment", "supervisor"];
@@ -109,7 +110,7 @@ export default function EditUser() {
         >
           Edit user
         </Typography>
-        <form onSubmit={formik.handleSubmit} >
+        <form onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             {renderInputs}
             <Grid item md={6} xs={12}>
@@ -126,6 +127,7 @@ export default function EditUser() {
               <SelectCom
                 labelId="role-label"
                 id="role"
+                multiple
                 value={formik.values.role}
                 onChange={handleRoleChange}
                 label="Role"
@@ -133,7 +135,6 @@ export default function EditUser() {
               />
             </Grid>
           </Grid>
-          
           <Button
             variant="contained"
             sx={{
