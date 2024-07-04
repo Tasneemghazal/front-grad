@@ -93,7 +93,7 @@ export default function AccordionExpandIcon({ submissions }) {
                     sx={{ display: "flex", justifyContent: "center", mb: 2 }}
                   >
                     {submission.file && (
-                      <Link href={submission.file}>
+                      <Link href={submission.file} target="_blank">
                         <Avatar
                           alt="pdf logo"
                           src="/image/file.png"
