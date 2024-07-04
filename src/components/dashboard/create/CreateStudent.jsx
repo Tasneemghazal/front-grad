@@ -33,6 +33,7 @@ export default function CreateStudent() {
     phoneNumber: "",
     academicYear: "",
     depId: "",
+    universityNum:""
   };
 
 
